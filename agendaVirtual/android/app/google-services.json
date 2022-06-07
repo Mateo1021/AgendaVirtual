@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "153894393930",
+    "firebase_url": "https://agenda-virtual-fearc-default-rtdb.firebaseio.com",
+    "project_id": "agenda-virtual-fearc",
+    "storage_bucket": "agenda-virtual-fearc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:153894393930:android:ed75a82e7607bab0bc2eb3",
+        "android_client_info": {
+          "package_name": "com.agendavirtual"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "153894393930-8f17vbaqac82tjultd1s4heqbldnctgs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmaWtyT7ZrdIqNCk5m2KxKQY9F8dJfhg8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "153894393930-8f17vbaqac82tjultd1s4heqbldnctgs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
