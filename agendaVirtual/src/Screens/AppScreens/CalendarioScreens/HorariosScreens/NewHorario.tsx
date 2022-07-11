@@ -5,14 +5,6 @@ import {Picker} from '@react-native-picker/picker';
 import { Button } from 'react-native'
 import DatePicker from 'react-native-date-picker'
 import { AuthContext } from '../../../../Context/ContextUser/AuthContext';
-import axios from 'axios';
-
-
-import { initializeApp } from 'firebase/app';
-import { getFirestore}  from "firebase/firestore";
-import { collection, addDoc } from "firebase/firestore"
-
-
 import firestore from '@react-native-firebase/firestore';
 
 

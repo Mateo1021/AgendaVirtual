@@ -12,7 +12,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { TopTapCalendarNavigator } from './CalendariosNavigator/TopTapCalendarNavigator';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { TopTapNotasNavigator } from './NotasNavigator/TopTapNotasNavigator';
-import { TopTapProyNavigator } from './ProyectosNavigator/TopTapProyNavigator';
+import { newProyectoNavigator } from './ProyectosNavigator/newProyectoNavigator';
 import { AgendaNavigator } from './AgendaNavigator/AgendaNavigator';
 
 
@@ -67,7 +67,7 @@ const BottonTabNavigatorAndr= ()=> {
       <TabAndroid.Screen name="TopTapCalendarNavigator" options={{title:'Calendario'}} component={TopTapCalendarNavigator} />
       <TabAndroid.Screen name="TopTapNotasNavigator" options={{title:'Notas'}} component={TopTapNotasNavigator} />
       <TabAndroid.Screen name="AgendaNavigator" options={{title:'Agenda'}} component={AgendaNavigator} />
-      <TabAndroid.Screen name="TopTapProyNavigator" options={{title:'Proyectos'}} component={TopTapProyNavigator} />
+      <TabAndroid.Screen name="TopTapProyNavigator" options={{title:'Proyectos'}} component={newProyectoNavigator} />
     </TabAndroid.Navigator>
   );
 }
@@ -120,7 +120,7 @@ export const BottonTabNavigatorIos = ()=> {
       <TabIos.Screen name="TopTapCalendarNavigator" options={{title:'Calendario'}} component={TopTapCalendarNavigator} />
       <TabIos.Screen name="TopTapNotasNavigator" options={{title:'Notas'}} component={TopTapNotasNavigator} />
       <TabIos.Screen name="AgendaNavigator" options={{title:'Agenda'}} component={AgendaNavigator} />
-      <TabIos.Screen name="TopTapProyNavigator" options={{title:'Proyectos'}} component={TopTapProyNavigator} />
+      <TabIos.Screen name="TopTapProyNavigator" options={{title:'Proyectos'}} component={newProyectoNavigator} />
     </TabIos.Navigator>
   );
 }
