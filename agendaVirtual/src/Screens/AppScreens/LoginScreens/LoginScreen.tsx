@@ -31,7 +31,7 @@ export const LoginScreen = ({ navigation }: Props) => {
   })
 
   const logIn =  () =>{
-    if(state.email === '' || state.password === ''){
+/*     if(state.email === '' || state.password === ''){
       Alert.alert('Campos vacios')
     }else{
 
@@ -59,12 +59,12 @@ export const LoginScreen = ({ navigation }: Props) => {
     console.error(error);
   });
 
-    }
+    } */
 
 
-/*     setDataUser('mateo123','87123812jhas','234234','sdfsdfdsf',[],'asdasd12321');
+    setDataUser('mateo123','87123812jhas','234234','sdfsdfdsf',[],'asdasd12321');
     signIn();
-    navigation.navigate('MenuLateralNavigator') */
+    navigation.navigate('MenuLateralNavigator')
   }
   
   return (

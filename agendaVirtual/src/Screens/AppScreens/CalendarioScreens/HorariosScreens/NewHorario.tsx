@@ -21,6 +21,7 @@ export const NewHorario = () => {
 
 
 async function addMateria (){
+  
 try{
 const user = await firestore().collection('Materias').doc('materias1').get();
 console.log(user);
