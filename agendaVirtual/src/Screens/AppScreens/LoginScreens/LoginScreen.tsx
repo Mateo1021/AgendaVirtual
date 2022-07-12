@@ -4,7 +4,7 @@ import { Alert, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { stylesApp, colors } from '../../../Themes/AppThemes';
 
-import {getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import {getAuth, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
 
 import {initializeApp} from 'firebase/app'
 
@@ -13,12 +13,15 @@ import { AuthContext } from '../../../Context/ContextUser/AuthContext';
 import { LogBox } from 'react-native';
 
 import auth from '@react-native-firebase/auth';
+import { firebase } from '@react-native-firebase/firestore';
 
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs();//Ignore all log notifications
 
 
 interface Props extends StackScreenProps<any, any> {};
+
+
 export const LoginScreen = ({ navigation }: Props) => {
 
   const {signIn,setDataUser} = useContext(AuthContext)
@@ -31,7 +34,7 @@ export const LoginScreen = ({ navigation }: Props) => {
   })
 
   const logIn =  () =>{
-/*     if(state.email === '' || state.password === ''){
+    if(state.email === '' || state.password === ''){
       Alert.alert('Campos vacios')
     }else{
 
@@ -39,6 +42,10 @@ export const LoginScreen = ({ navigation }: Props) => {
   .then(() => {
     console.log('User account created & signed in!');
     signIn();
+    const user = firebase.auth().currentUser;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    setDataUser(user.email,user.displayName,user.phoneNumber,user.photoURL,user.providerData,user.uid);
     navigation.navigate('MenuLateralNavigator')
   })
   .catch(error => {
@@ -59,12 +66,12 @@ export const LoginScreen = ({ navigation }: Props) => {
     console.error(error);
   });
 
-    } */
+    }
 
-
+/* 
     setDataUser('mateo123','87123812jhas','234234','sdfsdfdsf',[],'asdasd12321');
     signIn();
-    navigation.navigate('MenuLateralNavigator')
+    navigation.navigate('MenuLateralNavigator') */
   }
   
   return (

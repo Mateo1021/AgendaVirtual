@@ -3,12 +3,16 @@ import { View,Text, TextInput, Button, Alert } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { stylesApp } from '../../../Themes/AppThemes';
 import auth from '@react-native-firebase/auth';
-import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, getMultiFactorResolver } from 'firebase/auth'
 import {initializeApp} from 'firebase/app'
 import { StackScreenProps } from '@react-navigation/stack';
+import firestore from '@react-native-firebase/firestore';
 
 
 interface Props extends StackScreenProps<any, any> {};
+
+
+
 export const CreateUserScreen = ( { navigation }: Props) => {
 
 
@@ -25,6 +29,30 @@ export const CreateUserScreen = ( { navigation }: Props) => {
       .then(() => {
         Alert.alert('Usuario creado con Exito')
         navigation.navigate('LoginScreen')
+
+        firestore()
+        .collection('Usuarios').doc('')
+        .set({
+          Aprellidos: '',
+          Correo: state.email,
+          Edad: '',
+          Nombres: '',
+          Puntaje: '',
+          codUser: '',
+          foto: '',
+          idCalificaciones: '',
+          idCurso: '',
+          idHorario: '',
+          idMaterias: '',
+          idNotas: '',
+        })
+        .then(() => {
+          console.log('User added!');
+        });
+
+
+
+
       })
       .catch(error => {
         Alert.alert(error)
