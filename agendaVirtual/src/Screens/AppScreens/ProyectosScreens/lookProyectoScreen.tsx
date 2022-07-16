@@ -1,8 +1,15 @@
-import React, { useEffect } from 'react'
-import { SafeAreaView, Text, View } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
+import { Alert, SafeAreaView, Text, View } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import { FlatList, StyleSheet} from 'react-native';
 import {ListRenderItem} from 'react-native';
+import { RefreshControl, ScrollView , TouchableOpacity } from 'react-native';
+import { AuthContext } from '../../../Context/ContextUser/AuthContext';
+
+const wait = (timeout : any) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
+
 
 let DATA: any = [];
 
@@ -41,39 +48,106 @@ async function searchCours (){
 DATA = arr;
 
 }
+let dataUserGlobal:any;
+function saveDataUser(data:any){
+dataUserGlobal= data;
+}
 
 
+function addCoursEstudent(id:any){
 
+  let uid= dataUserGlobal.uid;
+  let docUserEdit:any;
+  firestore()
+  .collection('Usuarios')
+  // Filter results
+  .where('uid', '==', uid)
+  .get()
+  .then(querySnapshot => {
+        querySnapshot.forEach(documentSnapshot => {
+          docUserEdit=documentSnapshot.id;
+    });
+    setTimeout(setCours, 1000);
+  });
+ 
+  function setCours(){
+    firestore()
+    .collection('Usuarios').doc(docUserEdit)
+    .update({
+      idCurso: id
+    })
+  }
+}
+//
+
+
+  const createTwoButtonAlert = (tittle:any, id : any) =>
+  Alert.alert(
+    "Desea Agregar Este Proyecto. "+tittle,
+    "Unicamente te podras reguistrar a 1 curso por periodo academico.",
+    [
+      {
+        text: "Cancel",
+        onPress: () => 
+        console.log("Cancel Pressed")
+        ,
+        style: "cancel"
+      },
+      { text: "OK", onPress: () => addCoursEstudent(id)}
+    ]
+  );
+  
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-const Item = ({ title }) => (
-  <View style={styles.item}>
+const Item = ({ title, id }) => (
+  <TouchableOpacity onPress={()=>createTwoButtonAlert(title,id)} >
     <Text style={styles.title}>{title}</Text>
-  </View>
+  </TouchableOpacity>
 );
 
 
 export const lookProyectoScreen = () => {
 
-  useEffect(() => {
-    searchCours();
+const { authState } = useContext(AuthContext);
+useEffect(() => {
+  saveDataUser(authState);
+  searchCours();
+}, [])
+
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
   }, []);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const renderItem = ({ item }) => (
-    <Item title={item.title} />
+
+  
+  const renderItem = ({ item}) => (
+    <Item title={item.title}  id={item.id}/>
   );
   
-
     return (
       <SafeAreaView style={styles.container}>
-      <FlatList
-        data={DATA}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-      />
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          }
+        >
+        <FlatList
+          data={DATA}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+        />
+
+      </ScrollView>
     </SafeAreaView>
     );
 }

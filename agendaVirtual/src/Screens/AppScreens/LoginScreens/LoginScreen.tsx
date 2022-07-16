@@ -14,6 +14,7 @@ import { LogBox } from 'react-native';
 
 import auth from '@react-native-firebase/auth';
 import { firebase } from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
 
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs();//Ignore all log notifications
@@ -27,7 +28,8 @@ export const LoginScreen = ({ navigation }: Props) => {
   const {signIn,setDataUser} = useContext(AuthContext)
 
 
-
+  let uidLeg = '';
+  let docUserLog:string = '';
   const [state, setState] = useState({
     email:'',
     password:''
@@ -46,6 +48,12 @@ export const LoginScreen = ({ navigation }: Props) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     setDataUser(user.email,user.displayName,user.phoneNumber,user.photoURL,user.providerData,user.uid);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    uidLeg = user.uid;
+    
+    
+
     navigation.navigate('MenuLateralNavigator')
   })
   .catch(error => {
@@ -66,7 +74,29 @@ export const LoginScreen = ({ navigation }: Props) => {
     console.error(error);
   });
 
+  firestore()
+  .collection('Usuarios')
+  // Filter results
+  .where('Correo', '==', state.email)
+  .get()
+  .then(querySnapshot => {
+        querySnapshot.forEach(documentSnapshot => {
+          docUserLog=documentSnapshot.id;
+    });
+
+    setTimeout(addUidUser, 1000);
+    
+  });
+
     }
+
+  function addUidUser(){
+    firestore()
+    .collection('Usuarios').doc(docUserLog)
+    .update({
+      uid: uidLeg
+    })
+  }
 
 /* 
     setDataUser('mateo123','87123812jhas','234234','sdfsdfdsf',[],'asdasd12321');

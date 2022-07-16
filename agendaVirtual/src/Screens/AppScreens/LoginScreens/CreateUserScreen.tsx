@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View,Text, TextInput, Button, Alert } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { stylesApp } from '../../../Themes/AppThemes';
@@ -11,10 +11,24 @@ import firestore from '@react-native-firebase/firestore';
 
 interface Props extends StackScreenProps<any, any> {};
 
+let userId:any =[] ;
 
+async function searchUsers (){
+  
+  try{
+    const collection = await firestore().collection('Usuarios').get();
+    collection.forEach(doc => userId.push(doc.id));
+  }catch(e){
+  console.log('error: '+e);
+  }
+
+}
 
 export const CreateUserScreen = ( { navigation }: Props) => {
 
+  useEffect(() => {
+    searchUsers();
+  }, []);
 
   const [state, setState] = useState({
     email:'',
@@ -27,11 +41,12 @@ export const CreateUserScreen = ( { navigation }: Props) => {
     }else{
       auth().createUserWithEmailAndPassword(state.email,state.password)
       .then(() => {
-        Alert.alert('Usuario creado con Exito')
-        navigation.navigate('LoginScreen')
-
+        let idArrayUser : number =  userId[userId.length - 1].split('_')[1];
+        let idArrayUserNumber = ++idArrayUser;
+        Alert.alert('Usuario creado con Exito');
+        navigation.navigate('LoginScreen');
         firestore()
-        .collection('Usuarios').doc('')
+        .collection('Usuarios').doc('us_'+(idArrayUserNumber))
         .set({
           Aprellidos: '',
           Correo: state.email,
@@ -45,6 +60,7 @@ export const CreateUserScreen = ( { navigation }: Props) => {
           idHorario: '',
           idMaterias: '',
           idNotas: '',
+          uid:''
         })
         .then(() => {
           console.log('User added!');
