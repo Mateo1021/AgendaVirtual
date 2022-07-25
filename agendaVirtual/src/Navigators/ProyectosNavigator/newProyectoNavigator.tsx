@@ -2,6 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { ProyectosScreen } from '../../Screens/AppScreens/ProyectosScreens/ProyectosScreen';
 import { lookProyectoScreen } from '../../Screens/AppScreens/ProyectosScreens/lookProyectoScreen';
+import { ForoScreen } from '../../Screens/AppScreens/ProyectosScreens/ForoScreen';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,7 @@ export const newProyectoNavigator=()=> {
     >
       <Stack.Screen name="ProyectosScreen"  component={ProyectosScreen} />
       <Stack.Screen name="lookProyectoScreen"  component={lookProyectoScreen} />
+      <Stack.Screen name="ForoScreen"  component={ForoScreen} />
 
     </Stack.Navigator>
   );

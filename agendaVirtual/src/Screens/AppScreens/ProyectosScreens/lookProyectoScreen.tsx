@@ -5,17 +5,77 @@ import { FlatList, StyleSheet} from 'react-native';
 import {ListRenderItem} from 'react-native';
 import { RefreshControl, ScrollView , TouchableOpacity } from 'react-native';
 import { AuthContext } from '../../../Context/ContextUser/AuthContext';
+import { stylesApp } from '../../../Themes/AppThemes';
+import { StackScreenProps } from '@react-navigation/stack';
 
+
+interface Props extends StackScreenProps<any, any> {};
+
+//Variables globales 
+let DATA: any = [];
+let dataCours: any = [];
+let dataUserGlobal:any;
+///////////////////////////////////////////
+
+//funciones tipo flecha
 const wait = (timeout : any) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
+const createTwoButtonAlert = (tittle:any, id : any) =>
+Alert.alert(
+  "Desea Agregar Este Proyecto. "+tittle,
+  "Unicamente te podras reguistrar a 1 curso por periodo academico.",
+  [
+    {
+      text: "Cancel",
+      onPress: () => 
+      console.log("Cancel Pressed")
+      ,
+      style: "cancel"
+    },
+    { text: "OK", onPress: () => addCoursEstudent(id)}
+  ]
+);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const Item = ({ title, id }) => (
+    <TouchableOpacity onPress={()=>createTwoButtonAlert(title,id)} >
+      <Text style={stylesApp.titles}>{title}</Text>
+    </TouchableOpacity>
+  );
+///////////////////////////////////////////
+
+//funciones JS
+function saveDataUser(data:any){
+  dataUserGlobal= data;
+  }
+
+function addCoursEstudent(id:any ){
+
+    let uid= dataUserGlobal.uid;
+    let docUserEdit:any;
+    firestore()
+    .collection('Usuarios')
+    .where('uid', '==', uid)
+    .get()
+    .then(querySnapshot => {
+          querySnapshot.forEach(documentSnapshot => {
+            docUserEdit=documentSnapshot.id;
+      });
+      setTimeout(setCours, 1000);
+    });
+   
+    function setCours(){
+      firestore()
+      .collection('Usuarios').doc(docUserEdit)
+      .update({
+        idCurso: id
+      })
+    }
+  }
 
 
-let DATA: any = [];
-
-let dataCours: any = [];
 async function searchCours (){
-  
   try{
   const users = await firestore().collection('Cursos').get();
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -46,66 +106,14 @@ async function searchCours (){
   return exists; 
 });
 DATA = arr;
-
-}
-let dataUserGlobal:any;
-function saveDataUser(data:any){
-dataUserGlobal= data;
 }
 
-
-function addCoursEstudent(id:any){
-
-  let uid= dataUserGlobal.uid;
-  let docUserEdit:any;
-  firestore()
-  .collection('Usuarios')
-  // Filter results
-  .where('uid', '==', uid)
-  .get()
-  .then(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
-          docUserEdit=documentSnapshot.id;
-    });
-    setTimeout(setCours, 1000);
-  });
- 
-  function setCours(){
-    firestore()
-    .collection('Usuarios').doc(docUserEdit)
-    .update({
-      idCurso: id
-    })
-  }
-}
-//
+///////////////////////////////////////////
 
 
-  const createTwoButtonAlert = (tittle:any, id : any) =>
-  Alert.alert(
-    "Desea Agregar Este Proyecto. "+tittle,
-    "Unicamente te podras reguistrar a 1 curso por periodo academico.",
-    [
-      {
-        text: "Cancel",
-        onPress: () => 
-        console.log("Cancel Pressed")
-        ,
-        style: "cancel"
-      },
-      { text: "OK", onPress: () => addCoursEstudent(id)}
-    ]
-  );
-  
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-const Item = ({ title, id }) => (
-  <TouchableOpacity onPress={()=>createTwoButtonAlert(title,id)} >
-    <Text style={styles.title}>{title}</Text>
-  </TouchableOpacity>
-);
 
+// screenRenderApp
 
 export const lookProyectoScreen = () => {
 
@@ -127,7 +135,7 @@ useEffect(() => {
   // @ts-ignore
 
   
-  const renderItem = ({ item}) => (
+  const renderItem = ({item}) => (
     <Item title={item.title}  id={item.id}/>
   );
   

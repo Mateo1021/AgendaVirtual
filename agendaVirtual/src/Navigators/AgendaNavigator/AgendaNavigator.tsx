@@ -21,7 +21,7 @@ export const AgendaNavigator=()=> {
     }}
     >
       <Stack.Screen name="AgendaScreen" options={{title:' ', headerShown:false}} component={AgendaScreen} />
-      <Stack.Screen name="newNoteScreen"  component={newNoteScreen} />
+      <Stack.Screen name="newNoteScreen" options={{title:'Notas'}}  component={newNoteScreen} />
 
     </Stack.Navigator>
   );

@@ -21,7 +21,6 @@ async function searchUsers (){
   }catch(e){
   console.log('error: '+e);
   }
-
 }
 
 export const CreateUserScreen = ( { navigation }: Props) => {
@@ -43,6 +42,7 @@ export const CreateUserScreen = ( { navigation }: Props) => {
       .then(() => {
         let idArrayUser : number =  userId[userId.length - 1].split('_')[1];
         let idArrayUserNumber = ++idArrayUser;
+
         Alert.alert('Usuario creado con Exito');
         navigation.navigate('LoginScreen');
         firestore()
@@ -56,7 +56,7 @@ export const CreateUserScreen = ( { navigation }: Props) => {
           codUser: '',
           foto: '',
           idCalificaciones: '',
-          idCurso: '',
+          idCurso: '0',
           idHorario: '',
           idMaterias: '',
           idNotas: '',
