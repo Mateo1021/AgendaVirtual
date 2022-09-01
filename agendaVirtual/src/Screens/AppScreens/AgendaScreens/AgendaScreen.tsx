@@ -32,25 +32,15 @@ const onRefresh = React.useCallback(() => {
 const { authState } = useContext(AuthContext);
 function refreshData(){
 
-  let uid = authState.uid;
   let notas:any = [];
-  firestore()
-  .collection('Usuarios')
-  .where('uid', '==', uid)
-  .get()
-  .then(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
-          codUser=documentSnapshot.id;
-    });
-    setTimeout(() => {
-      test ()
-    },1000);
-  });
+    test ();
+
+console.log(authState.uid);
 
 function test (){
   firestore()
   .collection('Notas_agenda')
-  .where('codUser', '==', codUser)
+  .where('codUser', '==', authState.uid)
   .get()
   .then(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {

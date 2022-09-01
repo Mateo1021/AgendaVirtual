@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { Alert, SafeAreaView, Text, View } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import { FlatList, StyleSheet} from 'react-native';
@@ -53,21 +53,11 @@ function saveDataUser(data:any){
 function addCoursEstudent(id:any ){
 
     let uid= dataUserGlobal.uid;
-    let docUserEdit:any;
-    firestore()
-    .collection('Usuarios')
-    .where('uid', '==', uid)
-    .get()
-    .then(querySnapshot => {
-          querySnapshot.forEach(documentSnapshot => {
-            docUserEdit=documentSnapshot.id;
-      });
-      setTimeout(setCours, 1000);
-    });
-   
+
+    setCours()
     function setCours(){
       firestore()
-      .collection('Usuarios').doc(docUserEdit)
+      .collection('Usuarios').doc(uid)
       .update({
         idCurso: id
       })
@@ -118,10 +108,20 @@ DATA = arr;
 export const lookProyectoScreen = () => {
 
 const { authState } = useContext(AuthContext);
-useEffect(() => {
+useLayoutEffect(() => {
+  
   saveDataUser(authState);
   searchCours();
-}, [])
+  setTimeout(() => {
+    let time = 3;
+  }, 2000);
+
+},[])
+
+/* useEffect(() => {
+  saveDataUser(authState);
+  searchCours();
+}, []) */
 
 
   const [refreshing, setRefreshing] = React.useState(false);

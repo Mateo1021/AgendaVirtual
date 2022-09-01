@@ -1,61 +1,37 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import React from 'react'
-import { Button, Text, TouchableOpacity, View } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler';
-import { stylesApp } from '../../Themes/AppThemes';
+import { ActivityIndicator, Button, RefreshControl, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import { TaskCard } from '../../Components/TaskCard';
+import { useTareas } from '../../Hooks/useTareas';
+import { colors, stylesApp } from '../../Themes/AppThemes';
+import Carousel from 'react-native-snap-carousel';
 
-interface Props extends StackScreenProps<any, any> {};
 
-export const HomeScreen = ({ navigation }: Props) => {
-  return (
-    <ScrollView>
-    <View style={stylesApp.globalMargin}>
 
-      <View style={{
-        flex: 0,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-around'
-      }}>
-        <TouchableOpacity
-          style={{
-            width: '100%',
-            alignItems: 'center',
-            paddingTop: 80
-          }}
-          onPress={() => navigation.navigate('TareaScreen', {
-            Materia: 'Biologia',
-            Fecha: '21-04-2022',
-            Dificultad: 'Alta',
-          })}
-        >
-          <Text style={stylesApp.titles}>Tarea</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            width: '100%',
-            alignItems: 'center',
-            paddingTop: 150
-          }}
-          onPress={() => navigation.navigate('PerfilScreen')}
-        >
-          <Text style={stylesApp.titles}>Perfil</Text>
-        </TouchableOpacity>
+export const HomeScreen = () => {
 
-        
-        <TouchableOpacity
-          style={{
-            width: '100%',
-            alignItems: 'center',
-            paddingTop: 150
-          }}
-          onPress={() => navigation.navigate('RankingScreen')}
-        >
-          <Text style={stylesApp.titles}>Medallas</Text>
-        </TouchableOpacity>
+
+  const {tareas,isLoading}=useTareas();
+
+
+  if(isLoading){
+    return (
+      <View style={{flex: 1, justifyContent:'center', alignContent: 'center' }}>
+        <ActivityIndicator color={colors.primary} size={100}></ActivityIndicator>
       </View>
+    )
+  }
+    return (
 
-    </View>
-    </ScrollView>
-  )
+          <View >
+            <Carousel
+            data={tareas}
+            renderItem={({item}:any)=><TaskCard tarea={item}></TaskCard>}
+            sliderWidth={350}
+            itemWidth={200}
+            />
+          </View>
+
+    )
+  
 }

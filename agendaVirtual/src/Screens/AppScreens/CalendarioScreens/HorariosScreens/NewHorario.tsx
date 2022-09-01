@@ -1,87 +1,102 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { View, Text, TextInput } from 'react-native';
+import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
+import { View, Text, TextInput, SafeAreaView, ScrollView, RefreshControl, LogBox, Button } from 'react-native';
 import { stylesApp } from '../../../../Themes/AppThemes';
-import {Picker} from '@react-native-picker/picker';
-import { Button } from 'react-native'
-import DatePicker from 'react-native-date-picker'
-import { AuthContext } from '../../../../Context/ContextUser/AuthContext';
 import firestore from '@react-native-firebase/firestore';
+import { AuthContext } from '../../../../Context/ContextUser/AuthContext';
+import { colors } from '../../../../Themes/AppColors';
+import { StackScreenProps } from '@react-navigation/stack';
 
+const wait = (timeout : any) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
 
+interface Props extends StackScreenProps<any, any> {};
 
-export const NewHorario = () => {
+export const NewHorario = ({ navigation }: Props) => {
 
+  const { authState } = useContext(AuthContext);
 
-async function addMateria (){
+  let calId:any =[] ;
+
+async function searchCals (){
   
-try{
-const user = await firestore().collection('Materias').doc('materias1').get();
-console.log(user);
+  try{
+    const collection = await firestore().collection('Horarios').get();
+    collection.forEach(doc => calId.push(doc.id));
 
+    console.log(calId);
+    
+  }catch(e){
+  console.log('error: '+e);
+  }
+}
 
-}catch(e){
-console.log('error: '+e);
+function createCal(){
+  let idArrayCall : number =  calId[calId.length - 1].split('_')[1];
+  let idArrayCallNumber = ++idArrayCall;
+  firestore()
+  .collection('Horarios').doc('h_'+idArrayCallNumber)
+  .set({
+    codHorario:'h_'+idArrayCallNumber,
+    codEstud:authState.uid,
+    nombreHorario:'Test'
+  })
+
+  firestore()
+  .collection('Usuarios').doc(authState.uid)
+  .update({
+    idHorario:'h_'+idArrayCallNumber
+  })
+
 
 }
-}
 
-useEffect(() => {
-  addMateria();
-}, [])
+  const [refreshing, setRefreshing] = React.useState(false);
+  const onRefresh = React.useCallback(() => {
+      setRefreshing(true);
+      wait(2000).then(() => setRefreshing(false));
+    }, []);
 
-const [selectedDay, setSelectedDay] = useState('lun');
-const [date, setDate] = useState(new Date());
-const [dateF, setDateF] = useState(new Date());
-const [nMateria, setnMateria] = useState('');
-const {authState} = useContext(AuthContext);
-const Materia = {
-  estudiante:'',
-  day:'',
-  materia:'',
-  horaI:'',
-  horaF:'',
-}
+
+
+
+  useLayoutEffect(() => {
+    searchCals();
+    setTimeout(() => {
+      createCal()
+    }, 1000);
+    
+  },[])
+
+  useEffect(() => {
+
+  }, [])
+
   return (
-    <View>
-      <View>
-        <Text style={stylesApp.titles}>Agregar nueva materia</Text>
-        <TextInput 
-        style={stylesApp.inputsMaterias}
-        placeholder='Nombre asignatura'
-        value={nMateria}
-        onChangeText={(value) => setnMateria(value)}
-        />
-      </View>
-
-      <View>
-        <Picker
-        style={{backgroundColor:'#cccc'}}
-          selectedValue={selectedDay}
-          onValueChange={(itemValue, itemIndex) => setSelectedDay(itemValue)
-          }>
-          <Picker.Item label="Lunes" value="lun" />
-          <Picker.Item label="Martes" value="mar" />
-          <Picker.Item label="Miercoles" value="mier" />
-          <Picker.Item label="Jueves" value="jue" />
-          <Picker.Item label="Viernes" value="vie" />
-          <Picker.Item label="Sabado" value="sab" />
-          <Picker.Item label="Domingo" value="dom" />
-        </Picker>
-      </View>
-
+    <SafeAreaView>
+    <ScrollView
+      refreshControl={
+        <RefreshControl
+        refreshing={refreshing}
+        onRefresh={onRefresh}
+        />}>
       <View style={{
-        flexDirection:'row',
-        justifyContent:'flex-start'
-      }}>
-<DatePicker style={{margin:0, padding:0,flex:1}} mode='time' date={date} onDateChange={setDate} />
-<DatePicker style={{margin:0, padding:0,flex:1}} mode='time' date={dateF} onDateChange={setDateF} />
-
-      </View>
-
-        <Button title='Agregar Materia'
-        onPress={()=> 'sda' } 
+        flex:1,
+        alignItems:'center',
+        justifyContent:'center'
         
-        ></Button>
-    </View>
+      }}>
+          <Text style={{
+            ...stylesApp.generalText,
+            marginBottom:20,
+          }}>Primero debe reguistrar las materias</Text>
+          <Button 
+            color={colors.primary}
+            title='Agregar Materias'
+            onPress={()=>navigation.navigate('addMateriasScreen')}
+          ></Button>
+      </View>
+    </ScrollView>
+    </SafeAreaView>
   )
 }

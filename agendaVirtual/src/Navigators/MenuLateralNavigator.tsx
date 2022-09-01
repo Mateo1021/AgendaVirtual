@@ -2,7 +2,6 @@ import React from 'react';
 import { createDrawerNavigator, DrawerContentComponentProps, DrawerContentScrollView } from '@react-navigation/drawer';
 import 'react-native-gesture-handler';
 import { PerfilScreen } from '../Screens/AppScreens/UsuarioScreens/PerfilScreen';
-import { HomeScreen } from '../Screens/AppScreens/HomeScreen';
 import { ConfigScreen } from '../Screens/ConfigScreen';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { stylesApp } from '../Themes/AppThemes';

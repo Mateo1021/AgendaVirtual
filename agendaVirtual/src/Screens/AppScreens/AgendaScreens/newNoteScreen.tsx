@@ -29,18 +29,6 @@ async function searchNotes (){
 }
 
 
-function getInfoUser(uid:string){
-
-  firestore()
-  .collection('Usuarios')
-  .where('uid', '==', uid)
-  .get()
-  .then(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
-          codUser=documentSnapshot.id;
-    });
-  });
-}
 
 function createNoteDb(titulo:string,body:string){
   let idArrayUser : number =  notaId[notaId.length - 1].split('_')[1];
@@ -66,7 +54,7 @@ const onRefresh = React.useCallback(() => {
 const { authState } = useContext(AuthContext);
 
 useEffect(() => {
-  getInfoUser(authState.uid);
+  codUser = authState.uid;
   searchNotes();
 }, []);
 

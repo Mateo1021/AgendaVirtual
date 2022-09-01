@@ -9,6 +9,7 @@ import { stylesApp } from '../../../Themes/AppThemes';
 interface Props extends StackScreenProps<any, any> {};
 
 let dataUserGlobal:any;
+let codCoursGlob:any;
 
 const wait = (timeout : any) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -35,28 +36,37 @@ export const ProyectosScreen = ({ navigation }: Props) => {
       let uid= authState.uid;
       firestore()
       .collection('Usuarios')
-      .where('uid', '==', uid)
+      .where('codUser', '==', uid)
       .get()
       .then(querySnapshot => {
             querySnapshot.forEach(documentSnapshot => {
-               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
-               carga = setState({state,stateCours:documentSnapshot._data.idCurso})   
+               carga = setState({state,stateCours:documentSnapshot._data.idCurso}) 
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+               codCoursGlob = documentSnapshot._data.idCurso;
+                
         });
+        setTimeout(() => {
+          loadDataCours();
+        }, 1000);
       });
       
-      firestore()
-      .collection('Cursos')
-      .where('codCurso', '==', '1')
-      .get()
-      .then(querySnapshot => {
-            querySnapshot.forEach(documentSnapshot => {
-               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              carga2 = setStateInfo({stateInfo,infoCours:documentSnapshot._data}) 
-              console.log(stateInfo);
+      function loadDataCours(){
+        firestore()
+        .collection('Cursos')
+        .where('codCurso', '==', codCoursGlob)
+        .get()
+        .then(querySnapshot => {
+              querySnapshot.forEach(documentSnapshot => {
+                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                carga2 = setStateInfo({stateInfo,infoCours:documentSnapshot._data}) 
+                console.log(stateInfo);
+          });
         });
-      });
+      }
               
   }, [])
 

@@ -30,6 +30,7 @@ export const LoginScreen = ({ navigation }: Props) => {
 
   let uidLeg = '';
   let docUserLog:string = '';
+  let userGlobal:any =[]
   const [state, setState] = useState({
     email:'',
     password:''
@@ -45,9 +46,10 @@ export const LoginScreen = ({ navigation }: Props) => {
     console.log('User account created & signed in!');
     signIn();
     const user = firebase.auth().currentUser;
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    setDataUser(user.email,user.displayName,user.phoneNumber,user.photoURL,user.providerData,user.uid);
+    userGlobal = user;
+/*     console.log(userGlobal); */
+    
+
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     uidLeg = user.uid;
@@ -84,9 +86,12 @@ export const LoginScreen = ({ navigation }: Props) => {
           docUserLog=documentSnapshot.id;
     });
 
-    setTimeout(addUidUser, 1000);
-    
-  });
+  console.log(userGlobal);
+  setDataUser(userGlobal.email,userGlobal.displayName,userGlobal.phoneNumber,userGlobal.photoURL,userGlobal.providerData,docUserLog);
+
+      setTimeout(addUidUser, 1000);
+      
+    });
 
     }
 

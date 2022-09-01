@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text } from 'react-native';
 export const colors = {
     primary:'#ed7c23',
     secundary:'#492013',
@@ -54,5 +54,45 @@ export const stylesApp = StyleSheet.create({
         borderBottomWidth:1,
         borderColor:'black',
         color:'black'
+    },
+    cardTaskStyle:{
+        width:200,
+        height:180,
+        borderRadius:18,
+        borderWidth: 1,
+        borderColor:'#cecece',
+        textAlign: 'center',
+        shadowColor: "#000",
+        shadowOpacity: 0.18,
+        shadowRadius: 1.00,
+    },
+    textCardTitle:{
+        flex:1,
+        textAlign: 'center',
+        borderWidth: 1,
+        borderColor:'#d4d4d4',
+        borderTopLeftRadius: 18,
+        borderTopRightRadius:18,
+        paddingTop: 10,
+        paddingBottom:8,
+        color:'black'
+
+    },
+    textCardBody:{
+        flex:5,
+        color:'black'
+
+    },
+    textCardFooter:{
+        flex:1,
+        textAlign: 'center',
+        borderWidth: 1,
+        borderColor:'#d4d4d4',
+        borderBottomLeftRadius: 18,
+        borderBottomRightRadius:18,
+        paddingTop: 8,
+        paddingBottom:10,
+        color:'black'
+        
     }
 });
