@@ -5,6 +5,7 @@ import firestore from '@react-native-firebase/firestore';
 import { AuthContext } from '../../../../Context/ContextUser/AuthContext';
 import { colors } from '../../../../Themes/AppColors';
 import { StackScreenProps } from '@react-navigation/stack';
+import { useCreateHorario } from '../../../../Hooks/HorarioHooks/useCreateHorario';
 
 const wait = (timeout : any) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -14,42 +15,8 @@ interface Props extends StackScreenProps<any, any> {};
 
 export const NewHorario = ({ navigation }: Props) => {
 
-  const { authState } = useContext(AuthContext);
+  const {createHora} = useCreateHorario();
 
-  let calId:any =[] ;
-
-async function searchCals (){
-  
-  try{
-    const collection = await firestore().collection('Horarios').get();
-    collection.forEach(doc => calId.push(doc.id));
-
-    console.log(calId);
-    
-  }catch(e){
-  console.log('error: '+e);
-  }
-}
-
-function createCal(){
-  let idArrayCall : number =  calId[calId.length - 1].split('_')[1];
-  let idArrayCallNumber = ++idArrayCall;
-  firestore()
-  .collection('Horarios').doc('h_'+idArrayCallNumber)
-  .set({
-    codHorario:'h_'+idArrayCallNumber,
-    codEstud:authState.uid,
-    nombreHorario:'Test'
-  })
-
-  firestore()
-  .collection('Usuarios').doc(authState.uid)
-  .update({
-    idHorario:'h_'+idArrayCallNumber
-  })
-
-
-}
 
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = React.useCallback(() => {
@@ -57,21 +24,9 @@ function createCal(){
       wait(2000).then(() => setRefreshing(false));
     }, []);
 
-
-
-
-  useLayoutEffect(() => {
-    searchCals();
-    setTimeout(() => {
-      createCal()
-    }, 1000);
-    
-  },[])
-
-  useEffect(() => {
-
+    useEffect(() => {
+      createHora()
   }, [])
-
   return (
     <SafeAreaView>
     <ScrollView

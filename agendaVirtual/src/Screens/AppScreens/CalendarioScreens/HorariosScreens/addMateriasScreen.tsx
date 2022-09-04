@@ -1,74 +1,34 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
-import { View, Text, TextInput, SafeAreaView, ScrollView, RefreshControl } from 'react-native';
-import { stylesApp } from '../../../../Themes/AppThemes';
+import { View, Text, TextInput, SafeAreaView, ScrollView, RefreshControl, TouchableOpacity } from 'react-native';
+import { stylesApp, colors } from '../../../../Themes/AppThemes';
 import firestore from '@react-native-firebase/firestore';
 import { AuthContext } from '../../../../Context/ContextUser/AuthContext';
+import { useCreateMateria } from '../../../../Hooks/HorarioHooks/useCreateMateria';
+import { useNavigation } from '@react-navigation/core';
 
 const wait = (timeout : any) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
-
-
 export const addMateriasScreen = () => {
+  const navigation = useNavigation();
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = React.useCallback(() => {
       setRefreshing(true);
       wait(2000).then(() => setRefreshing(false));
     }, []);
 
-  const [matState, matSetState] = useState([])
-    const { authState } = useContext(AuthContext);
-let coMateria:any = [];
-let materiasArray:any = [];
-let idHorario='';
-    async function loadMaterias(){
-      try{
-        const collection = await firestore().collection('Materia').get();
-        collection.forEach(doc => coMateria.push(doc.id));
+    const [materiData, setMateriData] = useState({
+      nombre: '',
+    })
+    const [input, setinput] = useState('')
 
-        const collectionDataUser = await firestore()
-        .collection('Usuarios')
-        .where('codUser', '==', authState.uid)
-        .get().then(querySnapshot => {
-          querySnapshot.forEach(documentSnapshot => {
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              idHorario = documentSnapshot._data.idHorario
-      });
-    }); 
 
-        const collectionData = await firestore()
-        .collection('Materia')
-        .where('codHorario', '==', idHorario)
-        .get().then(querySnapshot => {
-          querySnapshot.forEach(documentSnapshot => {
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              let materia = documentSnapshot._data
-              materiasArray.push(materia)
+    const {createMateria} = useCreateMateria();
 
-      });
-    }); 
 
-      for(let i in materiasArray){
-        console.log('Array Fin ->  '+materiasArray[i].nombre);
-      } 
-      
-      }catch(e){
-      console.log('error: '+e);
-      }
-  }
+    
+  
 
-  useLayoutEffect(() => {
-    loadMaterias();
-  }, [])
-  
-  
-  
-  useEffect(() => {
-  
-  }, [])
-  
     return (
       <SafeAreaView>
       <ScrollView
@@ -81,6 +41,35 @@ let idHorario='';
               <Text style={stylesApp.titles}>
                    Agregar Materias
               </Text>
+              
+              <TextInput 
+              placeholder='Nombre' 
+              style={stylesApp.generalText}
+              onChangeText={(value) => setMateriData({ ...materiData,nombre:value})}
+              ></TextInput>
+
+
+              <TouchableOpacity
+                style={{
+                  alignItems:'center',
+                  flex:1,
+                  marginBottom:10,
+                  marginTop:20
+                }}
+                onPress={() =>{
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-ignore
+                  navigation.navigate('editarHorarioScreen')
+                  createMateria(materiData.nombre)
+                }}
+              >
+                <Text style={{ backgroundColor:colors.primary,
+                  flex:1,
+                  width: 200,
+                  color:'white'
+                }}>guardar</Text>
+              </TouchableOpacity>
+
           </View>
       </ScrollView>
       </SafeAreaView>

@@ -1,17 +1,25 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import React from 'react'
-import { ActivityIndicator, Button, RefreshControl, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Button, Dimensions, RefreshControl, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
 import { TaskCard } from '../../Components/TaskCard';
 import { useTareas } from '../../Hooks/useTareas';
 import { colors, stylesApp } from '../../Themes/AppThemes';
 import Carousel from 'react-native-snap-carousel';
 
 
+interface Props extends StackScreenProps<any, any> {};
+export const HomeScreen = ({ navigation, route }: Props) => {
 
-export const HomeScreen = () => {
 
+const {getTareas,tareas,isLoading}=useTareas();
+let dimencionSWind = (Dimensions.get('window').width) - 50;
 
-  const {tareas,isLoading}=useTareas();
+React.useEffect(() => {
+  const focusHandler = navigation.addListener('focus', () => {
+    getTareas();
+  });
+  return focusHandler;
+}, [navigation]);
 
 
   if(isLoading){
@@ -27,8 +35,8 @@ export const HomeScreen = () => {
             <Carousel
             data={tareas}
             renderItem={({item}:any)=><TaskCard tarea={item}></TaskCard>}
-            sliderWidth={350}
-            itemWidth={200}
+            sliderWidth={400}
+            itemWidth={dimencionSWind}
             />
           </View>
 

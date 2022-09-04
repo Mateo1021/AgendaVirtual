@@ -5,6 +5,7 @@ import { AuthContext } from '../../../Context/ContextUser/AuthContext';
 import { colors } from '../../../Themes/AppColors';
 import { StackScreenProps } from '@react-navigation/stack';
 import firestore from '@react-native-firebase/firestore';
+import { HorarioComp } from '../../../Components/MateriasComponets/HorarioComp';
 const wait = (timeout : any) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
@@ -19,9 +20,18 @@ const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     wait(2000).then(() => {
       setRefreshing(false)
+      codCalendar();
     });
   }, []);
 //......
+
+
+React.useEffect(() => {
+  const focusHandler = navigation.addListener('focus', () => {
+    codCalendar();
+  });
+  return focusHandler;
+}, [navigation]);
 
 const [calState, calSetState] = useState({
   stateCal:'',
@@ -31,8 +41,6 @@ const [calState, calSetState] = useState({
 
 
 function codCalendar(){
-
-
       firestore()
       .collection('Horarios')
       .where('codEstud', '==', authState.uid)
@@ -50,27 +58,11 @@ function codCalendar(){
 
         });
       }); 
-
-
 }
-
-
 
   useLayoutEffect(() => {
     codCalendar()
-    console.log('idn'+calState.stateCal);
-    if(calState.stateCal){
-      console.log('1');
-    }else{
-      console.log('2');
-      
-    }
   },[])
-
-
-  useEffect(() => {
-  
-  }, [])
 
   if(calState.stateCal){
     return(
@@ -81,10 +73,7 @@ function codCalendar(){
         justifyContent:'center'
         
       }}>
-          <Text style={{
-            ...stylesApp.generalText,
-            marginBottom:20,
-          }}>Editar Horario {calState.stateCal}</Text>
+          <HorarioComp/>
           <Button 
             color={colors.primary}
             title='Editar'

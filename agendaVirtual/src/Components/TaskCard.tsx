@@ -1,7 +1,9 @@
 import React from 'react';
 import { Text, View } from 'react-native'
-import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
-import { stylesApp } from '../Themes/AppThemes';
+import { stylesApp, colors } from '../Themes/AppThemes';
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards';
 
 
 
@@ -13,17 +15,26 @@ export const TaskCard = ({tarea}:any) => {
    
   return (
         <View style={stylesApp.cardTaskStyle}>
-            <Text style={stylesApp.textCardTitle}>
-            {tarea._data.titulo}
-            </Text>   
+          <Card>
+            <CardTitle 
+            titleStyle={stylesApp.textCardTitle}
+            style={stylesApp.styleCardTitel}
+              title={tarea._data.titulo} 
+            />
+            <CardContent textStyle={stylesApp.textCardBody} text={tarea._data.body} />
+            <CardAction 
+              textStyle={stylesApp.textCardFooter}
+              separator={true} 
+              inColumn={false}>
 
-            <Text style={stylesApp.textCardBody}>
-            {tarea._data.body}
-            </Text>  
-            
-            <Text style={stylesApp.textCardFooter}>
-            {datePrint}
-            </Text>  
+              <CardButton
+                textStyle={stylesApp.textCardFooterButtom}
+                onPress={() => {}}
+                title={datePrint}
+                color='black'
+              />
+            </CardAction>
+          </Card>
         </View>
  
 

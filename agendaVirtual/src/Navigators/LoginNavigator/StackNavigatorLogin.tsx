@@ -26,7 +26,6 @@ export const StackNavigatorLogin=()=> {
     >
       <Stack.Screen name="LoginScreen" options={{title: 'Iniciar sesion' }}  component={LoginScreen} />
       <Stack.Screen name="CreateUserScreen"  component={CreateUserScreen} />
-      <Stack.Screen name="listScreen"  component={listScreen} />
       <Stack.Screen name="EditUserscreen" component={EditUserscreen} />
       <Stack.Screen name="MenuLateralNavigator" options={{headerShown:false}} component={MenuLateralNavigator} />
     </Stack.Navigator>

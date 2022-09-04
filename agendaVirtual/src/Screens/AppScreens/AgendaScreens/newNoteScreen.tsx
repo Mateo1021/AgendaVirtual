@@ -4,6 +4,8 @@ import { Button, RefreshControl, SafeAreaView, ScrollView, Text, TextInput, View
 import { colors, stylesApp } from '../../../Themes/AppThemes'
 import firestore from '@react-native-firebase/firestore';
 import { AuthContext } from '../../../Context/ContextUser/AuthContext';
+import { useAgenda } from '../../../Hooks/useAgenda';
+import { useAddNote } from '../../../Hooks/useAddNote';
 
 
 //refres config  
@@ -13,37 +15,7 @@ const wait = (timeout : any) => {
 //......
 interface Props extends StackScreenProps<any, any> {}; 
 
-let notaId:any =[] ;
-let codUser:string ='' ;
-async function searchNotes (){
-  
-  try{
-    const collection = await firestore().collection('Notas_agenda').get();
-    collection.forEach(doc => notaId.push(doc.id));
-
-    console.log(notaId);
-    
-  }catch(e){
-  console.log('error: '+e);
-  }
-}
-
-
-
-function createNoteDb(titulo:string,body:string){
-  let idArrayUser : number =  notaId[notaId.length - 1].split('_')[1];
-  let idArrayUserNumber = ++idArrayUser;
-  firestore()
-  .collection('Notas_agenda').doc('not_'+idArrayUserNumber)
-  .set({
-    Titulo: titulo,
-    body: body,
-    codNota:'not_'+idArrayUserNumber,
-    codUser:codUser
-  })
-}
-
-export const newNoteScreen = ( { navigation }: Props ) => {
+export const newNoteScreen = ( { navigation, route }: Props ) => {
 //refres config  
 const [refreshing, setRefreshing] = React.useState(false);
 const onRefresh = React.useCallback(() => {
@@ -51,22 +23,13 @@ const onRefresh = React.useCallback(() => {
     wait(2000).then(() => setRefreshing(false));
   }, []);
 //......
-const { authState } = useContext(AuthContext);
 
-useEffect(() => {
-  codUser = authState.uid;
-  searchNotes();
-}, []);
+const {AddNote} = useAddNote();
 
 const [stateNote, setStateNote] = useState({
   titulo: '',
   body:''
 })
-
-
-
-
-
 
   return (
       <SafeAreaView>
@@ -84,7 +47,7 @@ const [stateNote, setStateNote] = useState({
                 <Text style={stylesApp.generalText}>
                     Titulo / Nombre
                 </Text>
-                <TextInput 
+                <TextInput
                 style={stylesApp.generalText}
                 onChangeText={(value) => setStateNote({ ...stateNote,titulo:value})}
                 ></TextInput>
@@ -98,9 +61,9 @@ const [stateNote, setStateNote] = useState({
 
                 <Button 
                   color={colors.primary}
-                  title='Buscar Curso'
+                  title='Agregar nota'
                   onPress={()=>{
-                    createNoteDb(stateNote.titulo, stateNote.body)
+                    AddNote(stateNote.titulo, stateNote.body)
                     navigation.navigate('AgendaScreen')
                   }}
                 ></Button>

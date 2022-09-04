@@ -1,8 +1,10 @@
 import firestore from '@react-native-firebase/firestore';
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useContext, useLayoutEffect, useState } from 'react';
-import { Button, RefreshControl, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { ActivityIndicator, Button, RefreshControl, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { AuthContext } from '../../../Context/ContextUser/AuthContext';
+import { useProyectos } from '../../../Hooks/ProyectosHooks/useProyectos';
+import { useRemovePro } from '../../../Hooks/ProyectosHooks/useRemovePro';
 import { colors } from '../../../Themes/AppColors';
 import { stylesApp } from '../../../Themes/AppThemes';
 
@@ -16,61 +18,57 @@ const wait = (timeout : any) => {
 }
 
 export const ProyectosScreen = ({ navigation }: Props) => {
+ 
+  const {idCursoDB,getidProyects,proyectosArray,isLoading}=useProyectos();
+  const {removePro}= useRemovePro();
+  
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
+    getidProyects();
   }, []);
 
 
-  const {authState} = useContext(AuthContext)
-  const [state, setState] = useState({
-    stateCours:''
-  })
-
-  const [stateInfo, setStateInfo] = useState({
-    infoCours: {nombreCurso:''}
-  })
-  useLayoutEffect(() => {
-
-      let uid= authState.uid;
-      firestore()
-      .collection('Usuarios')
-      .where('codUser', '==', uid)
-      .get()
-      .then(querySnapshot => {
-            querySnapshot.forEach(documentSnapshot => {
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-               carga = setState({state,stateCours:documentSnapshot._data.idCurso}) 
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-               codCoursGlob = documentSnapshot._data.idCurso;
-                
-        });
-        setTimeout(() => {
-          loadDataCours();
-        }, 1000);
-      });
+  React.useEffect(() => {
+    const focusHandler = navigation.addListener('focus', () => {
+      getidProyects();
       
-      function loadDataCours(){
-        firestore()
-        .collection('Cursos')
-        .where('codCurso', '==', codCoursGlob)
-        .get()
-        .then(querySnapshot => {
-              querySnapshot.forEach(documentSnapshot => {
-                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                carga2 = setStateInfo({stateInfo,infoCours:documentSnapshot._data}) 
-                console.log(stateInfo);
-          });
-        });
-      }
-              
-  }, [])
+    });
+    return focusHandler;
+  }, [navigation]);
+ 
 
-  if(state.stateCours == '0'){  
+  function removerCurso(){
+    removePro();
+    navigation.navigate('HomeScreen')
+  }
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  let idCours = proyectosArray.codCurso;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  let nombreCours = proyectosArray.nombreCurso;
+  let proyectosArrayL = proyectosArray;
+
+
+
+  console.log('asd'+idCours);
+  
+if(idCours == undefined || idCours == '0'){
+  console.log('if');
+  idCours = '0';
+}
+
+if(isLoading){
+  return (
+    <View style={{flex: 1, justifyContent:'center', alignContent: 'center' }}>
+      <ActivityIndicator color={colors.primary} size={100}></ActivityIndicator>
+    </View>
+  )
+}else{
+
+  if(idCours == '0'){  
     return(
 
     <View style={{
@@ -103,23 +101,25 @@ export const ProyectosScreen = ({ navigation }: Props) => {
           }
         >
       <View style={stylesApp.globalMargin}>
-          <Text style={stylesApp.titles}> {stateInfo.infoCours.nombreCurso}</Text>
-          <Text style={stylesApp.generalText}>{JSON.stringify(stateInfo.infoCours,null,1)}</Text>
+          <Text style={stylesApp.titles}> {nombreCours}</Text>
+          <Text style={stylesApp.generalText}>{JSON.stringify(proyectosArrayL,null,1)}</Text>
           <Button 
           color={colors.primary}
           title='go foro'
           onPress={()=>navigation.navigate('ForoScreen')}
         ></Button>
+        <Button 
+          color={colors.primary}
+          title='salir'
+          onPress={()=> removerCurso()}
+        ></Button>
       </View>
 
       </ScrollView>
     </SafeAreaView>
-
-
-
-
 )
   }
-
+}
+  
 
 }

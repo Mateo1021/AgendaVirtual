@@ -7,122 +7,17 @@ import { RefreshControl, ScrollView , TouchableOpacity } from 'react-native';
 import { AuthContext } from '../../../Context/ContextUser/AuthContext';
 import { stylesApp } from '../../../Themes/AppThemes';
 import { StackScreenProps } from '@react-navigation/stack';
-
-
-interface Props extends StackScreenProps<any, any> {};
-
-//Variables globales 
-let DATA: any = [];
-let dataCours: any = [];
-let dataUserGlobal:any;
-///////////////////////////////////////////
+import { useLookProyects } from '../../../Hooks/ProyectosHooks/useLookProyects';
+import { ProyectoCard } from '../../../Components/proyectComponets/ProyectoCard';
+import Carousel from 'react-native-snap-carousel';
 
 //funciones tipo flecha
 const wait = (timeout : any) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
-const createTwoButtonAlert = (tittle:any, id : any) =>
-Alert.alert(
-  "Desea Agregar Este Proyecto. "+tittle,
-  "Unicamente te podras reguistrar a 1 curso por periodo academico.",
-  [
-    {
-      text: "Cancel",
-      onPress: () => 
-      console.log("Cancel Pressed")
-      ,
-      style: "cancel"
-    },
-    { text: "OK", onPress: () => addCoursEstudent(id)}
-  ]
-);
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const Item = ({ title, id }) => (
-    <TouchableOpacity onPress={()=>createTwoButtonAlert(title,id)} >
-      <Text style={stylesApp.titles}>{title}</Text>
-    </TouchableOpacity>
-  );
-///////////////////////////////////////////
-
-//funciones JS
-function saveDataUser(data:any){
-  dataUserGlobal= data;
-  }
-
-function addCoursEstudent(id:any ){
-
-    let uid= dataUserGlobal.uid;
-
-    setCours()
-    function setCours(){
-      firestore()
-      .collection('Usuarios').doc(uid)
-      .update({
-        idCurso: id
-      })
-    }
-  }
-
-
-async function searchCours (){
-  try{
-  const users = await firestore().collection('Cursos').get();
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  for(let i in users._docs){
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-    dataCours.push(users._docs[i]._data);
-   }
-  }catch(e){
-  console.log('error: '+e);
-  }
-
-  var arr: any = [];
-  var obj: any = {};
-  for(let j = 0 ; j < dataCours.length; j++){
-    let Materia = {
-      "id": dataCours[j].codCurso,
-      "title": dataCours[j].nombreCurso
-     }
-    arr.push(Materia);
-  }
-  
-  var hash: any = {};
-  arr = arr.filter(function(current: any) {
-  var exists = !hash[current.id];
-  hash[current.id] = true;
-  return exists; 
-});
-DATA = arr;
-}
-
-///////////////////////////////////////////
-
-
-
-
-// screenRenderApp
 
 export const lookProyectoScreen = () => {
-
-const { authState } = useContext(AuthContext);
-useLayoutEffect(() => {
-  
-  saveDataUser(authState);
-  searchCours();
-  setTimeout(() => {
-    let time = 3;
-  }, 2000);
-
-},[])
-
-/* useEffect(() => {
-  saveDataUser(authState);
-  searchCours();
-}, []) */
-
+  const {isLoading,proyectosArrayL}= useLookProyects()  
 
   const [refreshing, setRefreshing] = React.useState(false);
 
@@ -131,16 +26,9 @@ useLayoutEffect(() => {
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-
-  
-  const renderItem = ({item}) => (
-    <Item title={item.title}  id={item.id}/>
-  );
   
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView>
         <ScrollView
           refreshControl={
             <RefreshControl
@@ -149,27 +37,16 @@ useLayoutEffect(() => {
             />
           }
         >
-        <FlatList
-          data={DATA}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-        />
+          
+          <Carousel
+            data={proyectosArrayL}
+            renderItem={({item}:any)=><ProyectoCard pro={item}></ProyectoCard>}
+            sliderWidth={400}
+            itemWidth={300}
+            />
 
       </ScrollView>
     </SafeAreaView>
     );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  item: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  title: {
-    fontSize: 32,
-  },
-});
+

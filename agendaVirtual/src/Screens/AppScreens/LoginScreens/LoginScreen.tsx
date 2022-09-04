@@ -47,6 +47,8 @@ export const LoginScreen = ({ navigation }: Props) => {
     signIn();
     const user = firebase.auth().currentUser;
     userGlobal = user;
+    console.log(user);
+    
 /*     console.log(userGlobal); */
     
 
@@ -75,18 +77,19 @@ export const LoginScreen = ({ navigation }: Props) => {
 
     console.error(error);
   });
+let emailLower = state.email.toLowerCase()
+console.log(emailLower);
 
   firestore()
   .collection('Usuarios')
   // Filter results
-  .where('Correo', '==', state.email)
+  .where('Correo', '==', emailLower)
   .get()
   .then(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
-          docUserLog=documentSnapshot.id;
+          docUserLog=documentSnapshot.id;      
     });
 
-  console.log(userGlobal);
   setDataUser(userGlobal.email,userGlobal.displayName,userGlobal.phoneNumber,userGlobal.photoURL,userGlobal.providerData,docUserLog);
 
       setTimeout(addUidUser, 1000);

@@ -1,9 +1,13 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
-import { Text, View, TouchableOpacity, SafeAreaView, ScrollView, RefreshControl } from 'react-native';
+import { Text, View, TouchableOpacity, SafeAreaView, ScrollView, RefreshControl, ActivityIndicator } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack'
 import { stylesApp } from '../../../Themes/AppThemes';
 import firestore from '@react-native-firebase/firestore';
 import { AuthContext } from '../../../Context/ContextUser/AuthContext';
+import { useAgenda } from '../../../Hooks/useAgenda';
+import { colors } from '../../../Themes/AppColors';
+import Carousel from 'react-native-snap-carousel';
+import { NoteCard } from '../../../Components/noteCard';
 //refres config  
 const wait = (timeout : any) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -13,63 +17,34 @@ interface Props extends StackScreenProps<any, any> {};
 
 
 
-let codUser:string ='' ;
-
-
-
-export const AgendaScreen = ({ navigation }: Props) => {
+export const AgendaScreen = ({ navigation, route }: Props) => {
+  const {getNotes,notas,isLoading}=useAgenda();
 //refres config  
 const [refreshing, setRefreshing] = React.useState(false);
 const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     wait(2000).then(() => {
-      refreshData()
       setRefreshing(false)
+      getNotes()
     });
   }, []);
 //......
 
-const { authState } = useContext(AuthContext);
-function refreshData(){
-
-  let notas:any = [];
-    test ();
-
-console.log(authState.uid);
-
-function test (){
-  firestore()
-  .collection('Notas_agenda')
-  .where('codUser', '==', authState.uid)
-  .get()
-  .then(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
-             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-          notas.push(documentSnapshot._data.Titulo)
-           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-          setstateNotas({stateNotas,notas:notas})   
-    });
-    console.log(stateNotas.notas);
+React.useEffect(() => {
+  const focusHandler = navigation.addListener('focus', () => {
+    getNotes();
   });
+  return focusHandler;
+}, [navigation]);
+
+
+if(isLoading){
+  return (
+    <View style={{flex: 1, justifyContent:'center', alignContent: 'center' }}>
+      <ActivityIndicator color={colors.primary} size={100}></ActivityIndicator>
+    </View>
+  )
 }
-}
-
-const [stateNotas, setstateNotas] = useState({
-  notas : {}
-})
-
-useEffect(() => {
-}, [])
-
-
-
-useLayoutEffect(() => {
-  refreshData();
-}, [])
-
-
 
   return (
 
@@ -81,7 +56,14 @@ useLayoutEffect(() => {
             onRefresh={onRefresh}
             />}>
         <View>
-        <Text style={stylesApp.generalText}>{JSON.stringify(stateNotas.notas,null,4)}</Text>
+
+        <Carousel
+            data={notas}
+            renderItem={({item}:any)=><NoteCard note={item}></NoteCard>}
+            sliderWidth={400}
+            itemWidth={300}
+            />
+            
             <View style={{
               flex: 0,
               flexDirection: 'column',

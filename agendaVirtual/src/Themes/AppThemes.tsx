@@ -56,7 +56,6 @@ export const stylesApp = StyleSheet.create({
         color:'black'
     },
     cardTaskStyle:{
-        width:200,
         height:180,
         borderRadius:18,
         borderWidth: 1,
@@ -67,32 +66,48 @@ export const stylesApp = StyleSheet.create({
         shadowRadius: 1.00,
     },
     textCardTitle:{
-        flex:1,
-        textAlign: 'center',
-        borderWidth: 1,
-        borderColor:'#d4d4d4',
-        borderTopLeftRadius: 18,
-        borderTopRightRadius:18,
-        paddingTop: 10,
-        paddingBottom:8,
-        color:'black'
-
+        margin:0,
+        padding:0,
+        fontSize:20,
+        textAlign:'center'
     },
     textCardBody:{
-        flex:5,
+        fontSize:16,
         color:'black'
-
     },
     textCardFooter:{
-        flex:1,
-        textAlign: 'center',
+        padding:0,
+        margin:0,
+        height:40,
+        textAlign:'center'
+    },
+        styleCardTitel:{
+        height:20,
+        margin:0,
+        padding:0,
+        textAlign:'center'
+    },
+    textCardFooterButtom:{
+        textAlign:'center'
+    },
+    selectComp: {
+        fontSize: 16,
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+        borderWidth: 0.5,
+        borderColor: 'purple',
+        borderRadius: 8,
+        color: 'black',
+        paddingRight: 30 // to ensure the text is never behind the icon
+    },
+    cardHoraario:{
+        height:300,
+        borderRadius:18,
         borderWidth: 1,
-        borderColor:'#d4d4d4',
-        borderBottomLeftRadius: 18,
-        borderBottomRightRadius:18,
-        paddingTop: 8,
-        paddingBottom:10,
-        color:'black'
-        
+        borderColor:'#cecece',
+        textAlign: 'center',
+        shadowColor: "#000",
+        shadowOpacity: 0.18,
+        shadowRadius: 1.00,
     }
 });
