@@ -51,7 +51,9 @@ export const CalendarioScreen: React.FC = () => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text>{item.name}</Text>
+              <Text style={{
+                color:'black'
+              }}>{item.name}</Text>
               <Avatar.Text label="J" />
             </View>
           </Card.Content>

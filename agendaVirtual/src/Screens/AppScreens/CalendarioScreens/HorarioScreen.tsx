@@ -6,6 +6,7 @@ import { colors } from '../../../Themes/AppColors';
 import { StackScreenProps } from '@react-navigation/stack';
 import firestore from '@react-native-firebase/firestore';
 import { HorarioComp } from '../../../Components/MateriasComponets/HorarioComp';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 const wait = (timeout : any) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
@@ -76,9 +77,10 @@ function codCalendar(){
           <HorarioComp/>
           <Button 
             color={colors.primary}
-            title='Editar'
+            title='Editarr'
             onPress={()=>navigation.navigate('editarHorarioScreen')}
           ></Button>
+
       </View>
   
     )

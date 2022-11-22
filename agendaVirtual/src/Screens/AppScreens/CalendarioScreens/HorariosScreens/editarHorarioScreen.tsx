@@ -34,7 +34,7 @@ export const editarHorarioScreen = ({ navigation }: Props) => {
           ></Button>
           <Button 
             color={colors.primary}
-            title='Configurar'
+            title='Configurarr'
             onPress={()=>navigation.navigate('viewHorarioScreen',materias)}
           ></Button>
     </View>

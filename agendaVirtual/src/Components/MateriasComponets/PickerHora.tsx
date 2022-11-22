@@ -1,92 +1,91 @@
 import React, {useState} from 'react';
 import {View, Button, Platform, Text} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 
-import { stylesApp } from '../../Themes/AppThemes';
+import { colors, stylesApp } from '../../Themes/AppThemes';
+import { useAddHorario } from '../../Hooks/HorarioHooks/useAddHorario';
+import { useNavigation } from '@react-navigation/core';
 
 
 
-export const PickerHora = ({dias}:any) => {
-    const [date, setDate] = useState(new Date());
-    const [mode, setMode] = useState('date');
-    const [show, setShow] = useState(false);
-    const [fullHora, sethora] = useState('00:00')
-    const [horaFormat, sethoraF] = useState('')
+export const PickerHora = (materia:any,dia:any) => {
 
-    let fullHoraV:string = '';
+  const navigation = useNavigation();
+
+  const {createHora} = useAddHorario()
+
+  const [timeiDB, settimeiDB] = useState('');
+    const [dateString, setDate] = useState('00:00');
+
+
     const onChange = (event:any, selectedDate:any) => {
-
-        let getHora = new Date(selectedDate)
-        let hora = getHora.getUTCHours();
-        let minut =  getHora.getUTCMinutes()
-        fullHoraV = hora+':'+minut
-        const currentDate = selectedDate || date;
-        setShow(Platform.OS === 'ios');
-        console.log(fullHoraV);
-        btnHora()
+      const currentDate = selectedDate;
+      console.log('date print --->  '+currentDate);
+      let hora = String(currentDate).split(' ')[4].split(':')[0];
+      let minut = String(currentDate).split(' ')[4].split(':')[1];
+      let fullHora = hora+':'+minut
+      console.log('date print --->  '+fullHora);
+      console.log('date print useState --->  '+dateString);
+      settimeiDB(fullHora)
+      setDate(btnHora(fullHora)); 
     };
-    function btnHora (){
-        let horaComplet = fullHoraV.split(':')[0].length < 2 ? '0'+fullHoraV.split(':')[0]+','+'AM' : ((Number(fullHoraV.split(':')[0]) + 11) % 12 + 1)+','+'PM' ;
-        let minCoplet = fullHoraV.split(':')[1].length < 2 ? '0'+fullHoraV.split(':')[1] : fullHoraV.split(':')[0];
-        sethoraF(fullHoraV)
-        sethora(horaComplet.split(',')[0]+':'+minCoplet+' '+horaComplet.split(',')[1])
-    }
+  
+    function btnHora (fullHora:any){
+      let horaform12 = ((Number(fullHora.split(':')[0]) + 11) % 12 + 1)
+      let dayTime = fullHora.split(':')[0] >11? 'PM':'AM'
+      console.log(horaform12+':'+fullHora.split(':')[1]+' '+dayTime)   
+      return (horaform12+':'+fullHora.split(':')[1]+' '+dayTime);   
+  }
 
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const showMode = currentMode => {
-      setShow(true);
-      setMode(currentMode);
+    const showMode = () => {
+      DateTimePickerAndroid.open({
+        value: new Date(),
+        onChange,
+        mode: 'time',
+        is24Hour: false,
+      });
     };
-    const showTimepicker = () => {
-      showMode('time');
-    };
+  //////////////////////////////////////////////////////////////////////////////////////////////
+  const [timefDB, settimefDB] = useState('');
+  const [dateStringF, setTimeF] = useState('00:00');
+  const setDateF = (event:any,date:any) => {
+    const currentDate = date;
+    console.log(currentDate);
+    
+    console.log('date print ff --->  '+currentDate);
+    let hora = String(currentDate).split(' ')[4].split(':')[0];
+    let minut = String(currentDate).split(' ')[4].split(':')[1];
+    let fullHora = hora+':'+minut
+    console.log('date print F --->  '+fullHora);
+    settimefDB(fullHora)
+    setTimeF(btnHora(fullHora)); 
+    console.log('s');
+    
+  };
+  const showModeF = () => {
+    DateTimePickerAndroid.open({
+      value: new Date(),
+      onChange:setDateF,
+      mode: 'time',
+      is24Hour: false,
+    });
+  };
 
 
     return (
-        <View>
-            <View>
-                <Text style={stylesApp.titles}>{dias}</Text>
-            </View>
-            <Text style={stylesApp.generalText}>Hora Inicio</Text>
-            <View>
-            <View>
-            <Button onPress={showTimepicker} title={fullHora} />
-            </View>
-            {show && (
-            <DateTimePicker
-                testID="dateTimePicker"
-                timeZoneOffsetInMinutes={0}
-                value={date}
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                mode={mode}
-                is24Hour={false}
-                display="default"
-                onChange={onChange}
-            />
-            )}
-        </View>
-        <Text style={stylesApp.generalText}>Hora Fin</Text>
-        <View>
-            <View>
-            <Button onPress={showTimepicker} title={fullHora} />
-            </View>
-            {show && (
-            <DateTimePicker
-                testID="dateTimePicker"
-                timeZoneOffsetInMinutes={0}
-                value={date}
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                mode={mode}
-                is24Hour={false}
-                display="default"
-                onChange={onChange}
-            />
-            )}
-        </View>
+      <View>
+        <Button onPress={showMode} title={dateString} />
+        <Button onPress={showModeF} title={dateStringF} />
+        <Button 
+            color={colors.primary}
+            title='Agregar Materias'
+            onPress={()=>{
+              createHora(materia.materia,timeiDB,timefDB,materia.dia)
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              navigation.navigate('editarHorarioScreen')
+            }}
+      ></Button>
       </View>
- )
+    );
 }

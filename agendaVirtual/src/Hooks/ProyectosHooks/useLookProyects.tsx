@@ -25,6 +25,7 @@ export const useLookProyects = () => {
 
   return {
     isLoading,
-    proyectosArrayL
+    proyectosArrayL,
+    lookProyects
   }
 }

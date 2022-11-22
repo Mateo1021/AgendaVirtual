@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState } from 'react'
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Button } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import { stylesApp, colors } from '../../../../Themes/AppThemes';
 import { SelectComp } from '../../../../Components/GeneralComponets/SelectComp';
@@ -9,15 +9,23 @@ import { useMaterias } from '../../../../Hooks/HorarioHooks/useMaterias';
 
 import Carousel from 'react-native-snap-carousel';
 import { PickerHora } from '../../../../Components/MateriasComponets/PickerHora';
+import { useAddHorario } from '../../../../Hooks/HorarioHooks/useAddHorario';
 
 
 
 export const viewHorarioScreen = () => {
-let diasSeman=['lunes','martes','miercoles','jueves','viernes','sabado','domingo']
+let diasSeman=[
+    {label:'Lunes', value:'Lunes'},
+    {label:'Martes', value:'Martes'},
+    {label:'Miercoles', value:'Miercoles'},
+    {label:'Jueves', value:'Jueves'},
+    {label:'Viernes', value:'Viernes'},
+    {label:'Sabado', value:'Sabado'},
+    {label:'Domingo', value:'Domingo'}
+]
 
 const navigation = useNavigation();
-
-const {materias} = useMaterias()
+const {materias} = useMaterias();
 
 let materiasListArray:any=[]
 const [materiasList, setmateriasList] = useState([])
@@ -29,6 +37,7 @@ for(let i in materias){
 
 
 const [ select, setselect ] = useState("");
+const [ selectDia, setselectDia ] = useState("");
 
 return (
   <View>
@@ -40,14 +49,23 @@ return (
             style={pickerSelectStyles}
         />
     </View>
-<Text style={stylesApp.titles}>hola</Text>
-    <Carousel
-            data={diasSeman}
-            renderItem={({item}:any)=><PickerHora dias={item} ></PickerHora>}
-            sliderWidth={400}
-            itemWidth={300}
-            />
+    <View style={styles.container}>
+        <RNPickerSelect
+            placeholder={{ label: "Selecciona una opcion", value: null }}
+            onValueChange={(selectD) => setselectDia(selectD)}
+            items={diasSeman}
+            style={pickerSelectStyles}
+        />
+    </View>
+    <Text style={stylesApp.titles}>Agregar Horas</Text>
 
+    <PickerHora 
+    materia={select}
+    dia={selectDia}
+    ></PickerHora>
+
+
+   
     </View>
 
 )

@@ -15,17 +15,24 @@ import Carousel from 'react-native-snap-carousel';
 const wait = (timeout : any) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
-
-export const lookProyectoScreen = () => {
-  const {isLoading,proyectosArrayL}= useLookProyects()  
+interface Props extends StackScreenProps<any, any> {};
+export const lookProyectoScreen = ({ navigation, route }: Props) => {
+  const {isLoading,proyectosArrayL,lookProyects}= useLookProyects()  
 
   const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
+    lookProyects()
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
+  React.useEffect(() => {
+    const focusHandler = navigation.addListener('focus', () => {
+      lookProyects()
+    });
+    return focusHandler;
+  }, [navigation]);
   
     return (
       <SafeAreaView>
