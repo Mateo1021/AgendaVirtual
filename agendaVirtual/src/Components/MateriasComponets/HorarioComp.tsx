@@ -1,60 +1,164 @@
-import React from 'react'
-import { Text, View, StyleSheet } from 'react-native';
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react'
+import { Text, View, StyleSheet, Button, SafeAreaView, ScrollView, RefreshControl } from 'react-native';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import WeeklyCalendar from 'react-native-weekly-calendar';
+import { useMaterias } from '../../Hooks/HorarioHooks/useMaterias';
 import { colors, stylesApp } from '../../Themes/AppThemes';
+import { useLayoutEffect } from 'react';
+//refres config  
+const wait = (timeout: any) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
+//......
+
+function restarHoras(hora1: any, hora2: any) {
+  // Convertir las horas a milisegundos
+  let hora1ms = hora1.getTime();
+  let hora2ms = hora2.getTime();
+
+  // Calcular la diferencia en milisegundos
+  let diferenciaMs = hora2ms - hora1ms;
+
+  // Convertir la diferencia de milisegundos a horas
+  let horas = new Date(diferenciaMs)
+
+  // Devolver el resultado
+  return horas;
+}
+
+function sumarDias(fecha: any, dias: any) {
+  fecha.setDate(fecha.getDate() + dias);
+  return fecha;
+}
+
+
 
 export const HorarioComp = () => {
 
-        const sampleEvents = [
-          { start: '2022-11-21 09:00:00', duration: '00:20:00', note: 'Español' },
-          { 'start': '2022-11-21 08:00:00', 'duration': '00:20:00', 'note': 'Fisica' },
-          { 'start': '2022-11-21 10:00:00', 'duration': '00:20:00', 'note': 'Ingles' },
-          { 'start': '2022-11-22 11:00:00', 'duration': '00:20:00', 'note': 'Quimica' },
-          { 'start': '2022-11-22 12:00:00', 'duration': '01:00:00', 'note': 'Artes' },
-          { 'start': '2022-11-22 08:00:00', 'duration': '00:30:00', 'note': 'Religion' },
-          { 'start': '2022-11-22 14:00:00', 'duration': '02:00:00', 'note': 'Calculo' },
-          { 'start': '2022-11-22 19:00:00', 'duration': '01:00:00', 'note': 'edu Fisica' },
-          { 'start': '2022-11-23 19:00:00', 'duration': '01:00:00', 'note': 'Ingles' },
-          { 'start': '2022-11-24 19:00:00', 'duration': '01:00:00', 'note': 'Biologia' },
-          { 'start': '2022-11-24 19:00:00', 'duration': '01:00:00', 'note': 'Informatica' },
-          { 'start': '2022-11-24 19:00:00', 'duration': '01:00:00', 'note': 'Español' },
-          { 'start': '2022-11-24 19:00:00', 'duration': '01:00:00', 'note': 'Fisica' },
-          { 'start': '2022-11-24 19:00:00', 'duration': '01:00:00', 'note': 'Quimica' },
-          { 'start': '2022-11-25 19:00:00', 'duration': '01:00:00', 'note': 'Edu fisica' },
-          { 'start': '2022-11-25 19:00:00', 'duration': '01:00:00', 'note': 'Calculo' },
-          { 'start': '2022-11-25 19:00:00', 'duration': '01:00:00', 'note': 'Musica' },
-          { 'start': '2022-11-25 19:00:00', 'duration': '01:00:00', 'note': 'Artes' },
-          { 'start': '2022-11-25 19:00:00', 'duration': '01:00:00', 'note': 'Biologia' },
-          { 'start': '2022-11-26 19:00:00', 'duration': '01:00:00', 'note': 'Contabilidad' },
-          { 'start': '2022-11-26 19:00:00', 'duration': '01:00:00', 'note': 'Gestion de proyectos' },
-          { 'start': '2022-11-26 19:00:00', 'duration': '01:00:00', 'note': 'PPP' }
-        ]
+  const navigation = useNavigation();
+  const { materias } = useMaterias()
 
-        let date = new Date();
-
-        let usDate = date.toLocaleString("en-US", {timeZone: "America/New_York"});
-        console.log(usDate);
+  let data: any = []
+  let materiasArry: any = []
+  var date = new Date();
+  var numberOfMlSeconds = date.getTime();
+  var addMlSeconds = 60 * 300000;
+  var newDateObj = new Date(numberOfMlSeconds - addMlSeconds);
+  let dayInicial;
+  let diasSemana: any = [];
+  let dayMilisegundos = 1440000;
+  const diasSem = [
+    'Lunes',
+    'Martes',
+    'Miercoles',
+    'Jueves',
+    'Viernes',
+    'Sabado',
+    'Domingo'
+  ];
+  let sampleEventsComp: any = []
 
 
+  function requestData() {
+    for (let x in materias) {
+      let infoMateria = {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        nombre: materias[x]._data.nombre,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        repet: materias[x]._data.repet
+      }
+      materiasArry.push(infoMateria)
+    }
+
+    if (newDateObj.getUTCDay() > 1) {
+      dayInicial = sumarDias(newDateObj, -(newDateObj.getUTCDay() - 1));
+    } else {
+      dayInicial = newDateObj;
+    }
+    for (let i = 0; i < 7; i++) {
+      var dateNumber = dayInicial.getTime();
+      var dateSumDay = 60 * dayMilisegundos * i;
+      var newDateSum = new Date(dateNumber + dateSumDay);
+      let arrayDateSemana = {
+        date: newDateSum,
+        dia: diasSem[i]
+      }
+      diasSemana.push(arrayDateSemana)
+    }
+    for (let mate in materiasArry) {
+      for (let dia in materiasArry[mate].repet) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        let diaSemana = diasSemana.find(x => x.dia == materiasArry[mate].repet[dia].dia);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        let mes = (diaSemana?.date.getMonth() + 1).toString().length > 1 ? (diaSemana?.date.getMonth() + 1).toString() : '0' + (diaSemana?.date.getMonth() + 1).toString();
+        let year = diaSemana?.date.getUTCFullYear();
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        let diaS = diaSemana?.date.getDate().toString().length > 1 ? diaSemana?.date.getDate() : '0' + diaSemana?.date.getDate();
+        let hora = materiasArry[mate].repet[dia].horaI
+        let horaFin = materiasArry[mate].repet[dia].horaF;
+
+        let hi = new Date(year + '-' + mes + '-' + diaS + 'T' + hora + ':00');
+        let hf = new Date(year + '-' + mes + '-' + diaS + 'T' + horaFin + ':00');
+        let horaRest = restarHoras(hi, hf);
+
+        let horaRestH = horaRest.getHours().toString().length > 1 ? horaRest.getHours() : '0' + horaRest.getHours()
+        let horaRestM = horaRest.getMinutes().toString().length > 1 ? horaRest.getMinutes() : '0' + horaRest.getMinutes()
+        let dataMateria = {
+          note: materiasArry[mate].nombre,
+          start: year + '-' + mes + '-' + diaS + ' ' + hora + ':00',
+          duration: horaRestH + ':' + horaRestM + ':00'
+        }
+        sampleEventsComp.push(dataMateria)
+      }
+    }
+
+    return sampleEventsComp;
+  }
+
+
+data = requestData()
+  React.useEffect(() => {
+    const focusHandler = navigation.addListener('focus', () => {
+
+    });
+    return focusHandler;
+  }, [navigation]);
+
+
+
+  const Comp = () => {
+    return (
+      <View style={styles.container}>
+        <WeeklyCalendar events={data} style={{ height: 597, backgroundColor: 'white', color: 'blue', width: 400 }} titleStyle={{}} locale='es' themeColor={colors.primary} />
+      </View>
+    )
+    data =[]
+
+  }
+  
 
 
   return (
-        <View style={styles.container}>
-          <WeeklyCalendar events={sampleEvents} style={{ height: 600,backgroundColor: 'black', color:'blue'}} titleStyle={{color:'black'}}  locale='es' themeColor = {colors.primary}/>
-        </View>
-
+    <View style={styles.container}>
+      <Comp></Comp>
+    </View>
   )
 }
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: 'withe',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontStyle:{
-        color:'black'
-      }
+  container: {
+    flex: 1,
+    backgroundColor: 'withe',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontStyle: {
+      color: 'black'
     }
-  });
+  },
+});

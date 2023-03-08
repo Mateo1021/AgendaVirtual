@@ -111,28 +111,30 @@ export const stylesApp = StyleSheet.create({
         shadowRadius: 1.00,
     },
     cardIdentit:{
-        height:200,
+        height:190,
         borderRadius:18,
         borderWidth: 1,
         borderColor:'#cecece',
-        textAlign: 'center',
         shadowColor: "#000",
         shadowOpacity: 0.18,
         shadowRadius: 1.00,
 
     },
     stylHome:{
-        flex: 1,
-        flexDirection: 'column'   
+        flex: 2,
+        flexDirection: 'column',
+        justifyContent:'space-between' 
     },
     styleCarruserHome:{
 
     },
     stylePuntajeHome:{
-        alignItems:'center'
+        alignItems:'center',
+        marginVertical:15,
 
     },
     styleidentitiHome:{
 
     }
+
 });

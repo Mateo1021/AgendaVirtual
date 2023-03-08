@@ -23,7 +23,9 @@ export const useAgenda = () => {
         setisLoading(false)
      }
      useEffect(() => {   
-        getNotes();    
+        getNotes();   
+        console.log(notas);
+         
     }, [])
   return {
     isLoading,

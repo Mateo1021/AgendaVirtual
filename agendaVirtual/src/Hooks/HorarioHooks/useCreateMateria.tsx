@@ -34,8 +34,8 @@ export const useCreateMateria = () => {
           codHorario: codHor,
           codMateria: 'mat_'+idArrayUserNumber,
           nombre: nombre,
-          periodo:'authState.uid'/* ,
-          repet: infoRepeat */
+          periodo:'authState.uid',
+          repet: []
             })
 console.log('llego');
 

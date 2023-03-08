@@ -1,6 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useContext, useState } from 'react'
-import { Alert, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { stylesApp, colors } from '../../../Themes/AppThemes';
 
@@ -115,18 +115,41 @@ console.log(emailLower);
   return (
 
 
-    <ScrollView>
-      <View style={{...stylesApp.inputGrup,
-      flex: 3
+    <ScrollView >
+        <View style={{ 
+          flex:1,
+          alignItems:'center',
+          marginVertical:50
+         }}>
+          <Image
+            style={{ width: 150, height: 150 }}
+            source={{ uri: "https://firebasestorage.googleapis.com/v0/b/agenda-virtual-fearc.appspot.com/o/testImgs%2FlogoSimp.png?alt=media&token=aae216df-f380-48a8-b3d3-4907c2f8f4c0" }}
+          />
+        </View>
+      <View style={{
+      flex: 1,
+      marginTop:10
       }}>
+        
         <TextInput 
           placeholder='Correo' 
-          style={stylesApp.generalText}
+          style={{...stylesApp.generalText,
+          marginHorizontal:20,
+          borderWidth:1,
+          borderColor:'#999999',
+          borderRadius:15,
+          }}
           onChangeText={(value) => setState({ ...state,email:value})}
         ></TextInput>
       </View>
-      <View style={{...stylesApp.inputGrup,
-      flex: 3
+
+      <View style={{
+          marginHorizontal:20,
+          borderWidth:1,
+          marginTop:20,
+          borderColor:'#999999',
+          borderRadius:15,
+
       }}>
         
         <TextInput 
@@ -160,7 +183,7 @@ console.log(emailLower);
             flex:1,
             marginBottom:10,
           }}
-          onPress={() => navigation.navigate('CreateUserScreen')}
+          onPress={() => console.log('1')}
         >
           <Text style={{
             textDecorationLine: 'underline',
@@ -175,16 +198,17 @@ console.log(emailLower);
             borderWidth:1,
             borderColor:colors.blanco,
             backgroundColor: colors.primary,
-            height:35,
-            width:300,
-            marginTop:50
+            borderRadius:8,
+            height:45,
+            width:350,
+            marginTop:50,
+            justifyContent:'center'
           }}
           onPress={() => logIn()}
         >
           <Text style={{
             color:'white',
             alignItems:'center',
-            paddingTop:5
           }}>Ingresar</Text>
         </TouchableOpacity>
     </View>

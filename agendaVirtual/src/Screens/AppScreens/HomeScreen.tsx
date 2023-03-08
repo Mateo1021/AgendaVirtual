@@ -1,6 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import React from 'react'
-import { ActivityIndicator, Button, Dimensions, RefreshControl, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Button, Dimensions, RefreshControl, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { TaskCard } from '../../Components/TaskCard';
 import { useTareas } from '../../Hooks/useTareas';
 import { colors, stylesApp } from '../../Themes/AppThemes';
@@ -36,27 +36,28 @@ React.useEffect(() => {
     )
   }
     return (
-
-          <View  style={stylesApp.stylHome}>
-            <View  style={stylesApp.styleCarruserHome}>
-              <Carousel
-              data={tareas}
-              renderItem={({item}:any)=><TaskCard tarea={item}></TaskCard>}
-              sliderWidth={400}
-              itemWidth={dimencionSWind}
-              />
+          <ScrollView style={{
+            flex:1
+          }}>
+            <View  style={stylesApp.stylHome}>
+              <View  style={stylesApp.styleCarruserHome}>
+                <Carousel
+                data={tareas}
+                renderItem={({item}:any)=><TaskCard tarea={item}></TaskCard>}
+                sliderWidth={400}
+                itemWidth={dimencionSWind}
+                />
+              </View>
+              <View  style={stylesApp.stylePuntajeHome}>
+                <PuntajeComp
+                puntaje={puntaje}
+                ></PuntajeComp>
+              </View>
+              <View  style={stylesApp.styleidentitiHome}>
+                <IdentitiCard></IdentitiCard>
+              </View>
             </View>
-            <View  style={stylesApp.stylePuntajeHome}>
-              <PuntajeComp
-              puntaje={puntaje}
-              ></PuntajeComp>
-              <Text style={stylesApp.generalText}>{puntaje}</Text>
-            </View>
-            <View  style={stylesApp.styleidentitiHome}>
-              <IdentitiCard></IdentitiCard>
-            </View>
-          </View>
-
+          </ScrollView>
     )
   
 }
