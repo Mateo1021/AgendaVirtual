@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Image, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
 import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards';
 import { stylesApp } from '../../Themes/AppThemes';
-export const IdentitiCard = () => {
+import { useContext, useLayoutEffect } from 'react';
+import { AuthContext } from '../../Context/ContextUser/AuthContext';
+import { useIdentification } from '../../Hooks/UserHooks/useIdentification';
 
+export const IdentitiCard = (infoUser:any) => {
+  const dataUser = infoUser.infoUser[0]._data;
+  const { authState } = useContext(AuthContext);
   return (
   <View style={stylesApp.cardIdentit}>
     <View style={{
@@ -18,7 +23,7 @@ export const IdentitiCard = () => {
       <View>
       <Image
             style={{ width: 150, height: 150 }}
-            source={{ uri: "https://firebasestorage.googleapis.com/v0/b/agenda-virtual-fearc.appspot.com/o/userImgs%2FtestUSer.jpg?alt=media&token=07be05ce-0f33-4cac-8858-7fceba340d3b" }}
+            source={{ uri: `${dataUser.foto}`}}
           />
       </View>
       <View style={{
@@ -29,23 +34,23 @@ export const IdentitiCard = () => {
         <Text style={{
           fontWeight: 'bold',
           color: 'black',
-        }}>Mateo Peña Duran</Text>
+        }}>{dataUser.Nombres} {dataUser.Apellidos}</Text>
         <Text style={{
           fontWeight: 'bold',
           color: '#ed7c23',
         }}>Activo</Text>
         <Text style={{
            color: 'black',
-        }}>Mateopd1021@gmail.com</Text>
+        }}>{dataUser.Correo}</Text>
         <Text style={{
            color: 'black',
-        }}>23 años</Text>
+        }}>{dataUser.Edad} Años</Text>
         <Text style={{
            color: 'black',
-        }}>Estudiante de ingenieria</Text>
+        }}>{dataUser.descripcion}</Text>
         <Text style={{
            color: 'black',
-        }}>SD231A2AD3DWT54W</Text>
+        }}>11111111</Text>
       </View>
       <View>
       <Icon name={'star'} size={25} color='#ed7c23' />

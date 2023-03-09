@@ -1,8 +1,19 @@
 import React, {useState} from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
-import {Agenda} from 'react-native-calendars';
+import {Agenda, LocaleConfig} from 'react-native-calendars';
 import {Card, Avatar} from 'react-native-paper';
+import { grey100, grey700, red300 } from 'react-native-paper/lib/typescript/styles/colors';
+import Icon from 'react-native-vector-icons/Ionicons';
+import defineLocale from '../../../core/defineLocale';
 
+LocaleConfig.locales['fr'] = {
+  monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+  monthNamesShort: ['Ene.','Feb.','Mar','Abr','May','Jul','Jul.','Agos','Sept.','Oct.','Nov.','Dic.'],
+  dayNames: ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','sabado'],
+  dayNamesShort: ['Dom.','Lun.','Mar.','Mier.','Jue.','Vie.','sab.']
+};
+ 
+LocaleConfig.defaultLocale = 'fr';
 
 const timeToString = (time : any) => {
   const date = new Date(time);
@@ -14,23 +25,22 @@ export const CalendarioScreen: React.FC = () => {
 
   const loadItems = (day: any) => {
     setTimeout(() => {
-      for (let i = -15; i < 85; i++) {
-        const time: any = day.timestamp + i * 24 * 60 * 60 * 1000;
-        const strTime : any = timeToString(time);
+
+      const nDnate = new Date();
+        const strTime : any = timeToString(nDnate);
         // @ts-ignore
         if (!items[strTime]) {
           // @ts-ignore
           items[strTime] = [];
-          const numItems = Math.floor(Math.random() * 3 + 1);
-          for (let j = 0; j < numItems; j++) {
+
             // @ts-ignore
             items[strTime].push({
-              name: 'Item for ' + strTime + ' #' + j,
+              name: 'Evento ' + strTime + ' #' ,
               height: Math.max(50, Math.floor(Math.random() * 150)),
             });
-          }
+          
         }
-      }
+      
       const newItems : any= {};
       Object.keys(items).forEach((key) => {              
         // @ts-ignore
@@ -67,9 +77,23 @@ export const CalendarioScreen: React.FC = () => {
       <Agenda
         items={items}
         loadItemsForMonth={loadItems}
-        selected={'2022-07-31'}
+        selected={'2023-03-09'}
         renderItem={renderItem}
+
       />
+        <TouchableOpacity
+          style={{
+
+          }}
+          onPress={() => console.log('test')}
+        >
+          <View style={{
+
+          }}>
+            <Icon name={'squared-plus'} size={40} color='#ed7c23' />
+          </View>
+        </TouchableOpacity>
     </View>
   );
-};
+
+}

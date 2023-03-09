@@ -22,6 +22,8 @@ export const ConfigScreen = () => {
   console.log(response.assets[0].uri);
   const reference = storage().ref('userImgs/'+authState.uid);
   await reference.putFile(response.assets[0].uri);
+  console.log(reference);
+  
 }
   const { open } = state;
 
