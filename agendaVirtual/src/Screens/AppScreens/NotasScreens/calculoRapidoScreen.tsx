@@ -57,6 +57,8 @@ export const calculoRapidoScreen = () => {
   const [notaExe, setnotaExe] = useState('')
   const [notaPerf, setnotaPerf] = useState('')
 
+  const [notaEspef, setnotaEspef] = useState('')
+
   const calNotas = () => {
 
     let sumaNotas = Number(nota1) + Number(nota2) + Number(nota3)
@@ -69,12 +71,27 @@ export const calculoRapidoScreen = () => {
         '2': 12,
         '3': 13.5
       }
+
       let notaMin = notasMinimas[1] - sumaNotas;
-      setnotaMini(notaMin.toFixed(2).toString());
+      if(notaMin>5){
+        setnotaMini('algo imposible :c ')
+      }else{
+        setnotaMini(notaMin.toFixed(2).toString());
+      }
+
       let notaEx = notasMinimas[2] - sumaNotas;
-      setnotaExe(notaEx.toFixed(2).toString());
+      if(notaEx>5){
+        setnotaExe('algo imposible :c ')
+      }else{
+        setnotaExe(notaEx.toFixed(2).toString());
+      }
+
       let notaPerf = notasMinimas[3] - sumaNotas;
-      setnotaPerf(notaPerf.toFixed(2).toString());
+      if(notaPerf>5){
+        setnotaPerf('algo imposible :c ')
+      }else{        
+        setnotaPerf(notaPerf.toFixed(2).toString());
+      }
     }
 
 
@@ -84,12 +101,26 @@ export const calculoRapidoScreen = () => {
     if (sumaNotas > 0) {
       let valEpecif = Number(nota4) * 3
       let valorNec = valEpecif - sumaNotas;
-      if (valorNec > 5.0) {
-        console.log('lo siento bro');
+      if (valorNec > 5) {
+        setnotaEspef('con las notas que acabas de reguistra no te alzanza para sacar la nota deseada intenta con un valor mas bajo');
       }
-      console.log(valorNec);
-      
+      else{
+        setnotaEspef('La nota que necesitas para sacar tu nota deseada es: '+valorNec.toFixed(2).toString());
+      }
+
     }
+  }
+  const resetValores=()=>{
+    setnota1Show('')
+    setnota2Show('')
+    setnota3Show('')
+    setnota4Show('')
+
+    setnotaActual('')
+    setnotaMini('')
+    setnotaExe('')
+    setnotaPerf('')
+    setnotaEspef('')
   }
 
 
@@ -140,8 +171,17 @@ export const calculoRapidoScreen = () => {
               <Text style={styles.text}>Calcular</Text>
             </TouchableOpacity>
             <View style={styles.containerResult2}>
-
+              <Text>
+               {notaEspef}
+              </Text>
             </View>
+
+            <TouchableOpacity
+              onPress={() => resetValores()}
+              style={styles.buttton}>
+              <Text style={styles.text}>Borrar datos</Text>
+            </TouchableOpacity>
+
           </View>
         </View>
       </SafeAreaView>

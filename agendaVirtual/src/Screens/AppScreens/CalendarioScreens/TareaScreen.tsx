@@ -18,7 +18,6 @@ import RNDateTimePicker from '@react-native-community/datetimepicker';
 interface Props extends StackScreenProps<any, any> { }
 export const TareaScreen = ({ route, navigation }: Props) => {
 
-  const { materias, getMateriasUser } = useMaterias();
   const [dataTare, setdataTare] = useState({})
   const [select, setselect] = useState("");
   const [radioButtons, setRadioButtons] = useState<RadioButtonProps[]>([
@@ -48,7 +47,8 @@ export const TareaScreen = ({ route, navigation }: Props) => {
   const [titulo, onChangetitulo] = React.useState('');
   const [descrip, onChangedescrip] = React.useState('');
 
-
+  
+  const { materias, getMateriasUser } = useMaterias();
   const { tareas, isLoading } = useTareas();
   const { addTarea } = useTarea();
 
