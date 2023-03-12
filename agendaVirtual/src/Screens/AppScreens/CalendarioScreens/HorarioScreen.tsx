@@ -71,8 +71,8 @@ function codCalendar(){
       <View style={{
         flex:1,
         alignItems:'center',
-        justifyContent:'center'
-        
+        justifyContent:'center',
+        marginTop:80
       }}>
           <HorarioComp/>
           <Button 

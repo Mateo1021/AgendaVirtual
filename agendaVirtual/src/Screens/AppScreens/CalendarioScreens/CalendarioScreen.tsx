@@ -1,52 +1,89 @@
+import { useNavigation } from '@react-navigation/native';
 import React, {useState} from 'react';
-import {View, TouchableOpacity, Text} from 'react-native';
+import {View, TouchableOpacity, Text, Button} from 'react-native';
 import {Agenda, LocaleConfig} from 'react-native-calendars';
 import {Card, Avatar} from 'react-native-paper';
 import { grey100, grey700, red300 } from 'react-native-paper/lib/typescript/styles/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import defineLocale from '../../../core/defineLocale';
+import { useTareas } from '../../../Hooks/useTareas';
+import { colors } from '../../../Themes/AppThemes';
 
-LocaleConfig.locales['fr'] = {
+LocaleConfig.locales['es'] = {
   monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
   monthNamesShort: ['Ene.','Feb.','Mar','Abr','May','Jul','Jul.','Agos','Sept.','Oct.','Nov.','Dic.'],
   dayNames: ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','sabado'],
   dayNamesShort: ['Dom.','Lun.','Mar.','Mier.','Jue.','Vie.','sab.']
 };
  
-LocaleConfig.defaultLocale = 'fr';
+LocaleConfig.defaultLocale = 'es';
 
 const timeToString = (time : any) => {
   const date = new Date(time);
   return date.toISOString().split('T')[0];
 };
 
-export const CalendarioScreen: React.FC = () => {
+export const CalendarioScreen = () => {
+  
   const [items, setItems] = useState({});
+  const navigation = useNavigation();
+  const {getTareas,tareas, isLoading}=useTareas();
 
-  const loadItems = (day: any) => {
+  function toDateTime(secs:any) {
+    var t = new Date(1970, 0, 1); // Epoch
+    t.setSeconds(secs);
+    return t;
+}
+
+  const loadItems = () => {
+    getTareas();
     setTimeout(() => {
 
-      const nDnate = new Date();
-        const strTime : any = timeToString(nDnate);
-        // @ts-ignore
-        if (!items[strTime]) {
-          // @ts-ignore
-          items[strTime] = [];
+      for(let x in tareas){
 
+         let count =0;
+                  // @ts-ignore
+        const nDnate = toDateTime(tareas[x]._data.fechaEntrega.seconds);
+          const strTime : any = timeToString(nDnate);
+          // @ts-ignore
+          if(!items[strTime]){
+            // @ts-ignore
+            items[strTime] = [];
             // @ts-ignore
             items[strTime].push({
-              name: 'Evento ' + strTime + ' #' ,
-              height: Math.max(50, Math.floor(Math.random() * 150)),
+            // @ts-ignore
+            name: 'Evento ' + tareas[x]._data.body,
+            // @ts-ignore
+            id: tareas[x]._data.codTarea
+          });
+          }else{
+            // @ts-ignore
+            for(let t in items[strTime]){
+              // @ts-ignore
+              if(items[strTime][t].id == tareas[x]._data.codTarea){
+                count++;
+              }
+              
+            }
+            // @ts-ignore
+            if(!count>0 ){
+              // @ts-ignore
+            items[strTime].push({
+              // @ts-ignore
+              name: 'Evento ' + tareas[x]._data.body,
+              // @ts-ignore
+              id: tareas[x]._data.codTarea
             });
-          
-        }
-      
-      const newItems : any= {};
-      Object.keys(items).forEach((key) => {              
-        // @ts-ignore
-        newItems[key] = items[key];
-      });
-      setItems(newItems);
+            }
+          }
+        const newItems : any= {};
+        Object.keys(items).forEach((key) => {              
+          // @ts-ignore
+          newItems[key] = items[key];
+        });
+        setItems(newItems);
+        
+      }
     }, 1000);
   };
 
@@ -72,27 +109,43 @@ export const CalendarioScreen: React.FC = () => {
     );
   };
 
+  React.useEffect(() => {
+    const focusHandler = navigation.addListener('focus', () => {
+        loadItems();
+
+    });
+    return focusHandler;
+  }, [navigation]);
+
   return (
+    
     <View style={{flex: 1}}>
-      <Agenda
-        items={items}
-        loadItemsForMonth={loadItems}
-        selected={'2023-03-09'}
-        renderItem={renderItem}
+      <View style={{flex: 11}}>
+        <Agenda
+          items={items}
+          loadItemsForMonth={loadItems}
+          selected={'2023-03-09'}
+          renderItem={renderItem}
 
-      />
-        <TouchableOpacity
-          style={{
-
-          }}
-          onPress={() => console.log('test')}
-        >
-          <View style={{
+        />
+      </View>
+      <View           
+      style={{
+        flex:1,
+        justifyContent:'flex-end',
+        alignContent:'flex-end',
+        alignItems:'center',
+/*         backgroundColor:'#ed7c23' */
 
           }}>
-            <Icon name={'squared-plus'} size={40} color='#ed7c23' />
-          </View>
-        </TouchableOpacity>
+
+        <Button 
+            color={colors.primary}
+            title='Agregar nuevo evento'
+            // @ts-ignore
+            onPress={() => navigation.navigate('TareaScreen')}
+          ></Button>
+      </View>
     </View>
   );
 

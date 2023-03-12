@@ -22,7 +22,7 @@ export const HomeNavigator=()=> {
     }}
     >
       <Stack.Screen name="HomeScreen" options={{title:' ', headerBackTitle:'Salir',headerBackTitleVisible:true}} component={HomeScreen} />
-      <Stack.Screen name="TareaScreen"  component={TareaScreen} />
+      <Stack.Screen name="TareaScreen" options={{headerShown:false}} component={TareaScreen} />
       <Stack.Screen name="PerfilScreen"  component={PerfilScreen} />
       <Stack.Screen name="RankingScreen" component={RankingScreen} />
     </Stack.Navigator>

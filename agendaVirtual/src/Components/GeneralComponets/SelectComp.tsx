@@ -4,9 +4,6 @@ import RNPickerSelect from 'react-native-picker-select';
 import { stylesApp } from '../../Themes/AppThemes';
 
 export const SelectComp = ({options}:any) => {
-
-    console.log(options);
-    
     const [ select, setselect ] = useState("");
 
     return (

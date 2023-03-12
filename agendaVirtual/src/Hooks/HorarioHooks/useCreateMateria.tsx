@@ -37,7 +37,6 @@ export const useCreateMateria = () => {
           periodo:'authState.uid',
           repet: []
             })
-console.log('llego');
 
       }
 

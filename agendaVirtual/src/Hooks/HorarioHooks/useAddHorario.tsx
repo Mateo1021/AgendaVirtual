@@ -41,6 +41,8 @@ let codMateria:any;
 
     async function  sabeRepeat(horaI:any,horaF:any,dia:any){
        const arrayTemp = await arrayrepeatDB(horaI,horaF,dia)
+       console.log(arrayTemp);
+       
         const opdateMateria = await firestore().collection('Materia').doc(codMateria).update({
             repet:arrayTemp
             })
