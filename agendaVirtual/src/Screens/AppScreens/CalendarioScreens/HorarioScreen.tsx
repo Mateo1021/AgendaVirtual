@@ -77,7 +77,7 @@ function codCalendar(){
           <HorarioComp/>
           <Button 
             color={colors.primary}
-            title='Editarr'
+            title='Editar'
             onPress={()=>navigation.navigate('editarHorarioScreen')}
           ></Button>
 

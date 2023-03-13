@@ -46,7 +46,7 @@ export const HorarioComp = () => {
   var numberOfMlSeconds = date.getTime();
   var addMlSeconds = 60 * 300000;
   var newDateObj = new Date(numberOfMlSeconds - addMlSeconds);
-  let dayInicial;
+  let dayInicial:any;
   let diasSemana: any = [];
   let dayMilisegundos = 1440000;
   const diasSem = [
@@ -76,7 +76,9 @@ export const HorarioComp = () => {
 
     if (newDateObj.getUTCDay() > 1) {
       dayInicial = sumarDias(newDateObj, -(newDateObj.getUTCDay() - 1));
-    } else {
+    } else if(newDateObj.getUTCDay() == 0){
+      dayInicial = sumarDias(newDateObj, +1);
+    }else {
       dayInicial = newDateObj;
     }
     for (let i = 0; i < 7; i++) {
@@ -118,6 +120,7 @@ export const HorarioComp = () => {
         sampleEventsComp.push(dataMateria)
       }
     }
+console.log(sampleEventsComp);
 
     return sampleEventsComp;
   }
@@ -136,7 +139,13 @@ data = requestData()
   const Comp = () => {
     return (
       <View style={styles.container}>
-        <WeeklyCalendar events={data} style={{ height: 597, backgroundColor: 'white', color: 'blue', width: 400 }} titleStyle={{}} locale='es' themeColor={colors.primary} />
+        <WeeklyCalendar 
+        events={data} 
+        style={{ height: 597, backgroundColor: 'white', color: 'blue', width: 400 }} 
+        titleStyle={{}} 
+        locale='es' 
+        themeColor={colors.primary} 
+        selected={dayInicial}/>
       </View>
     )
     data =[]

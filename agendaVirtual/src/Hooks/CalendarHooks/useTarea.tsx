@@ -10,7 +10,7 @@ export const useTarea = () => {
     const addTarea = async (data: {}) => {
 
         const calendar = await firestore().collection("calendario")
-            .where("cudUser", "==", "us_1").get();
+            .where("cudUser", "==", authState.uid).get();
         // @ts-ignore
         const idCalendar = await calendar._docs[0]._data.codCalendar
         const collection = await firestore().collection('Tareas').get();
