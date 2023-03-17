@@ -1,12 +1,14 @@
 import firestore from '@react-native-firebase/firestore';
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useContext, useLayoutEffect, useState } from 'react';
-import { ActivityIndicator, Button, RefreshControl, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { ActivityIndicator, Button, Image, RefreshControl, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { AuthContext } from '../../../Context/ContextUser/AuthContext';
 import { useProyectos } from '../../../Hooks/ProyectosHooks/useProyectos';
 import { useRemovePro } from '../../../Hooks/ProyectosHooks/useRemovePro';
 import { colors } from '../../../Themes/AppColors';
 import { stylesApp } from '../../../Themes/AppThemes';
+import Timeline from 'react-native-timeline-flatlist'
+
 
 interface Props extends StackScreenProps<any, any> {};
 
@@ -18,6 +20,17 @@ const wait = (timeout : any) => {
 }
 
 export const ProyectosScreen = ({ navigation }: Props) => {
+
+
+let data = [
+  {time: '09:00', title: 'Event 1', description: 'Event 1 Description'},
+  {time: '10:45', title: 'Event 2', description: 'Event 2 Description'},
+  {time: '12:00', title: 'Event 3', description: 'Event 3 Description'},
+  {time: '14:00', title: 'Event 4', description: 'Event 4 Description'},
+  {time: '16:30', title: 'Event 5', description: 'Event 5 Description'}
+]
+
+
  
   const {idCursoDB,getidProyects,proyectosArray,isLoading}=useProyectos();
   const {removePro}= useRemovePro();
@@ -99,7 +112,14 @@ if(isLoading){
         >
       <View style={stylesApp.globalMargin}>
           <Text style={stylesApp.titles}> {nombreCours}</Text>
-          <Text style={stylesApp.generalText}>{JSON.stringify(proyectosArrayL,null,1)}</Text>
+          <Image
+            style={{ width: 370, height: 150 }}
+            source={{ uri: `https://firebasestorage.googleapis.com/v0/b/agenda-virtual-fearc.appspot.com/o/userImgs%2Fus_1?alt=media&token=91346137-c42e-44fb-b139-13ad66ba541c`}}
+          />
+          <Timeline
+          data={data}
+        />
+
           <Button 
           color={colors.primary}
           title='go foro'
