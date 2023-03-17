@@ -123,7 +123,9 @@ if(isLoading){
           <Button 
           color={colors.primary}
           title='go foro'
-          onPress={()=>navigation.navigate('ForoScreen')}
+          onPress={()=>navigation.navigate('ForoScreen',{
+            idForo: idCours,
+          })}
         ></Button>
         <Button 
           color={colors.primary}

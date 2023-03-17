@@ -21,12 +21,14 @@ import { AuthContext } from '../../../Context/ContextUser/AuthContext';
 import { useContext } from 'react';
 import firestore from '@react-native-firebase/firestore';
 
-
-export const ForoScreen = () => {
+  // @ts-ignore
+export const ForoScreen = ({route}) => {
+  
 
   const [messages, setMessages] = useState([]);
   const navigation = useNavigation();
   const { authState } = useContext(AuthContext);
+console.log(authState);
 
 
   useLayoutEffect(() => {
@@ -37,14 +39,18 @@ export const ForoScreen = () => {
       .onSnapshot((querySnapshot) => {
         var msj:any = [];
         querySnapshot.forEach((doc) => {
-          msj.push(
-            {
-              _id: doc.data()._id,
-              createdAt:doc.data().createdAt.toDate(),
-              text: doc.data().text,
-              user: doc.data().user
-            }
-          );
+            // @ts-ignore
+          if(doc._data.cours == route.params.idForo){
+            msj.push(
+              {
+                _id: doc.data()._id,
+                createdAt:doc.data().createdAt.toDate(),
+                text: doc.data().text,
+                cours:doc.data().cours,
+                user: doc.data().user
+              }
+            );
+          }
         });
         setMessages(msj)
     });
@@ -67,6 +73,7 @@ export const ForoScreen = () => {
         _id:_id,
         createdAt:createdAt,
         text:text,
+        cours:route.params.idForo,
         user:user
       })
     }, []);
