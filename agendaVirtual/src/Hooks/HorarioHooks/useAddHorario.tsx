@@ -9,10 +9,7 @@ const [arrayRepetS, setcodarrayRepet] = useState([])
     const {getUser}=useMaterias();
 let codMateria:any;
     const createHora = async (materia:any,horaI:any,horaF:any,dia:any) =>{ 
-      console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-        console.log(materia + horaI+horaF+dia);
-      console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-        
+    
         const codHorarioBD = await getUser();
         const getIdMat = await firestore()
         .collection('Materia').where('codHorario', '==', codHorarioBD)
@@ -22,7 +19,7 @@ let codMateria:any;
     getIdMat._docs.forEach(object =>{
         if(object._data.nombre === materia){
             codMateria = (object._data.codMateria)
-            console.log(codMateria);
+
         }
     });
       sabeRepeat(horaI,horaF,dia)
@@ -41,7 +38,7 @@ let codMateria:any;
 
     async function  sabeRepeat(horaI:any,horaF:any,dia:any){
        const arrayTemp = await arrayrepeatDB(horaI,horaF,dia)
-       console.log(arrayTemp);
+
        
         const opdateMateria = await firestore().collection('Materia').doc(codMateria).update({
             repet:arrayTemp

@@ -76,18 +76,7 @@ export const CreateUserScreen = ( { navigation }: Props) => {
         console.error(error);
       });
       
-    /*  createUserWithEmailAndPassword(auth,state.email,state.password)
-     .then((userCredential)=>{
-       console.log('Acount Create')
-       const user = userCredential.user
-       console.log(user)
-       Alert.alert('Usuario creado con Exito')
-       navigation.navigate('LoginScreen')
-     })
-     .catch(error  =>{
-      console.log(error)
-      Alert.alert(error.message)
-     }) */
+
     }
   }
   

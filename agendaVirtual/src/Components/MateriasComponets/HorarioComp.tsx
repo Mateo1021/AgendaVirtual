@@ -120,7 +120,6 @@ export const HorarioComp = () => {
         sampleEventsComp.push(dataMateria)
       }
     }
-console.log(sampleEventsComp);
 
     return sampleEventsComp;
   }

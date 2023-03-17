@@ -48,9 +48,6 @@ export const LoginScreen = ({ navigation }: Props) => {
     const user = firebase.auth().currentUser;
     userGlobal = user;
     console.log(user);
-    
-/*     console.log(userGlobal); */
-    
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -78,7 +75,6 @@ export const LoginScreen = ({ navigation }: Props) => {
     console.error(error);
   });
 let emailLower = state.email.toLowerCase()
-console.log(emailLower);
 
   firestore()
   .collection('Usuarios')

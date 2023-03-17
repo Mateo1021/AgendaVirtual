@@ -126,9 +126,7 @@ function GraficMounth(){
   
 
   useLayoutEffect(() => {
-    callInfo()
-    console.log('stops');
-    
+    callInfo() 
   }, [])
 
 

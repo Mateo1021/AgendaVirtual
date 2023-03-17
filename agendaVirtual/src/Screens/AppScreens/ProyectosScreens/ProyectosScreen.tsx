@@ -53,10 +53,7 @@ export const ProyectosScreen = ({ navigation }: Props) => {
 
 
 
-  console.log('asd'+idCours);
-  
 if(idCours == undefined || idCours == '0'){
-  console.log('if');
   idCours = '0';
 }
 

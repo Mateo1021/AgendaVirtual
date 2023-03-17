@@ -24,8 +24,7 @@ export const useAgenda = () => {
      }
      useEffect(() => {   
         getNotes();   
-        console.log(notas);
-         
+       
     }, [])
   return {
     isLoading,

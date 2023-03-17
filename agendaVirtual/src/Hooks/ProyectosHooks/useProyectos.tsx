@@ -23,8 +23,7 @@ export const useProyectos = () => {
                 idCursoDB = documentSnapshot._data.idCurso
         });
         });
-        console.log(idCursoDB);
-        
+
        if(idCursoDB!=='0'){
         const proyectos = await firestore()
         .collection('Cursos')

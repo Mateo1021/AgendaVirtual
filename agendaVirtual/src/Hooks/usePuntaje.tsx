@@ -12,7 +12,7 @@ export const usePuntaje = () => {
     
     const getPuntos = async () =>{ 
       const url = await storage().ref('imgPuntaje/bronce.png').getDownloadURL();
-      console.log(url);
+
         const puntosDB = await firestore()
         .collection('Usuarios')
         .where('codUser', '==', authState.uid)

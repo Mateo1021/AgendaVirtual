@@ -82,7 +82,7 @@ export const TareaScreen = ({ route, navigation }: Props) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
-    console.log(selectedDate.getMonth()+1);
+
     
     let mesText: number = selectedDate.getMonth() < 9 ? '0' + (selectedDate.getMonth()+1) : (selectedDate.getMonth()+1);
     let diaText: number = selectedDate.getDate() < 9 ? '0' + selectedDate.getDate() : selectedDate.getDate()

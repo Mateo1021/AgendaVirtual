@@ -2,11 +2,12 @@ import React, { useEffect } from 'react'
 import firestore from '@react-native-firebase/firestore';
 import { useContext } from 'react';
 import { AuthContext } from '../../Context/ContextUser/AuthContext';
+import { generalFunctions } from '../../core/generalFunctions';
 
 export const useCalificaciones = () => {
     let califId: any = [];
     let materiasByUser: any = [];
-
+    const { parseDate } = generalFunctions();
     const { authState } = useContext(AuthContext);
 
     const AddCalif = async (dataCalif: any) => {
@@ -77,14 +78,55 @@ export const useCalificaciones = () => {
                 calificacionesByMateriasComplet.push(calificaciones);
             }
         }
-        console.log(calificacionesByMateriasComplet);
-
         return (calificacionesByMateriasComplet);
+
+    }
+
+    const searchCalificacione = async (mate: string = '', tipo: number = 0) => {
+        let materiasByfilter: any = [];
+        let materiasByfilter2: any = [];
+        const getHorarios = await firestore().collection("Usuarios")
+            .where("codUser", "==", authState.uid).get();
+        // @ts-ignore
+        const idHorario = getHorarios._docs[0]._data.idHorario
+
+
+        const getMaterias = await firestore().collection("Materia")
+            .where("codHorario", "==", idHorario).get();
+
+        const getNotasByMateria = await firestore().collection("calificaciones")
+            .where("codMateria", "==", mate).get();
+        // @ts-ignore
+        for (let notasBymat in getNotasByMateria._docs) {
+            // @ts-ignore
+            let formatData = { nombre: getNotasByMateria._docs[notasBymat]._data.nombre, fecha: parseDate(getNotasByMateria._docs[notasBymat]._data.fechaNota.seconds), valor: getNotasByMateria._docs[notasBymat]._data.valor }
+            if (tipo !== 0) {
+                // @ts-ignore
+                if (getNotasByMateria._docs[notasBymat]._data.tipoCalificacion == tipo) {
+                    materiasByfilter2.push(formatData)
+                }
+            }
+            materiasByfilter.push(formatData)
+        }
+        if (tipo !== 0) {
+            return materiasByfilter2;
+        } else {
+            return materiasByfilter;
+        }
+
+        /*                     // @ts-ignore
+                for (let idMaterias in getMaterias._docs) {
+                    // @ts-ignore
+                    materiasByfilter.push({ id: getMaterias._docs[idMaterias]._data.codMateria, name: getMaterias._docs[idMaterias]._data.nombre });
+                }
+                console.log(materiasByfilter); */
+
 
     }
 
     return {
         AddCalif,
-        getInfoCalificaciones
+        getInfoCalificaciones,
+        searchCalificacione
     }
 }

@@ -4,9 +4,7 @@ import storage from '@react-native-firebase/storage';
 import { AppRegistry, View, Image, StyleSheet } from 'react-native';
 
 
-export const PuntajeComp = ({puntaje}:any) => {
-/*     console.log(puntaje); */
-    
+export const PuntajeComp = ({puntaje}:any) => { 
     let urlImgPuntaje:any
     const [urlImgDb, seturlImgDb] = useState('')
 let puntInt:number = Number(puntaje)
@@ -63,11 +61,7 @@ let puntInt:number = Number(puntaje)
                 urlImgPuntaje = 'nn.png'
                 break;
         }
-        console.log(urlImgPuntaje);
-        
-        const url = await storage().ref('imgPuntaje/'+urlImgPuntaje).getDownloadURL();
-        console.log(url);
-        
+        const url = await storage().ref('imgPuntaje/'+urlImgPuntaje).getDownloadURL();       
         seturlImgDb(url)
        }
 

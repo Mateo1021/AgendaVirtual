@@ -48,10 +48,7 @@ function codCalendar(){
       .get()
       .then(querySnapshot => {
             querySnapshot.forEach(documentSnapshot => {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-              console.log(documentSnapshot._data.codHorario);
-              
+             
                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
                 calSetState({calState,stateCal:documentSnapshot._data.codHorario})
