@@ -32,9 +32,6 @@ console.log(authState);
 
 
   useLayoutEffect(() => {
-
-
-  
       var unsubscribe = firestore().collection("chats").orderBy('createdAt', 'desc')
       .onSnapshot((querySnapshot) => {
         var msj:any = [];

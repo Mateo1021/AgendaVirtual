@@ -69,7 +69,8 @@ export const stylesApp = StyleSheet.create({
         margin:0,
         padding:0,
         fontSize:20,
-        textAlign:'center'
+        textAlign:'center',
+        color:'black'
     },
     textCardBody:{
         fontSize:16,

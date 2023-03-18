@@ -10,31 +10,31 @@ import { stylesApp } from '../../../Themes/AppThemes';
 import Timeline from 'react-native-timeline-flatlist'
 
 
-interface Props extends StackScreenProps<any, any> {};
+interface Props extends StackScreenProps<any, any> { };
 
-let dataUserGlobal:any;
-let codCoursGlob:any;
+let dataUserGlobal: any;
+let codCoursGlob: any;
 
-const wait = (timeout : any) => {
+const wait = (timeout: any) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
 
 export const ProyectosScreen = ({ navigation }: Props) => {
 
 
-let data = [
-  {time: '09:00', title: 'Event 1', description: 'Event 1 Description'},
-  {time: '10:45', title: 'Event 2', description: 'Event 2 Description'},
-  {time: '12:00', title: 'Event 3', description: 'Event 3 Description'},
-  {time: '14:00', title: 'Event 4', description: 'Event 4 Description'},
-  {time: '16:30', title: 'Event 5', description: 'Event 5 Description'}
-]
+  let data = [
+    { time: '09:00', title: 'Event 1', description: 'Event 1 Description' },
+    { time: '10:45', title: 'Event 2', description: 'Event 2 Description' },
+    { time: '12:00', title: 'Event 3', description: 'Event 3 Description' },
+    { time: '14:00', title: 'Event 4', description: 'Event 4 Description' },
+    { time: '16:30', title: 'Event 5', description: 'Event 5 Description' }
+  ]
 
 
- 
-  const {idCursoDB,getidProyects,proyectosArray,isLoading}=useProyectos();
-  const {removePro}= useRemovePro();
-  
+
+  const { idCursoDB, getidProyects, proyectosArray, isLoading } = useProyectos();
+  const { removePro } = useRemovePro();
+
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -46,13 +46,13 @@ let data = [
   React.useEffect(() => {
     const focusHandler = navigation.addListener('focus', () => {
       getidProyects();
-      
+
     });
     return focusHandler;
   }, [navigation]);
- 
 
-  function removerCurso(){
+
+  function removerCurso() {
     removePro();
     navigation.navigate('HomeScreen')
   }
@@ -66,79 +66,87 @@ let data = [
 
 
 
-if(idCours == undefined || idCours == '0'){
-  idCours = '0';
-}
-
-if(isLoading){
-  return (
-    <View style={{flex: 1, justifyContent:'center', alignContent: 'center' }}>
-      <ActivityIndicator color={colors.primary} size={100}></ActivityIndicator>
-    </View>
-  )
-}else{
-
-  if(idCours == '0'){  
-    return(
-
-    <View style={{
-      flex:1,
-      alignItems:'center',
-      justifyContent:'center'
-      
-    }}>
-        <Text style={{
-          ...stylesApp.generalText,
-          marginBottom:20,
-        }}>Aun no tiene ningun curso reguistrado</Text>
-        <Button 
-          color={colors.primary}
-          title='Buscar Curso'
-          onPress={()=>navigation.navigate('lookProyectoScreen')}
-        ></Button>
-    </View>
-
-  )}else{
-    return (
-
-      <SafeAreaView>
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-            />
-          }
-        >
-      <View style={stylesApp.globalMargin}>
-          <Text style={stylesApp.titles}> {nombreCours}</Text>
-          <Image
-            style={{ width: 370, height: 150 }}
-            source={{ uri: `https://firebasestorage.googleapis.com/v0/b/agenda-virtual-fearc.appspot.com/o/userImgs%2Fus_1?alt=media&token=91346137-c42e-44fb-b139-13ad66ba541c`}}
-          />
-          <Timeline
-          data={data}
-        />
-
-          <Button 
-          color={colors.primary}
-          title='go foro'
-          onPress={()=>navigation.navigate('ForoScreen',{
-            idForo: idCours,
-          })}
-        ></Button>
-        <Button 
-          color={colors.primary}
-          title='salir'
-          onPress={()=> removerCurso()}
-        ></Button>
-      </View>
-
-      </ScrollView>
-    </SafeAreaView>
-)
+  if (idCours == undefined || idCours == '0') {
+    idCours = '0';
   }
-}
-  
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
+        <ActivityIndicator color={colors.primary} size={100}></ActivityIndicator>
+      </View>
+    )
+  } else {
+
+    if (idCours == '0') {
+      return (
+
+        <View style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center'
+
+        }}>
+          <Text style={{
+            ...stylesApp.generalText,
+            marginBottom: 20,
+          }}>Aun no tiene ningun curso reguistrado</Text>
+          <Button
+            color={colors.primary}
+            title='Buscar Curso'
+            onPress={() => navigation.navigate('lookProyectoScreen')}
+          ></Button>
+        </View>
+
+      )
+    } else {
+      return (
+
+        <SafeAreaView>
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+              />
+            }
+          >
+            <View style={stylesApp.globalMargin}>
+              <Text style={stylesApp.titles}> {nombreCours}</Text>
+              <Image
+                style={{ width: 370, height: 150 }}
+                source={{ uri: `https://firebasestorage.googleapis.com/v0/b/agenda-virtual-fearc.appspot.com/o/userImgs%2Fus_1?alt=media&token=91346137-c42e-44fb-b139-13ad66ba541c` }}
+              />
+              <Timeline
+                data={data}
+              />
+
+              <Button
+                color={colors.primary}
+                title='go chat'
+                onPress={() => navigation.navigate('ForoScreen', {
+                  idForo: idCours,
+                })}
+              ></Button>
+              <Button
+                color={colors.primary}
+                title='go foro'
+                onPress={() => navigation.navigate('ForoDocenteScreen', {
+                  idForo: idCours,
+                })}
+              ></Button>
+              <Button
+                color={colors.primary}
+                title='salir'
+                onPress={() => removerCurso()}
+              ></Button>
+            </View>
+
+          </ScrollView>
+        </SafeAreaView>
+      )
+    }
+  }
+
 
 }

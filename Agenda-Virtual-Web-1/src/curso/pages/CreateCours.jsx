@@ -61,21 +61,17 @@ const test = () =>{
  console.log(dataCours.nombreCurso , dataCours.nombreDocente, dataCours.temas);
 }
 
+const date2 = new Date('2023-03-17T03:24:00');
+
 const createCurs = async() =>{
  test();
- await setDoc(doc(database.db, "Cursos", codCuors), {
-   apellidosDocente:"Test",
-   banerCurso:dataCours.nameBanner,
-   cantEstudiantes:"0",
-   codCurso: codCuors,
-   codDocente:codProfesor,
-   idActividades:"2",
-   idForo:"0",
-   idNotas:"0",
-   nombreCurso:dataCours.nombreC,
-   nombreDocente:"test",
-   temas:dataCours.temasC,
-   uid:"123"
+ await setDoc(doc(database.db, "registrosForo", "reg_0"), {
+  body: 'probando para video 222',
+  createdAt:date2,
+  codProyecto: 'pg_1',
+  file: 'doc.data().file',
+  titulo:'titulo creat',
+  idRegistro:'reg_0'
  });
 }
 
