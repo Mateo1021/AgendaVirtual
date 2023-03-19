@@ -10,6 +10,7 @@ export const useCalificaciones = () => {
     const { parseDate } = generalFunctions();
     const { authState } = useContext(AuthContext);
 
+
     const AddCalif = async (dataCalif: any) => {
 
         const collection = await firestore().collection('calificaciones').get();
@@ -108,25 +109,259 @@ export const useCalificaciones = () => {
             }
             materiasByfilter.push(formatData)
         }
+
         if (tipo !== 0) {
             return materiasByfilter2;
         } else {
             return materiasByfilter;
         }
 
-        /*                     // @ts-ignore
-                for (let idMaterias in getMaterias._docs) {
-                    // @ts-ignore
-                    materiasByfilter.push({ id: getMaterias._docs[idMaterias]._data.codMateria, name: getMaterias._docs[idMaterias]._data.nombre });
-                }
-                console.log(materiasByfilter); */
+    }
 
+
+    const getInfoCalificacionesbyMounth = async (tipoCali: number) => {
+        const getHorarios = await firestore().collection("Usuarios")
+            .where("codUser", "==", authState.uid).get();
+        // @ts-ignore
+        const idHorario = getHorarios._docs[0]._data.idHorario
+
+
+        const getMaterias = await firestore().collection("Materia")
+            .where("codHorario", "==", idHorario).get();
+        // @ts-ignore
+        for (let idMaterias in getMaterias._docs) {
+            // @ts-ignore
+            materiasByUser.push({ id: getMaterias._docs[idMaterias]._data.codMateria, name: getMaterias._docs[idMaterias]._data.nombre });
+        }
+
+        let calificacionesByFecha: any = [];
+        for (let positionMateria in materiasByUser) {
+            let calificaciones: any = [];
+
+            const getCalificaciones = await firestore().collection("calificaciones")
+                .where("codMateria", "==", materiasByUser[positionMateria].id).get();
+            // @ts-ignore
+            for (let p in getCalificaciones._docs) {
+                calificacionesByFecha.push({
+                    // @ts-ignore
+                    fecha: parseDate(getCalificaciones._docs[p]._data.fechaNota.seconds),
+                    // @ts-ignore
+                    nota: getCalificaciones._docs[p]._data.valor,
+                    // @ts-ignore
+                    tipo: getCalificaciones._docs[p]._data.tipoCalificacion
+                });
+            }
+
+        }
+        let ene = []
+        let feb = []
+        let Mar = []
+        let Abr = []
+        let May = []
+        let Jun = []
+        let Jul = []
+        let ago = []
+        let sep = []
+        let Oct = []
+        let Nov = []
+        let Dic = []
+        for (let k in calificacionesByFecha) {
+            switch (calificacionesByFecha[k].fecha.split('-')[1]) {
+                case '1':
+                    if (calificacionesByFecha[k].tipo == tipoCali) {
+                        ene.push(calificacionesByFecha[k])
+                    }
+                    break;
+                case '2':
+                    if (calificacionesByFecha[k].tipo == tipoCali) {
+                        feb.push(calificacionesByFecha[k])
+                    }
+                    break;
+                case '3':
+                    if (calificacionesByFecha[k].tipo == tipoCali) {
+                        Mar.push(calificacionesByFecha[k])
+                    }
+                    break;
+                case '4':
+                    if (calificacionesByFecha[k].tipo == tipoCali) {
+                        Abr.push(calificacionesByFecha[k])
+                    }
+                    break;
+                case '5':
+                    if (calificacionesByFecha[k].tipo == tipoCali) {
+                        May.push(calificacionesByFecha[k])
+                    }
+                    break;
+                case '6':
+                    if (calificacionesByFecha[k].tipo == tipoCali) {
+                        Jun.push(calificacionesByFecha[k])
+                    }
+                    break;
+                case '7':
+                    if (calificacionesByFecha[k].tipo == tipoCali) {
+                        Jul.push(calificacionesByFecha[k])
+                    }
+                    break;
+                case '8':
+                    if (calificacionesByFecha[k].tipo == tipoCali) {
+                        ago.push(calificacionesByFecha[k])
+                    }
+                    break;
+                case '9':
+                    if (calificacionesByFecha[k].tipo == tipoCali) {
+                        sep.push(calificacionesByFecha[k])
+                    }
+                    break;
+                case '10':
+                    if (calificacionesByFecha[k].tipo == tipoCali) {
+                        Oct.push(calificacionesByFecha[k])
+                    }
+                    break;
+                case '11':
+                    if (calificacionesByFecha[k].tipo == tipoCali) {
+                        Nov.push(calificacionesByFecha[k])
+                    }
+                    break;
+                case '12':
+                    if (calificacionesByFecha[k].tipo == tipoCali) {
+                        Dic.push(calificacionesByFecha[k])
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        let notasBymosunCalculado = []
+        let total = 0
+        for (let i of ene) {
+            total += Number(i.nota);
+        }
+        if(total>0){
+            total = total / ene.length
+            notasBymosunCalculado.push(total)
+            total = 0
+        }else{
+            notasBymosunCalculado.push(0)  
+        }
+        for (let i of feb) {
+            total += Number(i.nota);
+        }
+        if(total>0){
+            total = total / feb.length
+            notasBymosunCalculado.push(total)
+            total = 0
+        }else{
+            notasBymosunCalculado.push(0)  
+        }
+        for (let i of Mar) {
+            total += Number(i.nota)
+        }
+        if(total>0){
+            total = total / Mar.length
+            notasBymosunCalculado.push(total)
+            total = 0
+        }else{
+            notasBymosunCalculado.push(0)  
+        }
+        for (let i of Abr) {
+            total += Number(i.nota)
+        }
+        if(total>0){
+            total = total / Abr.length
+            notasBymosunCalculado.push(total)
+            total = 0
+        }else{
+            notasBymosunCalculado.push(0)  
+        }
+        for (let i of May) {
+            total += Number(i.nota)
+        }
+        if(total>0){
+            total = total / May.length
+            notasBymosunCalculado.push(total)
+            total = 0
+        }else{
+            notasBymosunCalculado.push(0)  
+        }
+        for (let i of Jun) {
+            total += Number(i.nota)
+        }
+        if(total>0){
+            total = total / Jun.length
+            notasBymosunCalculado.push(total)
+            total = 0
+        }else{
+            notasBymosunCalculado.push(0)  
+        }
+        for (let i of Jul) {
+            total += Number(i.nota)
+        }
+        if(total>0){
+            total = total / Jul.length
+            notasBymosunCalculado.push(total)
+            total = 0
+        }else{
+            notasBymosunCalculado.push(0)  
+        }
+        for (let i of ago) {
+            total += Number(i.nota)
+        }
+        if(total>0){
+            total = total / ago.length
+            notasBymosunCalculado.push(total)
+            total = 0
+        }else{
+            notasBymosunCalculado.push(0)  
+        }
+        for (let i of sep) {
+            total += Number(i.nota)
+        }
+        if(total>0){
+            total = total / sep.length
+            notasBymosunCalculado.push(total)
+            total = 0
+        }else{
+            notasBymosunCalculado.push(0)  
+        }
+        for (let i of Oct) {
+            total += Number(i.nota)
+        }
+        if(total>0){
+            total = total / Oct.length
+            notasBymosunCalculado.push(total)
+            total = 0
+        }else{
+            notasBymosunCalculado.push(0)  
+        }
+        for (let i of Nov) {
+            total += Number(i.nota)
+        }
+        if(total>0){
+            total = total / Nov.length
+            notasBymosunCalculado.push(total)
+            total = 0
+        }else{
+            notasBymosunCalculado.push(0)  
+        }
+        for (let i of Dic) {
+            total += Number(i.nota)
+        }
+        if(total>0){
+            total = total / Dic.length
+            notasBymosunCalculado.push(total)
+            total = 0
+        }else{
+            notasBymosunCalculado.push(0)  
+        }
+
+        return (notasBymosunCalculado);
 
     }
 
     return {
         AddCalif,
         getInfoCalificaciones,
-        searchCalificacione
+        searchCalificacione,
+        getInfoCalificacionesbyMounth
     }
 }

@@ -16,18 +16,32 @@ import {
   StackedBarChart
 } from "react-native-chart-kit";
 import { useCalificaciones } from '../../../Hooks/calificacionesHooks/useCalificaciones';
+import RNPickerSelect from 'react-native-picker-select';
+import { generalArray } from '../../../Context/ContexGeneralVar/generalArray';
 
 export const NotasScreen = () => {
-
-  const { getInfoCalificaciones } = useCalificaciones();
+  const { tiposNotasArray } = generalArray();
+  const { getInfoCalificaciones, getInfoCalificacionesbyMounth } = useCalificaciones();
 
 
   const [usetest, setusetest] = useState('second')
   const [labelArrayMate, setlabelArrayMate] = useState([])
   const [dataArrayMate, setdataArrayMate] = useState([])
+  const [tipoSelect, settipoSelect] = useState(0)
+const [dataArrayMounth, setdataArrayMounth] = useState([0.0, 0.0, 0.0, 0.0,0.0, 0.0, 0.0,0.0, 0.0,0.0, 0.0, 0.0])
 
-  const callInfo = async () => {
-    let info = await getInfoCalificaciones(6)
+
+  const selectTipo = (tipoSelect: any) => {
+    settipoSelect(tipoSelect)
+    callInfo(tipoSelect)
+    callInfoMounth(tipoSelect)
+  }
+  
+  const callInfo = async (type:number) => {
+/*     callInfoMounth(type) */
+    setlabelArrayMate([])
+    setdataArrayMate([])
+    let info = await getInfoCalificaciones(type)
     let labelsArray: any = []
     let dataArray: any = []
     for (let idInfo in info) {
@@ -40,48 +54,54 @@ export const NotasScreen = () => {
     setdataArrayMate(dataArray)
   }
 
-function GraficMounth(){  
-  const dataByMounth = {
-    labels: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "ago", "sep", "Oct", "Nov", "Dic"],
-    datasets: [
-      {
-        data: [1.5, 4.5, 2.8, 5.0, 4.9, 4.3, 4.3, 4.3, 4.3, 4.3, 4.3, 4.3]
-      }
-    ]
+  const callInfoMounth = async (type:number) => {
+
+    let info = await getInfoCalificacionesbyMounth(type)
+    setdataArrayMounth(info)
   }
-  return(
-    <LineChart
-    data={dataByMounth}
-    width={Dimensions.get("window").width} // from react-native
-    height={220}
-    yAxisLabel=""
-    yAxisSuffix=""
-    yAxisInterval={1} // optional, defaults to 1
-    chartConfig={{
-      backgroundColor: "#e26a00",
-      backgroundGradientFrom: "#fb8c00",
-      backgroundGradientTo: "#ffa726",
-      decimalPlaces: 2, // optional, defaults to 2dp
-      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-      labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-      style: {
-        borderRadius: 16
-      },
-      propsForDots: {
-        r: "6",
-        strokeWidth: "2",
-        stroke: "#ffa726"
-      }
-    }}
-    bezier
-    style={{
-      marginVertical: 8,
-      borderRadius: 16
-    }}
-  />
-  )
-}
-  function RenderItem (){
+
+  function GraficMounth() {
+    const dataByMounth = {
+      labels: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "ago", "sep", "Oct", "Nov", "Dic"],
+      datasets: [
+        {
+          data: dataArrayMounth
+        }
+      ]
+    }
+    return (
+      <LineChart
+        data={dataByMounth}
+        width={Dimensions.get("window").width} // from react-native
+        height={220}
+        yAxisLabel=""
+        yAxisSuffix=""
+        yAxisInterval={1} // optional, defaults to 1
+        chartConfig={{
+          backgroundColor: "#e26a00",
+          backgroundGradientFrom: "#fb8c00",
+          backgroundGradientTo: "#ffa726",
+          decimalPlaces: 2, // optional, defaults to 2dp
+          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+          style: {
+            borderRadius: 16
+          },
+          propsForDots: {
+            r: "6",
+            strokeWidth: "2",
+            stroke: "#ffa726"
+          }
+        }}
+        bezier
+        style={{
+          marginVertical: 8,
+          borderRadius: 16
+        }}
+      />
+    )
+  }
+  function RenderItem() {
     const dataByMatsRender = {
       labels: labelArrayMate,
       datasets: [
@@ -123,10 +143,10 @@ function GraficMounth(){
     )
   };
 
-  
+
 
   useLayoutEffect(() => {
-    callInfo() 
+    callInfo(tipoSelect)
   }, [])
 
 
@@ -137,11 +157,17 @@ function GraficMounth(){
   return (
     <ScrollView>
       <View>
+      <RNPickerSelect
+          placeholder={{ label: "Selecciona una opcion", value: null }}
+          onValueChange={(select) => selectTipo(select)}
+          items={tiposNotasArray}
+          style={pickerSelectStyles}
+        />
         <Text style={stylesApp.titles}>Grafica Promedios</Text>
-<GraficMounth></GraficMounth>
+        <GraficMounth></GraficMounth>
 
         <Text style={stylesApp.titles}>Grafica Notas por materia</Text>
-<RenderItem></RenderItem>
+        <RenderItem></RenderItem>
 
       </View>
     </ScrollView>
@@ -157,4 +183,30 @@ const styles = StyleSheet.create({
   chart: {
     flex: 1
   }
+});
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 4,
+    color: 'black',
+    paddingRight: 30,
+    marginVertical: 10
+  },
+  inputAndroid: {
+    fontSize: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderWidth: 0.5,
+    borderColor: 'purple',
+    borderRadius: 8,
+    color: 'black',
+    paddingRight: 30,
+    backgroundColor: '#EAEAEA',
+    marginVertical: 10
+
+  },
 });

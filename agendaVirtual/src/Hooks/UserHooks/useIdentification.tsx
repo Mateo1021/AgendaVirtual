@@ -4,7 +4,7 @@ import firestore from '@react-native-firebase/firestore';
 
 export const useIdentification = () => {
 
-    const [isLoading, setisLoading] = useState(true)
+    const [isLoadingIn, setisLoading] = useState(true)
     const [info, setInfo] = useState([])
     
     const { authState } = useContext(AuthContext);
@@ -24,7 +24,7 @@ export const useIdentification = () => {
         getInfoUser();     
     }, [])
   return {
-    isLoading,
+    isLoadingIn,
     info,
     getInfoUser
   }

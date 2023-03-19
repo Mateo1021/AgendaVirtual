@@ -10,29 +10,32 @@ import { PuntajeComp } from '../../Components/HomeComponets/PuntajeComp';
 import { IdentitiCard } from '../../Components/HomeComponets/IdentitiCard';
 import { useIdentification } from '../../Hooks/UserHooks/useIdentification';
 import { infoUser } from '../../Hooks/UserHooks/infoUser';
+import { async } from '@firebase/util';
 
 
 interface Props extends StackScreenProps<any, any> {};
 export const HomeScreen = ({ navigation, route }: Props) => {
 
-
 const {getTareas,tareas,isLoading}=useTareas();
 const{getPuntos,puntaje,isLoadingP} = usePuntaje();
-const {info,getInfoUser} = useIdentification();
+const {info,getInfoUser,isLoadingIn} = useIdentification();
 
 let dimencionSWind = (Dimensions.get('window').width) - 50;
-useLayoutEffect(() => {
-  getTareas()
-}, [])
+
+
+async function callInfoFuntion() {
+  await getTareas()
+}
+
 React.useEffect(() => {
   const focusHandler = navigation.addListener('focus', () => {
-    getTareas();
+    callInfoFuntion()
   });
   return focusHandler;
 }, [navigation]);
 
 
-  if(isLoading){
+  if(isLoading||isLoadingP||isLoadingIn){
     return (
       <View style={{flex: 1, justifyContent:'center', alignContent: 'center' }}>
         <ActivityIndicator color={colors.primary} size={100}></ActivityIndicator>
