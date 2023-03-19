@@ -4,6 +4,7 @@ import { ProyectosScreen } from '../../Screens/AppScreens/ProyectosScreens/Proye
 import { lookProyectoScreen } from '../../Screens/AppScreens/ProyectosScreens/lookProyectoScreen';
 import { ForoScreen } from '../../Screens/AppScreens/ProyectosScreens/ForoScreen';
 import { ForoDocenteScreen } from '../../Screens/AppScreens/ProyectosScreens/ForoDocenteScreen';
+import { ResponseForo } from '../../Screens/AppScreens/ProyectosScreens/ResponseForo';
 
 const Stack = createStackNavigator();
 
@@ -26,7 +27,8 @@ export const newProyectoNavigator=()=> {
       <Stack.Screen name="lookProyectoScreen"  component={lookProyectoScreen} />
       <Stack.Screen name="ForoScreen"  component={ForoScreen} />
       <Stack.Screen name="ForoDocenteScreen" options={{title:' ', headerBackTitle:'Salir',headerBackTitleVisible:true}} component={ForoDocenteScreen} />
-
+      <Stack.Screen name="ResponseForo"  component={ResponseForo} />
+      
     </Stack.Navigator>
   );
 }

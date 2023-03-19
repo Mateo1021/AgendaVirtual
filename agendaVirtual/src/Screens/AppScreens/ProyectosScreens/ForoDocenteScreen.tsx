@@ -9,13 +9,14 @@ import { TaskCard } from '../../../Components/TaskCard';
 // @ts-ignore
 import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards';
 import { Alert, Modal, Pressable } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { ResponseForo } from './ResponseForo';
 // @ts-ignore
 export const ForoDocenteScreen = ({ route }) => {
+  const navigation = useNavigation();
 
-
-  const [modalVisible, setModalVisible] = useState(false);
   const [messages, setMessages] = useState([]);
-  const [respuestas, setrespuestas] = useState([])
+
 
 
   useLayoutEffect(() => {
@@ -30,9 +31,10 @@ export const ForoDocenteScreen = ({ route }) => {
               {
                 body: doc.data().body,
                 createdAt: doc.data().createdAt.toDate(),
-                codForo: doc.data().codForo,
-                cod_registro: doc.data().cod_registro,
-                file: doc.data().file
+                codProyecto: doc.data().codProyecto,
+                file: doc.data().file,
+                titulo: doc.data().titulo,
+                idRegistro: doc.data().idRegistro,
               }
             );
           }
@@ -44,36 +46,16 @@ export const ForoDocenteScreen = ({ route }) => {
 
   }, []);
 
-useLayoutEffect(() => {
-  var unsubscribe = firestore().collection("respuestas").orderBy('createdAt', 'desc')
-  .onSnapshot((querySnapshot) => {
-    var res: any = [];
-    querySnapshot.forEach((doc) => {
-      // @ts-ignore
-      if (doc._data.codProyecto == route.params.idForo) {
-        // @ts-ignore
-        res.push(
-          {
-            bodyMsj: doc.data().bodyMsj,
-            createdAt: doc.data().createdAt.toDate(),
-            codRegistro: doc.data().codRegistro,
-            idUser: doc.data().idUser,
-          }
-        );
-      }
-    });
-    setrespuestas(res)
-  });
 
-return unsubscribe;
 
-}, [])
   function ScrollViewForo() {
+    
     return (
       <ScrollView>
         {
           messages.map((item, index) => (
-            <View style={styles.item}>
+            
+            <View style={styles.item} key={index}>
               <Card>
                 {/*@ts-ignore */}
                 <CardContent textStyle={stylesApp.textCardBody} text={item.body} />
@@ -84,7 +66,11 @@ return unsubscribe;
 
                   <CardButton
                     textStyle={stylesApp.textCardFooterButtom}
-                    onPress={() => { setModalVisible(true) }}
+                    //@ts-ignore
+                    onPress={() => navigation.navigate('ResponseForo', {
+                      //@ts-ignore
+                      idForo:item.idRegistro,
+                    })}
                     // @ts-ignore
                     title={'Agregar un comentario'}
                     color='black'
@@ -97,39 +83,12 @@ return unsubscribe;
       </ScrollView>
     )
   }
-  function RenderInfoRegistro() {
-
-    return (
-      <View style={styles.centeredView}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-            setModalVisible(!modalVisible);
-          }}>
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-            {/* @ts-ignore */}
-              <Text style={styles.modalText}>asd</Text>
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setModalVisible(!modalVisible)}>
-                <Text style={styles.textStyle}>Hide Modal</Text>
-              </Pressable>
-            </View>
-          </View>
-        </Modal>
-      </View>
-    )
-  }
+  
 
   return (
     <View>
       <Text>Probadno foro</Text>
       <ScrollViewForo></ScrollViewForo>
-      <RenderInfoRegistro></RenderInfoRegistro>
     </View>
   )
 }
@@ -172,7 +131,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#2196F3',
   },
   textStyle: {
-    color: 'white',
+    color: 'black',
     fontWeight: 'bold',
     textAlign: 'center',
   },
