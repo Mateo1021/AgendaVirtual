@@ -13,7 +13,6 @@ export const ResponseForo = ({ route }) => {
     const [response, setresponse] = useState('')
     const { authState } = useContext(AuthContext);
     const { AddResponse } = useAddResponse()
-console.log(route.params.idForo);
 
     useLayoutEffect(() => {
         var unsubscribe2 = firestore().collection("respuestas").orderBy('createdAt', 'desc')
@@ -36,7 +35,7 @@ console.log(route.params.idForo);
 
                 });
                 setrespuestas(res)
-                console.log(res);
+
             });
         return unsubscribe2;
     }, [])

@@ -28,7 +28,6 @@ export const ForoScreen = ({route}) => {
   const [messages, setMessages] = useState([]);
   const navigation = useNavigation();
   const { authState } = useContext(AuthContext);
-console.log(authState);
 
 
   useLayoutEffect(() => {

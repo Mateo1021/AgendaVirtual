@@ -8,6 +8,7 @@ import { useRemovePro } from '../../../Hooks/ProyectosHooks/useRemovePro';
 import { colors } from '../../../Themes/AppColors';
 import { stylesApp } from '../../../Themes/AppThemes';
 import Timeline from 'react-native-timeline-flatlist'
+import { useGetEventos } from '../../../Hooks/ProyectosHooks/useGetEventos';
 
 
 interface Props extends StackScreenProps<any, any> { };
@@ -21,14 +22,17 @@ const wait = (timeout: any) => {
 
 export const ProyectosScreen = ({ navigation }: Props) => {
 
+  const { getEvents } = useGetEventos()
 
+  getEvents()
   let data = [
-    { time: '09:00', title: 'Event 1', description: 'Event 1 Description' },
-    { time: '10:45', title: 'Event 2', description: 'Event 2 Description' },
-    { time: '12:00', title: 'Event 3', description: 'Event 3 Description' },
-    { time: '14:00', title: 'Event 4', description: 'Event 4 Description' },
-    { time: '16:30', title: 'Event 5', description: 'Event 5 Description' }
+    { time: 'jun - 03', title: 'Event 1', description: 'Event 1 Description' },
+    { time: 'jun - 03', title: 'Event 2', description: 'Event 2 Description' },
+    { time: 'jun - 03', title: 'Event 3', description: 'Event 3 Description' },
+    { time: 'jun - 03', title: 'Event 4', description: 'Event 4 Description' },
+    { time: 'jun - 03', title: 'Event 5', description: 'Event 5 Description' }
   ]
+
 
 
 
@@ -64,6 +68,50 @@ export const ProyectosScreen = ({ navigation }: Props) => {
   let nombreCours = proyectosArray.nombreCurso;
   let proyectosArrayL = proyectosArray;
 
+const [dataTimeLine, setdataTimeLine] = useState([])
+
+const formatDate =(date:Date)=>{
+  let meses =['ene','feb','marz','abri','may','jun','jul','ago','sep','oct','nov','dic']
+  // @ts-ignore
+  let secondsToDate = (date.seconds)*1000;
+  let dateF = new Date(secondsToDate);
+  let datePrint = meses[dateF.getMonth()]+" - "+dateF.getDate();
+return datePrint
+}
+useLayoutEffect(() => {
+  var unsubscribe = firestore().collection("evento").orderBy('createdAt', 'desc')
+    .onSnapshot((querySnapshot) => {
+      var msj: any = [];
+      querySnapshot.forEach((doc) => {
+        // @ts-ignore
+
+          // @ts-ignore
+          msj.push(
+            {
+              time: formatDate(doc.data().createdAt),
+              description: doc.data().body,
+              title: doc.data().titulo,
+            }
+          );
+    
+      });
+
+
+      setdataTimeLine(msj)
+    });
+
+  return unsubscribe;
+
+}, []);
+  function LineTimeRender() {
+    
+    
+    return (
+      <Timeline
+        data={dataTimeLine}
+      />
+    )
+  }
 
 
   if (idCours == undefined || idCours == '0') {
@@ -117,9 +165,7 @@ export const ProyectosScreen = ({ navigation }: Props) => {
                 style={{ width: 370, height: 150 }}
                 source={{ uri: `https://firebasestorage.googleapis.com/v0/b/agenda-virtual-fearc.appspot.com/o/userImgs%2Fus_1?alt=media&token=91346137-c42e-44fb-b139-13ad66ba541c` }}
               />
-              <Timeline
-                data={data}
-              />
+<LineTimeRender></LineTimeRender>
 
               <Button
                 color={colors.primary}

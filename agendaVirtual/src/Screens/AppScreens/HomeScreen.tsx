@@ -1,5 +1,5 @@
 import { StackScreenProps } from '@react-navigation/stack'
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import { ActivityIndicator, Button, Dimensions, RefreshControl, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { TaskCard } from '../../Components/TaskCard';
 import { useTareas } from '../../Hooks/useTareas';
@@ -21,7 +21,9 @@ const{getPuntos,puntaje,isLoadingP} = usePuntaje();
 const {info,getInfoUser} = useIdentification();
 
 let dimencionSWind = (Dimensions.get('window').width) - 50;
-
+useLayoutEffect(() => {
+  getTareas()
+}, [])
 React.useEffect(() => {
   const focusHandler = navigation.addListener('focus', () => {
     getTareas();

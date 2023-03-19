@@ -7,8 +7,7 @@ export const CreateRegForo = () => {
     const date2 = new Date('2023-03-17T03:24:00');
 
     const addRegister = async () =>{ 
-    console.log(date2);
-    
+
         firestore()
         .collection('registrosForo').doc()
         .set({

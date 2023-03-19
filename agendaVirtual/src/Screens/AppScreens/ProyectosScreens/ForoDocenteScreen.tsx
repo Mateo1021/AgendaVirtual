@@ -87,7 +87,6 @@ export const ForoDocenteScreen = ({ route }) => {
 
   return (
     <View>
-      <Text>Probadno foro</Text>
       <ScrollViewForo></ScrollViewForo>
     </View>
   )

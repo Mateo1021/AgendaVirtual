@@ -47,7 +47,6 @@ export const LoginScreen = ({ navigation }: Props) => {
     signIn();
     const user = firebase.auth().currentUser;
     userGlobal = user;
-    console.log(user);
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore

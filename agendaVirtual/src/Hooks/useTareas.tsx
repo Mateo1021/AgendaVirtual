@@ -18,7 +18,6 @@ const getCod = async () =>{
     .collection('calendario')
     .where('cudUser', '==', authState.uid)
     .get()
-    console.log(codCal);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     return codCal._docs[0]._data.codCalendar
