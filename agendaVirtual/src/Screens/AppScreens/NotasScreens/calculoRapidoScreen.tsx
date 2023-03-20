@@ -73,23 +73,23 @@ export const calculoRapidoScreen = () => {
       }
 
       let notaMin = notasMinimas[1] - sumaNotas;
-      if(notaMin>5){
-        setnotaMini('algo imposible :c ')
-      }else{
+      if (notaMin > 5) {
+        setnotaMini('Es algo imposible :c ')
+      } else {
         setnotaMini(notaMin.toFixed(2).toString());
       }
 
       let notaEx = notasMinimas[2] - sumaNotas;
-      if(notaEx>5){
-        setnotaExe('algo imposible :c ')
-      }else{
+      if (notaEx > 5) {
+        setnotaExe('Es algo imposible :c ')
+      } else {
         setnotaExe(notaEx.toFixed(2).toString());
       }
 
       let notaPerf = notasMinimas[3] - sumaNotas;
-      if(notaPerf>5){
-        setnotaPerf('algo imposible :c ')
-      }else{        
+      if (notaPerf > 5) {
+        setnotaPerf('Es algo imposible :c ')
+      } else {
         setnotaPerf(notaPerf.toFixed(2).toString());
       }
     }
@@ -102,15 +102,15 @@ export const calculoRapidoScreen = () => {
       let valEpecif = Number(nota4) * 3
       let valorNec = valEpecif - sumaNotas;
       if (valorNec > 5) {
-        setnotaEspef('con las notas que acabas de reguistra no te alzanza para sacar la nota deseada intenta con un valor mas bajo');
+        setnotaEspef('Con las notas que acabas de registra no te alzanza para sacar la nota deseada. Puedes intentar con un valor mas bajo');
       }
-      else{
-        setnotaEspef('La nota que necesitas para sacar tu nota deseada es: '+valorNec.toFixed(2).toString());
+      else {
+        setnotaEspef(valorNec.toFixed(2).toString());
       }
 
     }
   }
-  const resetValores=()=>{
+  const resetValores = () => {
     setnota1Show('')
     setnota2Show('')
     setnota3Show('')
@@ -121,6 +121,10 @@ export const calculoRapidoScreen = () => {
     setnotaExe('')
     setnotaPerf('')
     setnotaEspef('')
+    setnota1('')
+    setnota2('')
+    setnota3('')
+    setnota4('')
   }
 
 
@@ -145,19 +149,41 @@ export const calculoRapidoScreen = () => {
             </TouchableOpacity>
 
             <View style={styles.containerResult}>
-              <Text>
-                La nota actual es de: {notaActual}
-              </Text>
-              <Text>
-                La nota que necesitas para un 3 es: {notaMini}
-              </Text>
-              <Text>
-                La nota que necesitas para un 4.5 es: {notaExe}
-              </Text>
-              <Text>
-                La nota que necesitas para un 5 es: {notaPerf}
-              </Text>
+              <View style={styles.blockResult}>
+                <Text style={styles.titelNota}>
+                  Nota actual o definitiva
+                </Text>
+                <Text style={styles.notaResult}>
+                  {notaActual}
+                </Text>
+              </View>
+              <View style={styles.blockResult}>
+                <Text style={styles.titelNota}>
+                  La nota para un 3.0
+                </Text>
+                <Text style={styles.notaResult}>
+                  {notaMini}
+                </Text>
+              </View>
+              <View style={styles.blockResult}>
+                <Text  style={styles.titelNota}>
+                  La nota para un 4.5
+                </Text>
+                <Text style={styles.notaResult}>
+                  {notaExe}
+                </Text>
+              </View>
+              <View style={styles.blockResult}>
+                <Text style={styles.titelNota}>
+                  La nota para un 5.0
+                </Text>
+                <Text style={styles.notaResult}>
+                {notaPerf}
+                </Text>
+              </View>
             </View>
+
+
             <Text style={stylesApp.titles}>Calcular nota</Text>
             <View style={styles.containerNotas}>
               <TextInput keyboardType='numeric' style={styles.styleinput} value={nota4Show} onChangeText={(value) => validNumber4(value)} />
@@ -170,9 +196,12 @@ export const calculoRapidoScreen = () => {
               style={styles.buttton}>
               <Text style={styles.text}>Calcular</Text>
             </TouchableOpacity>
-            <View style={styles.containerResult2}>
-              <Text>
-               {notaEspef}
+            <View  style={styles.blockResult}>
+              <Text style={styles.titelNota2}>
+              La nota que necesitas para sacar tu nota deseada
+              </Text>
+              <Text style={styles.notaResult2}>
+                {notaEspef}
               </Text>
             </View>
 
@@ -216,12 +245,14 @@ const styles = StyleSheet.create({
   styleinput: {
     width: 50,
     height: 40,
-    borderColor: "black",
+    borderColor: colors.primary,
     margin: 5,
     borderWidth: 1,
     color: 'black',
     textAlign: 'center',
-    fontSize: 18
+    fontSize: 18,
+    borderRadius: 20,
+
   },
   inputContainer: {
     flex: 1,
@@ -236,11 +267,8 @@ const styles = StyleSheet.create({
     paddingTop: 15
   },
   containerResult: {
-    marginTop: 20,
-    borderColor: "grey",
-    borderWidth: 1,
-    width: 300,
-    height: 200,
+    alignItems: 'center',
+    paddingVertical: 30,
   },
   containerResult2: {
     marginVertical: 20,
@@ -248,5 +276,33 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: 300,
     height: 100,
-  }
+  },
+  titelNota: {
+    fontWeight: 'bold',
+    color: 'black',
+    fontSize: 18
+  },
+  blockResult: {
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: '#E6E6E6',
+    width:1000,
+    paddingVertical:10,
+    borderBottomEndRadius:20
+  },
+  notaResult: {
+    color: 'black',
+    fontSize: 18
+  },
+  notaResult2: {
+    color: 'black',
+    fontSize: 18,
+    paddingHorizontal:300
+  },
+  titelNota2: {
+    fontWeight: 'bold',
+    color: 'black',
+    fontSize: 18,
+    paddingHorizontal:300
+  },
 })

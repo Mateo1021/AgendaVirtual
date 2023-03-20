@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { Button, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Button, Platform, StyleSheet, Text, TouchableOpacity, View, SafeAreaView, ScrollView, Alert } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import RNPickerSelect from 'react-native-picker-select';
 import { useMaterias } from '../../../Hooks/HorarioHooks/useMaterias';
-import { colors } from '../../../Themes/AppThemes';
+import { colors, stylesApp } from '../../../Themes/AppThemes';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { generalArray } from '../../../Context/ContexGeneralVar/generalArray';
 import { useCalificaciones } from '../../../Hooks/calificacionesHooks/useCalificaciones';
@@ -65,55 +65,71 @@ export const ingresarNotaScreen = () => {
       valor: valorCalif
     }
     AddCalif(dataSend)
+    setdateShow('dd/mm/yy')
+    setselectMate('')
+    settipoSelect('')
+    setnombreCalif('')
+    setvalorCalif('')
+    setporcentajeCalif('')
+
+    Alert.alert('Notas', 'Su calificacion fue agregada con exito', [
+
+      {text: 'OK'}
+    ]);
   }
 
   return (
-    <View>
-      <View style={styles.container}>
-        <RNPickerSelect
-          placeholder={{ label: "Selecciona una opcion", value: null }}
-          onValueChange={(select) => slectMateria(select)}
-          items={materiasListArray}
-          style={pickerSelectStyles}
-        />
-        <RNPickerSelect
-          placeholder={{ label: "Selecciona una opcion", value: null }}
-          onValueChange={(select) => selectTipo(select)}
-          items={tiposNotasArray}
-          style={pickerSelectStyles}
-        />
-
-        <TextInput placeholder='Nombre nota' onChangeText={setnombreCalif} />
-        <View style={styles.containerNota}>
-          <TextInput placeholder='Nota' onChangeText={setvalorCalif} />
-          <TextInput placeholder='Porcentaje (%)' onChangeText={setporcentajeCalif} />
-        </View>
-
+    <ScrollView>
+      <SafeAreaView >
         <View>
-          <Button onPress={showDatepicker} color={colors.primary} title={dateShow} />
+          <View style={styles.container}>
+            <Text style={stylesApp.titles}>Agregar Notas</Text>
+            <RNPickerSelect
+              placeholder={{ label: "Selecciona una opcion", value: 0 }}
+              onValueChange={(select) => slectMateria(select)}
+              items={materiasListArray}
+              style={pickerSelectStyles}
+            />
+            <RNPickerSelect
+              placeholder={{ label: "Selecciona una opcion", value: 0 }}
+              onValueChange={(select) => selectTipo(select)}
+              items={tiposNotasArray}
+              style={pickerSelectStyles}
+            />
+
+            <TextInput style={styles.txtInput} placeholder='Nombre nota' value={nombreCalif} onChangeText={setnombreCalif} />
+            <View style={styles.containerNota}>
+              <TextInput style={styles.notaInput} keyboardType='numeric' placeholder='Nota' value={valorCalif} onChangeText={setvalorCalif} />
+              <TextInput style={styles.porcenInput} keyboardType='numeric' placeholder='Porcentaje (%)' value={porcentajeCalif} onChangeText={setporcentajeCalif} />
+            </View>
+
+            <View>
+              <Button onPress={showDatepicker} color={colors.primary} title={dateShow} />
+            </View>
+
+            {show && (
+              <RNDateTimePicker
+                testID="dateTimePicker"
+                timeZoneOffsetInMinutes={0}
+                value={date}
+                // @ts-ignore
+                mode={mode}
+                is24Hour={true}
+                display="default"
+                onChange={onChange}
+              />
+            )}
+
+            <TouchableOpacity
+              onPress={() => createNewCalif()}
+              style={styles.buttton}>
+              <Text style={styles.text}>Agregar Nota</Text>
+            </TouchableOpacity>
+
+          </View>
         </View>
-
-        {show && (
-          <RNDateTimePicker
-            testID="dateTimePicker"
-            timeZoneOffsetInMinutes={0}
-            value={date}
-            // @ts-ignore
-            mode={mode}
-            is24Hour={true}
-            display="default"
-            onChange={onChange}
-          />
-        )}
-
-        <TouchableOpacity
-          onPress={() => createNewCalif()}
-          style={styles.buttton}>
-          <Text style={styles.text}>Agregar Nota</Text>
-        </TouchableOpacity>
-
-      </View>
-    </View>
+      </SafeAreaView>
+    </ScrollView>
   )
 }
 
@@ -154,7 +170,8 @@ const styles = StyleSheet.create({
   containerNota: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
+    paddingBottom: 20
   },
   buttton: {
     alignItems: 'center',
@@ -170,4 +187,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 5
   },
+  txtInput: {
+    borderBottomWidth: 1,
+    borderColor: '#EAEAEA',
+    width: 350
+  },
+  notaInput: {
+    borderBottomWidth: 1,
+    borderColor: '#EAEAEA',
+    width: 175
+  },
+  porcenInput: {
+    borderBottomWidth: 1,
+    borderColor: '#EAEAEA',
+    width: 175
+  }
 });

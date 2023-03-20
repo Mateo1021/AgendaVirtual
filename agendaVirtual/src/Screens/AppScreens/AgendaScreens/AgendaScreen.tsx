@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
-import { Text, View, TouchableOpacity, SafeAreaView, ScrollView, RefreshControl, ActivityIndicator } from 'react-native';
+import { Text, View, TouchableOpacity, SafeAreaView, ScrollView, RefreshControl, ActivityIndicator, Button } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack'
 import { stylesApp } from '../../../Themes/AppThemes';
 import firestore from '@react-native-firebase/firestore';
@@ -9,81 +9,85 @@ import { colors } from '../../../Themes/AppColors';
 import Carousel from 'react-native-snap-carousel';
 import { NoteCard } from '../../../Components/noteCard';
 //refres config  
-const wait = (timeout : any) => {
+const wait = (timeout: any) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
 //......
-interface Props extends StackScreenProps<any, any> {};
+interface Props extends StackScreenProps<any, any> { };
 
 
 
 export const AgendaScreen = ({ navigation, route }: Props) => {
-  const {getNotes,notas,isLoading}=useAgenda();
-//refres config  
-const [refreshing, setRefreshing] = React.useState(false);
-const onRefresh = React.useCallback(() => {
+
+  const { authState } = useContext(AuthContext);
+  //refres config  
+
+  const [notasGet, setnotasGet] = useState([])
+
+  const [refreshing, setRefreshing] = React.useState(false);
+  const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     wait(2000).then(() => {
       setRefreshing(false)
-      getNotes()
+
     });
   }, []);
-//......
-
-React.useEffect(() => {
-  const focusHandler = navigation.addListener('focus', () => {
-    getNotes();
-  });
-  return focusHandler;
-}, [navigation]);
+  //......
 
 
-if(isLoading){
+
+  useLayoutEffect(() => {
+
+    var unsubscribe = firestore().collection("Notas_agenda").where('codUser', '==', authState.uid)
+      .onSnapshot((querySnapshot) => {
+        let notasArray = []
+ // @ts-ignore
+        for (let i in querySnapshot._docs) {
+           // @ts-ignore
+          notasArray.push(querySnapshot._docs[i])
+        }
+         // @ts-ignore
+        setnotasGet(notasArray);
+        
+      });
+
+    return unsubscribe;
+
+  }, [])
+
+
+
+
   return (
-    <View style={{flex: 1, justifyContent:'center', alignContent: 'center' }}>
-      <ActivityIndicator color={colors.primary} size={100}></ActivityIndicator>
-    </View>
-  )
-}
 
-  return (
-
-<SafeAreaView>
-        <ScrollView
+    <SafeAreaView>
+      <ScrollView
         refreshControl={
-            <RefreshControl
+          <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
-            />}>
+          />}>
         <View>
+          {
+            notasGet.map((item, index) => (
 
-        <Carousel
-            data={notas}
-            renderItem={({item}:any)=><NoteCard note={item}></NoteCard>}
-            sliderWidth={400}
-            itemWidth={300}
-            />
-            
-            <View style={{
-              flex: 0,
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'space-around'
-            }}>
-              <TouchableOpacity
-                style={{
-                  width: '100%',
-                  alignItems: 'center',
-                  paddingTop: 150
-                }}
-                onPress={() => navigation.navigate('newNoteScreen')}
-              >
-                <Text style={stylesApp.titles}>Nueva Nota.</Text>
-              </TouchableOpacity>
+              <NoteCard note={item}></NoteCard>
+            ))
 
-            </View>
-          </View>
-        </ScrollView>
-        </SafeAreaView>
+          }
+
+
+
+
+          <Button
+            color={colors.primary}
+            title='Agregar nota'
+            onPress={() => navigation.navigate('newNoteScreen')}
+          ></Button>
+
+
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   )
 }

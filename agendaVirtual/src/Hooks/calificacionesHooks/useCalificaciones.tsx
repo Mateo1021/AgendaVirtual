@@ -100,7 +100,13 @@ export const useCalificaciones = () => {
         // @ts-ignore
         for (let notasBymat in getNotasByMateria._docs) {
             // @ts-ignore
-            let formatData = { nombre: getNotasByMateria._docs[notasBymat]._data.nombre, fecha: parseDate(getNotasByMateria._docs[notasBymat]._data.fechaNota.seconds), valor: getNotasByMateria._docs[notasBymat]._data.valor }
+            let formatData = { nombre: getNotasByMateria._docs[notasBymat]._data.nombre, 
+                // @ts-ignore
+                fecha: parseDate(getNotasByMateria._docs[notasBymat]._data.fechaNota.seconds),
+                // @ts-ignore
+                 valor: getNotasByMateria._docs[notasBymat]._data.valor,
+                 // @ts-ignore
+                 id: getNotasByMateria._docs[notasBymat]._data.codNota}
             if (tipo !== 0) {
                 // @ts-ignore
                 if (getNotasByMateria._docs[notasBymat]._data.tipoCalificacion == tipo) {
@@ -358,10 +364,16 @@ export const useCalificaciones = () => {
 
     }
 
+    const deletCalificacion =async (codCali:string) => {
+        const caliDel = await firestore()
+        .collection('calificaciones').doc(codCali).delete();
+    }
+
     return {
         AddCalif,
         getInfoCalificaciones,
         searchCalificacione,
-        getInfoCalificacionesbyMounth
+        getInfoCalificacionesbyMounth,
+        deletCalificacion
     }
 }

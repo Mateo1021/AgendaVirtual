@@ -4,11 +4,10 @@ import { stylesApp, colors } from '../Themes/AppThemes';
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
 import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards';
+import { useNavigation } from '@react-navigation/native';
 
 export const NoteCard = ({note}:any) => {
-
-
-
+  const navigation = useNavigation();
        return (
              <View style={stylesApp.cardTaskStyle}>
                <Card>
@@ -25,8 +24,11 @@ export const NoteCard = ({note}:any) => {
      
                    <CardButton
                      textStyle={stylesApp.textCardFooterButtom}
-                     onPress={() => {}}
-                     title='Editar'
+                       // @ts-ignore
+                     onPress={() => {navigation.navigate('ViewNote',{
+                       codNota:note._data.codNota
+                     })}}
+                     title='Editar / Eliminar'
                      color='black'
                    />
                  </CardAction>

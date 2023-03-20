@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useState } from 'react'
 import firestore from '@react-native-firebase/firestore';
-import { Button, Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Button, Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { CreateRegForo } from '../../../testing/CreateRegForo';
 import { colors, stylesApp } from '../../../Themes/AppThemes';
 import Carousel from 'react-native-snap-carousel';
@@ -11,6 +11,7 @@ import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 
 import { Alert, Modal, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ResponseForo } from './ResponseForo';
+
 // @ts-ignore
 export const ForoDocenteScreen = ({ route }) => {
   const navigation = useNavigation();
@@ -49,44 +50,47 @@ export const ForoDocenteScreen = ({ route }) => {
 
 
   function ScrollViewForo() {
-    
+
     return (
-      <ScrollView>
+      <ScrollView style={styles.container}>
         {
           messages.map((item, index) => (
-            
             <View style={styles.item} key={index}>
-              <Card>
-                {/*@ts-ignore */}
-                <CardContent textStyle={stylesApp.textCardBody} text={item.body} />
-                <CardAction
-                  textStyle={stylesApp.textCardFooter}
-                  separator={true}
-                  inColumn={false}>
-
-                  <CardButton
-                    textStyle={stylesApp.textCardFooterButtom}
+              <View style={styles.itemTitel}>
+                <Text style={styles.textTitel}>{
+                /*@ts-ignore */}
+                  {item.titulo}
+                </Text>
+              </View>
+              <View style={styles.itemBody}>
+                <Text style={styles.textBody}>{
+                /*@ts-ignore */}
+                  {item.body}
+                </Text>
+              </View>
+              <View style={styles.itemBtn}>
+                <TouchableOpacity
+                
+                  //@ts-ignore
+                  onPress={() => navigation.navigate('ResponseForo', {
                     //@ts-ignore
-                    onPress={() => navigation.navigate('ResponseForo', {
-                      //@ts-ignore
-                      idForo:item.idRegistro,
-                    })}
-                    // @ts-ignore
-                    title={'Agregar un comentario'}
-                    color='black'
-                  />
-                </CardAction>
-              </Card>
+                    idForo: item.idRegistro,
+                  })}
+                >
+                  <Text style={styles.textBtn}>Agrega una participacion</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           ))
         }
       </ScrollView>
     )
   }
-  
+
 
   return (
-    <View>
+    <View style={styles.blok}>
+      <Text style={stylesApp.titles}>Foro</Text>
       <ScrollViewForo></ScrollViewForo>
     </View>
   )
@@ -95,47 +99,42 @@ export const ForoDocenteScreen = ({ route }) => {
 
 const styles = StyleSheet.create({
   item: {
-    marginTop: 30
-  },
-  centeredView: {
     flex: 1,
-    justifyContent: 'center',
+    borderBottomWidth: 1,
+    borderColor: '#E6E6E6',
+    paddingTop: 30
+
+  },
+  container: {
+    paddingTop: 10,
+    borderTopWidth: 1,
+    borderColor: '#E6E6E6',
+  },
+  blok: {
+    alignItems: 'center'
+  },
+  itemTitel: {
     alignItems: 'center',
-    marginTop: 22,
+    paddingBottom: 10
   },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'black',
+  textTitel: {
     fontWeight: 'bold',
-    textAlign: 'center',
+    fontSize: 22,
+    color: 'black'
   },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
+  itemBody: {
+    paddingBottom: 20,
   },
+  textBody: {
+    color: 'black',
+    fontSize: 20,
+   marginLeft:10,
+  },
+  itemBtn:{
+    alignItems:'flex-end'
+  },
+  textBtn:{
+  color:colors.primary,
+  fontSize:15
+  }
 })

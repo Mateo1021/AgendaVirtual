@@ -26,6 +26,7 @@ export const useAddResponse = () => {
             codRegistro:data.codRegistro,
             createdAt:data.date,
             idUser:data.idUser,
+            nameUser:data.nameUser
         })
     }
   return {

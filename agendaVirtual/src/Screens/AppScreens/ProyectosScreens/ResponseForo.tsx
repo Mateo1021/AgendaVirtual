@@ -7,28 +7,33 @@ import { colors } from '../../../Themes/AppThemes';
 import { useAddResponse } from '../../../Hooks/ProyectosHooks/useAddResponse';
 import { AuthContext } from '../../../Context/ContextUser/AuthContext';
 import { useContext } from 'react';
+
 // @ts-ignore
 export const ResponseForo = ({ route }) => {
-    const [respuestas, setrespuestas] = useState([])
-    const [response, setresponse] = useState('')
     const { authState } = useContext(AuthContext);
     const { AddResponse } = useAddResponse()
 
+
+
+    const [respuestas, setrespuestas] = useState([])
+    const [response, setresponse] = useState('')
+    const [titelForo, settitelForo] = useState('')
     useLayoutEffect(() => {
-        var unsubscribe2 = firestore().collection("respuestas").orderBy('createdAt', 'desc')
+        var unsubscribe2 = firestore().collection("respuestas").orderBy('createdAt', 'asc')
             .onSnapshot((querySnapshot) => {
                 var res: any = [];
                 querySnapshot.forEach((doc) => {
 
                     // @ts-ignore
                     if (doc._data.codRegistro == route.params.idForo) {
-                        // @ts-ignore
+
                         res.push(
                             {
                                 bodyMsj: doc.data().bodyMsj,
                                 createdAt: doc.data().createdAt.toDate(),
                                 codRegistro: doc.data().codRegistro,
                                 idUser: doc.data().idUser,
+                                nameUser: doc.data().nameUser,
                             }
                         );
                     }
@@ -40,20 +45,35 @@ export const ResponseForo = ({ route }) => {
         return unsubscribe2;
     }, [])
 
+    useLayoutEffect(() => {
+        firestore()
+            .collection('registrosForo')
+            // Filter results
+            .doc(route.params.idForo)
+            .get()
+            .then(querySnapshot => {
+                //@ts-ignore 
+                settitelForo(querySnapshot._data.body)
+            });
+    }, [])
 
     function RenderInfoRegistro() {
         return (
-            <ScrollView>
+            <View>
                 {
                     respuestas.map((item, index) => (
-                        <View>
+                        //@ts-ignore 
+                        <View key={index} style={[item.idUser == authState.uid ? styles.responseUser : styles.responseOters]}>
                             {/*@ts-ignore */}
-                            <Text style={styles.textStyle}>{item.bodyMsj}</Text>
+                            <Text style={styles.textResponseUser}>{item.nameUser}</Text>
+                            {/*@ts-ignore */}
+                            <Text style={styles.textResponse}>{item.bodyMsj}</Text>
                         </View>
                     ))
                 }
+            </View>
 
-            </ScrollView>
+
         )
     }
     function sendResponse() {
@@ -62,7 +82,8 @@ export const ResponseForo = ({ route }) => {
             bodyMsj: response,
             codRegistro: route.params.idForo,
             idUser: authState.uid,
-            date: date
+            date: date,
+            nameUser: authState.displayName
         }
         let newRegistro = respuestas;
         //@ts-ignore
@@ -72,12 +93,17 @@ export const ResponseForo = ({ route }) => {
         AddResponse(data)
     }
     return (
-        <View>
-            <RenderInfoRegistro></RenderInfoRegistro>
+        <View style={styles.block}>
+            <View style={styles.titelForo}>
+                <Text style={styles.textTitelForo}>{titelForo}</Text>
+            </View>
+            <ScrollView>
+                <RenderInfoRegistro></RenderInfoRegistro>
+            </ScrollView>
             <TextInput style={styles.textInput} onChangeText={setresponse} value={response} ></TextInput>
             <Button
                 color={colors.primary}
-                title='salir'
+                title='Enviar'
                 onPress={() => sendResponse()}
             ></Button>
         </View>
@@ -88,50 +114,50 @@ const styles = StyleSheet.create({
     item: {
         marginTop: 30
     },
-    centeredView: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 22,
-    },
-    modalView: {
-        margin: 20,
-        backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 35,
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
-    },
-    button: {
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2,
-    },
-    buttonOpen: {
-        backgroundColor: '#F194FF',
-    },
-    buttonClose: {
-        backgroundColor: '#2196F3',
-    },
-    textStyle: {
-        color: 'black',
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: 'center',
-    },
     textInput: {
         borderWidth: 1,
-        borderColor: 'black',
+        borderColor: '#E6E6E6',
+        borderRadius: 20
+    },
+    responseOters: {
+        borderWidth: 1,
+        alignSelf: 'flex-start',
+        padding: 10,
+        marginTop: 10,
+        borderRadius: 20,
+        borderColor: 'white',
+        backgroundColor: '#E6E6E6',
+    },
+    responseUser: {
+        borderWidth: 1,
+        alignSelf: 'flex-end',
+        padding: 10,
+        marginTop: 10,
+        borderRadius: 20,
+        backgroundColor: '#EAAA78',
+        borderColor: 'white',
+    },
+    textResponse: {
+        color: 'black',
+        fontSize:18
+    },
+    block: {
+        flex: 1
+    },
+    titelForo:{
+        alignItems:'center',
+        borderBottomWidth:1,
+        borderColor: '#E6E6E6',
+        padding:20
 
+    },
+    textTitelForo:{
+        color:'black',
+        fontSize:20,
+        
+    },
+    textResponseUser:{
+        color:'black',
+        fontWeight: 'bold',
     }
 })

@@ -31,6 +31,7 @@ export const LoginScreen = ({ navigation }: Props) => {
   let flagLogin = 0;
   let uidLeg = '';
   let docUserLog: string = '';
+  let nameUser:string='';
   let userGlobal: any = []
   const [state, setState] = useState({
     email: '',
@@ -62,9 +63,11 @@ export const LoginScreen = ({ navigation }: Props) => {
             .then(querySnapshot => {
               querySnapshot.forEach(documentSnapshot => {
                 docUserLog = documentSnapshot.id;
+                // @ts-ignore
+                nameUser = documentSnapshot._data.Nombres;
               });
 
-              setDataUser(userGlobal.email, userGlobal.displayName, userGlobal.phoneNumber, userGlobal.photoURL, userGlobal.providerData, docUserLog);
+              setDataUser(userGlobal.email, nameUser, userGlobal.phoneNumber, userGlobal.photoURL, userGlobal.providerData, docUserLog);
 
               navigation.navigate('MenuLateralNavigator')
 

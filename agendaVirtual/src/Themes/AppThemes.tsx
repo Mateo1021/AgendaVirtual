@@ -13,7 +13,8 @@ export const stylesApp = StyleSheet.create({
     },
     titles:{
         fontSize:30,
-        color:'black'
+        color:'black',
+
     },
     generalText:{
         fontSize:20,
@@ -80,7 +81,9 @@ export const stylesApp = StyleSheet.create({
         padding:0,
         margin:0,
         height:40,
-        textAlign:'center'
+        textAlign:'center',
+        justifyContent:'center',
+        textAlignVertical: "center",
     },
         styleCardTitel:{
         height:20,
@@ -89,7 +92,9 @@ export const stylesApp = StyleSheet.create({
         textAlign:'center'
     },
     textCardFooterButtom:{
-        textAlign:'center'
+        textAlign:'center',
+        justifyContent:'center',
+        textAlignVertical: "center",
     },
     selectComp: {
         fontSize: 16,

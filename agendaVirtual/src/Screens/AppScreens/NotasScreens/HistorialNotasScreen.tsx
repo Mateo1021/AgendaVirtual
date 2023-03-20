@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Platform, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Alert, Button, Platform, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { useMaterias } from '../../../Hooks/HorarioHooks/useMaterias';
 import { colors, stylesApp } from '../../../Themes/AppThemes'
 import RNPickerSelect from 'react-native-picker-select';
@@ -8,22 +8,24 @@ import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { useCalificaciones } from '../../../Hooks/calificacionesHooks/useCalificaciones';
 // @ts-ignore
 import DataTable, { COL_TYPES } from 'react-native-datatable-component';
-import { async } from '@firebase/util';
+
 
 
 export const HistorialNotasScreen = () => {
   const { materias } = useMaterias();
   const { tiposNotasArray } = generalArray()
-  const { searchCalificacione } = useCalificaciones()
+  const { searchCalificacione ,deletCalificacion} = useCalificaciones()
 
   const [selectMate, setselectMate] = useState('')
   const [selectTp, setselectTp] = useState(0)
   const [date, setDate] = useState(new Date());
   const [dataTable, setdataTable] = useState([])
 
-
-
   let materiasListArray: any = []
+  let arrayDeleet: any = []
+
+
+
   for (let i in materias) {
     // @ts-ignore
     materiasListArray.push({ label: materias[i]._data.nombre, value: materias[i]._data.codMateria })
@@ -46,15 +48,17 @@ export const HistorialNotasScreen = () => {
     return (
       <DataTable
         data={dataTable} // list of objects
-        colNames={['nombre', 'fecha', 'valor']} //List of Strings
+        colNames={['nombre', 'fecha', 'valor', 'Elimnar']} //List of Strings
         colSettings={[
-          { name: 'nombre', type: COL_TYPES.STRING, width: '40%' },
-          { name: 'fecha', type: COL_TYPES.STRING, width: '40%' },
-          { name: 'valor', type: COL_TYPES.STRING, width: '20%' }
+          { name: 'nombre', type: COL_TYPES.STRING, width: '30%' },
+          { name: 'fecha', type: COL_TYPES.STRING, width: '30%' },
+          { name: 'valor', type: COL_TYPES.STRING, width: '20%' },
+          { name: 'Elimnar', type: COL_TYPES.CHECK_BOX, width: '20%' }
         ]}//List of Objects
         noOfPages={2} //number
         backgroundColor={'#ffff'} //Table Background Color
         headerLabelStyle={{ color: 'grey', fontSize: 12 }} //Text Style Works
+        onRowSelect={(row: any) => { selectMatByDel(row) }}
       />)
   }
 
@@ -62,12 +66,42 @@ export const HistorialNotasScreen = () => {
     getDatosbyMat(selectMate, selectTp)
   }
 
+  const selectMatByDel = (id: string) => {
+    // @ts-ignore
+    arrayDeleet = arrayDeleet.filter(x => x.id !== id.id)
+    arrayDeleet.push(id)
+  }
+  const deletCali = () => {
+    Alert.alert(
+      "Estas seguro que deseas eliminar las notas seleccionadas",
+      "Despues de borrarlas no las podras ver en tu historial",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log('cancel')
+          
+          ,
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => {
+          for (let x in arrayDeleet) {
+            if (arrayDeleet[x].Elimnar) {
+              deletCalificacion(arrayDeleet[x].id);
+            }
+          }
+          searchMats()
+        }}
+      ]
+    );
+
+  }
+
   return (
     <ScrollView>
 
       <View>
-        <View style={{padding:20}}>
-          <Text style={stylesApp.titles}>Historias</Text>
+        <View style={{ padding: 20 }}>
+          <Text style={stylesApp.titles}>Historias de Notas</Text>
           <RNPickerSelect
             placeholder={{ label: "Selecciona una opcion", value: 0 }}
             onValueChange={(select) => slectMateria(select)}
@@ -90,7 +124,11 @@ export const HistorialNotasScreen = () => {
         <View style={styles.container}>
           <TableComponent></TableComponent>
         </View>
-
+        <Button
+          color={colors.primary}
+          title='Eliminar'
+          onPress={() => deletCali()}
+        ></Button>
 
       </View>
     </ScrollView>
