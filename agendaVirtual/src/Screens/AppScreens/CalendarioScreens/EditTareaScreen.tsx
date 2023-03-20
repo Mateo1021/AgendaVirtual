@@ -1,10 +1,10 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react'
-import { Button, FlatList, Platform, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Button, FlatList, Platform, StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
 import { colors, stylesApp } from '../../../Themes/AppThemes';
 import { useTareas } from '../../../Hooks/useTareas';
 import { ActivityIndicator } from 'react-native-paper';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useTarea } from '../../../Hooks/CalendarHooks/useTarea';
 import { ListaMaterias } from '../../../Components/MateriasComponets/ListaMaterias';
@@ -13,44 +13,50 @@ import RNPickerSelect from 'react-native-picker-select';
 import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
 import { SelectComp } from '../../../Components/GeneralComponets/SelectComp';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
-
-
+import { generalFunctions } from '../../../core/generalFunctions';
 interface Props extends StackScreenProps<any, any> { }
-export const TareaScreen = ({ route, navigation }: Props) => {
 
-  const [dataTare, setdataTare] = useState({})
-  const [select, setselect] = useState("");
+export const EditTareaScreen = ({ route, navigation }: Props) => {
+  // @ts-ignore
+  let dataTarea = route.params.codTarea._data;
+  const { parseDate } = generalFunctions()
+  let dateTareaRoute = 1000 * Number(dataTarea.fechaEntrega.seconds)
+
+  const [select, setselect] = useState(dataTarea.materia);
   const [radioButtons, setRadioButtons] = useState<RadioButtonProps[]>([
     {
       id: '1', // acts as primary key, should be unique and non-empty string
       label: 'Prioritario',
-      value: '1'
+      value: '1',
+      selected: dataTarea.prioridad == "1" ? true : false
     },
     {
       id: '2',
       label: 'Moderado',
-      value: '2'
+      value: '2',
+      selected: dataTarea.prioridad == "2" ? true : false
     },
     {
       id: '3',
       label: 'Relax',
-      value: '3'
+      value: '3',
+      selected: dataTarea.prioridad == "3" ? true : false
     }
   ]);
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date(dateTareaRoute));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
-  const [dateShow, setdateShow] = useState('dd/mm/yy')
+  const [dateShow, setdateShow] = useState(parseDate(dataTarea.fechaEntrega.seconds))
 
   const [priori, onChangepriori] = React.useState('');
 
-  const [titulo, onChangetitulo] = React.useState('');
-  const [descrip, onChangedescrip] = React.useState('');
+  const [titulo, onChangetitulo] = React.useState(dataTarea.titulo);
+  const [descrip, onChangedescrip] = React.useState(dataTarea.body);
 
 
-  const { materias, getMateriasUser } = useMaterias();
-  const { tareas, isLoading } = useTareas();
-  const { addTarea } = useTarea();
+  const { materias } = useMaterias();
+
+  const { updateTarea, delet } = useTarea();
 
 
   let materiasListArray: any = []
@@ -60,11 +66,6 @@ export const TareaScreen = ({ route, navigation }: Props) => {
     materiasListArray.push({ label: materias[i]._data.nombre, value: materias[i]._data.codMateria })
 
   }
-
-  useEffect(() => {
-    getMateriasUser()
-  }, [])
-
 
   const selectedMat = (value: any) => {
     setselect(value)
@@ -97,6 +98,7 @@ export const TareaScreen = ({ route, navigation }: Props) => {
   const showDatepicker = () => {
     showMode('date');
   };
+
   const agrupInfoTareo = () => {
     const info = {
       'body': descrip,
@@ -105,12 +107,20 @@ export const TareaScreen = ({ route, navigation }: Props) => {
       'materia': select,
       'prioridad': priori,
       'titulo': titulo,
+      'codTarea': dataTarea.codTarea
     }
-    setdataTare(dataTare => ({
-      ...dataTare,
-      ...info
-    }));
-    addTarea(info)
+
+    updateTarea(info);
+
+    onChangedescrip('')
+    setDate(new Date)
+    setselect('')
+    onChangetitulo('')
+  }
+
+  const deletTarea = () => {
+
+    delet(dataTarea.codTarea);
     onChangedescrip('')
     setDate(new Date)
     setselect('')
@@ -119,77 +129,80 @@ export const TareaScreen = ({ route, navigation }: Props) => {
 
 
 
+  return (
+    <ScrollView>
+      <View style={stylesApp.globalMargin}>
+        <Text style={stylesApp.titles}>Editar Tarea</Text>
 
-  if (isLoading) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
-        <ActivityIndicator color={colors.primary} size={100}></ActivityIndicator>
-      </View>
-    )
-  } else {
-    return (
-      <ScrollView>
-        <View style={stylesApp.globalMargin}>
-          <Text style={stylesApp.titles}>Nueva Tarea</Text>
-
-          <Text style={styles.textLabel}>Titulo</Text>
-          <TextInput
-            style={styles.textTitel}
-            placeholder="Nueva Tarea"
-            onChangeText={onChangetitulo}
+        <Text style={styles.textLabel}>Titulo</Text>
+        <TextInput
+          style={styles.textTitel}
+          placeholder="Nueva Tarea"
+          onChangeText={onChangetitulo}
+          value={titulo}
+        />
+        <Text style={styles.textLabel}>Descripcion</Text>
+        <TextInput
+          style={styles.textBody}
+          multiline={true}
+          numberOfLines={10}
+          placeholder="Hacer informe"
+          onChangeText={onChangedescrip}
+          value={descrip}
+        />
+        <RNPickerSelect
+          placeholder={{ label: "Selecciona una opcion", value: null }}
+          onValueChange={(select) => selectedMat(select)}
+          items={materiasListArray}
+          style={pickerSelectStyles}
+          value={select}
+        />
+        <RadioGroup
+          radioButtons={radioButtons}
+          onPress={onPressRadioButton}
+          layout={'row'}
+        />
+        <View>
+          <Button onPress={showDatepicker} color={colors.primary} title={dateShow} />
+        </View>
+        {show && (
+          <RNDateTimePicker
+            testID="dateTimePicker"
+            timeZoneOffsetInMinutes={0}
+            value={date}
+            // @ts-ignore
+            mode={mode}
+            is24Hour={true}
+            display="default"
+            onChange={onChange}
           />
-
-          <Text style={styles.textLabel}>Descripcion</Text>
-          <TextInput
-            style={styles.textBody}
-            multiline={true}
-            numberOfLines={10}
-            placeholder="Hacer informe"
-            onChangeText={onChangedescrip}
-          />
-          <RNPickerSelect
-            placeholder={{ label: "Selecciona una opcion", value: null }}
-            onValueChange={(select) => selectedMat(select)}
-            items={materiasListArray}
-            style={pickerSelectStyles}
-          />
-          <RadioGroup
-            radioButtons={radioButtons}
-            onPress={onPressRadioButton}
-            layout={'row'}
-          />
-          <View>
-            <Button onPress={showDatepicker} color={colors.primary} title={dateShow} />
+        )}
+        <View style={styles.viewBtn}>
+          <View style={styles.btnAdd}>
+            <Button
+              color={colors.primary}
+              title='Agregar Tarea'
+              onPress={() => {
+                agrupInfoTareo();
+                navigation.goBack();
+              }}
+            ></Button>
           </View>
-          {show && (
-            <RNDateTimePicker
-              testID="dateTimePicker"
-              timeZoneOffsetInMinutes={0}
-              value={date}
-              // @ts-ignore
-              mode={mode}
-              is24Hour={true}
-              display="default"
-              onChange={onChange}
-            />
-          )}
-          <View style={styles.viewBtn}>
-            <View style={styles.btnAdd}>
-
-              <Button
-                color={colors.primary}
-                title='Agregar Tarea'
-                onPress={() => {
-                  agrupInfoTareo();
-                  navigation.navigate('CalendarioScreen')
-                }}
-              ></Button>
-            </View>
+          <View style={styles.btnDel}>
+            <Button
+              color={colors.secundary}
+              title='Eliminar'
+              onPress={() => {
+                deletTarea();
+                navigation.goBack();
+              }}
+            ></Button>
           </View>
         </View>
-      </ScrollView>
-    )
-  }
+      </View>
+    </ScrollView>
+  )
+
 
 }
 

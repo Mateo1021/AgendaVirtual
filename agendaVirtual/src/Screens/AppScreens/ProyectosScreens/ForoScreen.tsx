@@ -21,9 +21,9 @@ import { AuthContext } from '../../../Context/ContextUser/AuthContext';
 import { useContext } from 'react';
 import firestore from '@react-native-firebase/firestore';
 
-  // @ts-ignore
-export const ForoScreen = ({route}) => {
-  
+// @ts-ignore
+export const ForoScreen = ({ route }) => {
+
 
   const [messages, setMessages] = useState([]);
   const navigation = useNavigation();
@@ -31,68 +31,70 @@ export const ForoScreen = ({route}) => {
 
 
   useLayoutEffect(() => {
-      var unsubscribe = firestore().collection("chats").orderBy('createdAt', 'desc')
+    var unsubscribe = firestore().collection("chats").orderBy('createdAt', 'desc')
       .onSnapshot((querySnapshot) => {
-        var msj:any = [];
+        var msj: any = [];
         querySnapshot.forEach((doc) => {
-            // @ts-ignore
-          if(doc._data.cours == route.params.idForo){
+          // @ts-ignore
+          if (doc._data.cours == route.params.idForo) {
             msj.push(
               {
                 _id: doc.data()._id,
-                createdAt:doc.data().createdAt.toDate(),
+                createdAt: doc.data().createdAt.toDate(),
                 text: doc.data().text,
-                cours:doc.data().cours,
+                cours: doc.data().cours,
                 user: doc.data().user
               }
             );
           }
         });
         setMessages(msj)
-    });
+      });
 
 
-  return unsubscribe;
-    }, []);
+    return unsubscribe;
+  }, []);
 
   const onSend = useCallback((messages = []) => {
-      setMessages(previousMessages =>
-        GiftedChat.append(previousMessages, messages)
-      );
-      // setMessages([...messages, ...messages]);
-      const { _id, createdAt, text, user } = messages[0];    
+    setMessages(previousMessages =>
+      GiftedChat.append(previousMessages, messages)
+    );
+    // setMessages([...messages, ...messages]);
+    const { _id, createdAt, text, user } = messages[0];
 
 
-      firestore()
+    firestore()
       .collection('chats').doc()
       .set({
-        _id:_id,
-        createdAt:createdAt,
-        text:text,
-        cours:route.params.idForo,
-        user:user
+        _id: _id,
+        createdAt: createdAt,
+        text: text,
+        cours: route.params.idForo,
+        user: user
       })
-    }, []);
+  }, []);
 
-    return (
-      // <>
-      //   {messages.map(message => (
-      //     <Text key={message._id}>{message.text}</Text>
-      //   ))}
-      // </>
-      <GiftedChat
-        messages={messages}
-        showAvatarForEveryMessage={false}
-        showUserAvatar={false}
-        onSend={messages => onSend(messages)}
-        messagesContainerStyle={{
-          backgroundColor: '#fff'
-        }}
-
-        user={{
-          _id: authState.uid,
-          avatar: 'https://i.pravatar.cc/300'
-        }}
-      />
-    );
+  return (
+    // <>
+    //   {messages.map(message => (
+    //     <Text key={message._id}>{message.text}</Text>
+    //   ))}
+    // </>
+    <GiftedChat
+      renderUsernameOnMessage={true}
+      messages={messages}
+      showAvatarForEveryMessage={false}
+      showUserAvatar={false}
+      onSend={messages => onSend(messages)}
+      messagesContainerStyle={{
+        backgroundColor: '#fff'
+      }}
+      placeholder='Mensaje'
+      user={{
+        _id: authState.uid,
+        avatar: 'https://i.pravatar.cc/300',
+        name: authState.displayName
+      }}
+    />
+  );
 }

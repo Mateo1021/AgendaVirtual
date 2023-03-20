@@ -4,6 +4,7 @@ import React from 'react';
 import { TareaScreen } from '../Screens/AppScreens/CalendarioScreens/TareaScreen';
 import { PerfilScreen } from '../Screens/AppScreens/UsuarioScreens/PerfilScreen';
 import { RankingScreen } from '../Screens/AppScreens/UsuarioScreens/RankingScreen';
+import { EditTareaScreen } from '../Screens/AppScreens/CalendarioScreens/EditTareaScreen';
 
 const Stack = createStackNavigator();
 
@@ -22,9 +23,9 @@ export const HomeNavigator=()=> {
     }}
     >
       <Stack.Screen name="HomeScreen" options={{title:' ', headerBackTitle:'Salir',headerBackTitleVisible:true}} component={HomeScreen} />
-      <Stack.Screen name="TareaScreen" options={{headerShown:false}} component={TareaScreen} />
       <Stack.Screen name="PerfilScreen"  component={PerfilScreen} />
       <Stack.Screen name="RankingScreen" component={RankingScreen} />
+      <Stack.Screen name="EditTareaScreen" options={{headerShown:false}} component={EditTareaScreen} />
     </Stack.Navigator>
   );
 }

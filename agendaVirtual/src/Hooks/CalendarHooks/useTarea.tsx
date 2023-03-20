@@ -21,7 +21,7 @@ export const useTarea = () => {
 
         });
         let idArrayUser: number = tareasId[tareasId.length - 1].split('_')[1];
-        let idArrayUserNumber = ++idArrayUser;
+        let idArrayUserNumber ='tar_'+(++idArrayUser);
 
 
         const arrayInfo = {
@@ -44,14 +44,29 @@ export const useTarea = () => {
         setFireStore(arrayInfo, idArrayUserNumber)
     }
 
-    function setFireStore(arrayInfo:{}, idArrayUserNumber:number) {
+    function setFireStore(arrayInfo:{}, idArrayUserNumber:string) {
 
         firestore()
-            .collection('Tareas').doc('tar_' + idArrayUserNumber)
+            .collection('Tareas').doc(idArrayUserNumber)
             .set(arrayInfo)
     }
+
+
+
+    const updateTarea =(dataUpdate:any)=>{
+        firestore()
+            .collection('Tareas').doc(dataUpdate.codTarea).update(
+                dataUpdate
+            )
+    }
+    const delet =(idTarea:any)=>{
+        firestore()
+            .collection('Tareas').doc(idTarea).delete()
+    }
     return {
-        addTarea
+        addTarea,
+        updateTarea,
+        delet
     }
 
 }

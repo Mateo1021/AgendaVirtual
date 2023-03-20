@@ -4,11 +4,13 @@ import { stylesApp, colors } from '../Themes/AppThemes';
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
 import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards';
+import { useNavigation } from '@react-navigation/native';
 
 
 
 export const TaskCard = ({tarea}:any) => {
-
+  
+  const navigation = useNavigation();
    let secondsToDate = (tarea._data.fechaEntrega.seconds)*1000;
    let date = new Date(secondsToDate);
    let datePrint = date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear();
@@ -29,7 +31,12 @@ export const TaskCard = ({tarea}:any) => {
 
               <CardButton
                 textStyle={stylesApp.textCardFooterButtom}
-                onPress={() => {}}
+                 // @ts-ignore
+                onPress={() => {navigation.navigate('EditTareaScreen',
+                {
+                  codTarea:tarea
+                }
+                )}}
                 title={datePrint}
                 color='black'
               />

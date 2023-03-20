@@ -6,6 +6,7 @@ import { colors } from '../../Themes/AppColors';
 import { Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { newHorarioNavigator } from './HorarioNavigator/newHorarioNavigator';
+import { calendarNavigator } from './CalendarioNavigator/calendarNavigator';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -44,7 +45,7 @@ export const TopTapCalendarNavigator = () => {
     })}
     
     >
-      <Tab.Screen name="CalendarioScreen" options={{title:'Calendario'}} component={CalendarioScreen} />
+      <Tab.Screen name="CalendarioScreen" options={{title:'Calendario'}} component={calendarNavigator} />
       <Tab.Screen name="HorarioScreen" options={{title:'Horario'}} component={newHorarioNavigator} />
     </Tab.Navigator>
   );
