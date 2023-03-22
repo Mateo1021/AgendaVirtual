@@ -1,172 +1,341 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react'
 import { Text, View, StyleSheet, Button, SafeAreaView, ScrollView, RefreshControl } from 'react-native';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import WeeklyCalendar from 'react-native-weekly-calendar';
-import { useMaterias } from '../../Hooks/HorarioHooks/useMaterias';
 import { colors, stylesApp } from '../../Themes/AppThemes';
 import { useLayoutEffect } from 'react';
-//refres config  
-const wait = (timeout: any) => {
-  return new Promise(resolve => setTimeout(resolve, timeout));
-}
-//......
-
-function restarHoras(hora1: any, hora2: any) {
-  // Convertir las horas a milisegundos
-  let hora1ms = hora1.getTime();
-  let hora2ms = hora2.getTime();
-
-  // Calcular la diferencia en milisegundos
-  let diferenciaMs = hora2ms - hora1ms;
-
-  // Convertir la diferencia de milisegundos a horas
-  let horas = new Date(diferenciaMs)
-
-  // Devolver el resultado
-  return horas;
-}
-
-function sumarDias(fecha: any, dias: any) {
-  fecha.setDate(fecha.getDate() + dias);
-  return fecha;
-}
+import Icon from 'react-native-vector-icons/Ionicons';
+import firestore from '@react-native-firebase/firestore';
 
 
 
-export const HorarioComp = () => {
+
+
+
+export const HorarioComp = (idHorario: any) => {
 
   const navigation = useNavigation();
-  const { materias } = useMaterias()
+  const [materias, setmaterias] = useState([])
 
-  let data: any = []
-  let materiasArry: any = []
-  var date = new Date();
-  var numberOfMlSeconds = date.getTime();
-  var addMlSeconds = 60 * 300000;
-  var newDateObj = new Date(numberOfMlSeconds - addMlSeconds);
-  let dayInicial:any;
-  let diasSemana: any = [];
-  let dayMilisegundos = 1440000;
-  const diasSem = [
-    'Lunes',
-    'Martes',
-    'Miercoles',
-    'Jueves',
-    'Viernes',
-    'Sabado',
-    'Domingo'
-  ];
-  let sampleEventsComp: any = []
+  const [lunes, setlunes] = useState([])
+  const [martes, setmartes] = useState([])
+  const [miercoles, setmiercoles] = useState([])
+  const [jueves, setjueves] = useState([])
+  const [viernes, setviernes] = useState([])
+  const [sabado, setsabado] = useState([])
+  const [domingo, setdomingo] = useState([])
 
+  useLayoutEffect(() => {
+    var unsubscribe2 = firestore().collection("Materia").where("codHorario", "==", idHorario.idHorario)
+      .onSnapshot((querySnapshot) => {
+        var res: any = [];
 
-  function requestData() {
-    for (let x in materias) {
-      let infoMateria = {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        nombre: materias[x]._data.nombre,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        repet: materias[x]._data.repet
-      }
-      materiasArry.push(infoMateria)
-    }
+        var lun: any = [];
+        var mar: any = [];
+        var mie: any = [];
+        var jue: any = [];
+        var vie: any = [];
+        var sab: any = [];
+        var dom: any = [];
+        querySnapshot.forEach((doc) => {
+          if (doc.data().repet.length > 0) {
+            for (let m in doc.data().repet) {
+              switch (doc.data().repet[m].dia) {
+                case 'Lunes':
+                  lun.push({
+                    horas: doc.data().repet[m],
+                    materia: doc.data().nombre
+                  })
+                  break;
+                case 'Martes':
+                  mar.push({
+                    horas: doc.data().repet[m],
+                    materia: doc.data().nombre
+                  })
+                  break;
+                case 'Miercoles':
+                  mie.push({
+                    horas: doc.data().repet[m],
+                    materia: doc.data().nombre
+                  })
+                  break;
+                case 'Jueves':
+                  jue.push({
+                    horas: doc.data().repet[m],
+                    materia: doc.data().nombre
+                  })
+                  break;
+                case 'Viernes':
+                  vie.push({
+                    horas: doc.data().repet[m],
+                    materia: doc.data().nombre
+                  })
+                  break;
+                case 'Sabado':
+                  sab.push({
+                    horas: doc.data().repet[m],
+                    materia: doc.data().nombre
+                  })
+                  break;
+                case 'Domingo':
+                  dom.push({
+                    horas: doc.data().repet[m],
+                    materia: doc.data().nombre
+                  })
 
-    if (newDateObj.getUTCDay() > 1) {
-      dayInicial = sumarDias(newDateObj, -(newDateObj.getUTCDay() - 1));
-    } else if(newDateObj.getUTCDay() == 0){
-      dayInicial = sumarDias(newDateObj, +1);
-    }else {
-      dayInicial = newDateObj;
-    }
-    for (let i = 0; i < 7; i++) {
-      var dateNumber = dayInicial.getTime();
-      var dateSumDay = 60 * dayMilisegundos * i;
-      var newDateSum = new Date(dateNumber + dateSumDay);
-      let arrayDateSemana = {
-        date: newDateSum,
-        dia: diasSem[i]
-      }
-      diasSemana.push(arrayDateSemana)
-    }
-    for (let mate in materiasArry) {
-      for (let dia in materiasArry[mate].repet) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        let diaSemana = diasSemana.find(x => x.dia == materiasArry[mate].repet[dia].dia);
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        let mes = (diaSemana?.date.getMonth() + 1).toString().length > 1 ? (diaSemana?.date.getMonth() + 1).toString() : '0' + (diaSemana?.date.getMonth() + 1).toString();
-        let year = diaSemana?.date.getUTCFullYear();
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        let diaS = diaSemana?.date.getDate().toString().length > 1 ? diaSemana?.date.getDate() : '0' + diaSemana?.date.getDate();
-        let hora = materiasArry[mate].repet[dia].horaI
-        let horaFin = materiasArry[mate].repet[dia].horaF;
+                  break;
 
-        let hi = new Date(year + '-' + mes + '-' + diaS + 'T' + hora + ':00');
-        let hf = new Date(year + '-' + mes + '-' + diaS + 'T' + horaFin + ':00');
-        let horaRest = restarHoras(hi, hf);
+                default:
+                  break;
+              }
+            }
+            res.push(doc.data())
+          }
+        });
+        setmaterias(res)
+        setlunes(lun)
+        setmartes(mar)
+        setmiercoles(mie)
+        setjueves(jue)
+        setviernes(vie)
+        setsabado(sab)
+        setdomingo(dom)
+        console.log(lun);
 
-        let horaRestH = horaRest.getHours().toString().length > 1 ? horaRest.getHours() : '0' + horaRest.getHours()
-        let horaRestM = horaRest.getMinutes().toString().length > 1 ? horaRest.getMinutes() : '0' + horaRest.getMinutes()
-        let dataMateria = {
-          note: materiasArry[mate].nombre,
-          start: year + '-' + mes + '-' + diaS + ' ' + hora + ':00',
-          duration: horaRestH + ':' + horaRestM + ':00'
-        }
-        sampleEventsComp.push(dataMateria)
-      }
-    }
-
-    return sampleEventsComp;
-  }
-
-
-data = requestData()
-  React.useEffect(() => {
-    const focusHandler = navigation.addListener('focus', () => {
-
-    });
-    return focusHandler;
-  }, [navigation]);
-
-
-
-  const Comp = () => {
-    return (
-      <View style={styles.container}>
-        <WeeklyCalendar 
-        events={data} 
-        style={{ height: 597, backgroundColor: 'white', color: 'blue', width: 400 }} 
-        titleStyle={{}} 
-        locale='es' 
-        themeColor={colors.primary} 
-        selected={dayInicial}/>
-      </View>
-    )
-    data =[]
-
-  }
-  
+      });
+    return unsubscribe2;
+  }, [])
 
 
   return (
     <View style={styles.container}>
-      <Comp></Comp>
+      <View style={styles.blockDay} >
+        <View style={styles.weekDay}><Text style={styles.weekDayTxt}>Lunes</Text></View>
+
+        <View style={styles.columB}>
+          {
+            lunes.map((item, index) => (
+              <View style={styles.columC}>
+                <View>
+                  <Icon name={'timer-outline'} size={25} color={colors.primary} />
+                </View>
+                <View>
+                  {/*@ts-ignore */}
+                  <Text style={styles.txtHora}>{item.horas.horaI}</Text>
+                  {/*@ts-ignore */}
+                  <Text style={styles.txtHora}>{item.horas.horaF}</Text>
+                </View>
+                <View>
+                  {/*@ts-ignore */}
+                  <Text style={styles.txtBody}>{item.materia}</Text>
+                </View>
+              </View>
+            ))
+          }
+        </View>
+
+      </View>
+      <View style={styles.blockDay}>
+        <View style={styles.weekDay}><Text style={styles.weekDayTxt}>Martes</Text></View>
+
+        <View style={styles.columB}>
+          {
+            martes.map((item, index) => (
+              <View style={styles.columC}>
+                <View>
+                  <Icon name={'timer-outline'} size={25} color={colors.primary} />
+                </View>
+                <View>
+                  {/*@ts-ignore */}
+                  <Text style={styles.txtHora}>{item.horas.horaI}</Text>
+                  {/*@ts-ignore */}
+                  <Text style={styles.txtHora}>{item.horas.horaF}</Text>
+                </View>
+                <View>
+                  {/*@ts-ignore */}
+                  <Text style={styles.txtBody}>{item.materia}</Text>
+                </View>
+              </View>
+            ))
+          }
+        </View>
+
+      </View>
+      <View style={styles.blockDay}>
+        <View style={styles.weekDay}><Text style={styles.weekDayTxt}>Miercoles</Text></View>
+
+        <View style={styles.columB}>
+          {
+            miercoles.map((item, index) => (
+              <View style={styles.columC}>
+                <View>
+                  <Icon name={'timer-outline'} size={25} color={colors.primary} />
+                </View>
+                <View>
+                  {/*@ts-ignore */}
+                  <Text style={styles.txtHora}>{item.horas.horaI}</Text>
+                  {/*@ts-ignore */}
+                  <Text style={styles.txtHora}>{item.horas.horaF}</Text>
+                </View>
+                <View>
+                  {/*@ts-ignore */}
+                  <Text style={styles.txtBody}>{item.materia}</Text>
+                </View>
+              </View>
+            ))
+          }
+        </View>
+
+      </View>
+      <View style={styles.blockDay}>
+        <View style={styles.weekDay}><Text style={styles.weekDayTxt}>Jueves</Text></View>
+
+        <View style={styles.columB}>
+          {
+            jueves.map((item, index) => (
+              <View style={styles.columC}>
+                <View>
+                  <Icon name={'timer-outline'} size={25} color={colors.primary} />
+                </View>
+                <View>
+                  {/*@ts-ignore */}
+                  <Text style={styles.txtHora}>{item.horas.horaI}</Text>
+                  {/*@ts-ignore */}
+                  <Text style={styles.txtHora}>{item.horas.horaF}</Text>
+                </View>
+                <View>
+                  {/*@ts-ignore */}
+                  <Text style={styles.txtBody}>{item.materia}</Text>
+                </View>
+              </View>
+            ))
+          }
+        </View>
+
+      </View>
+      <View style={styles.blockDay}>
+        <View style={styles.weekDay}><Text style={styles.weekDayTxt}>Viernes</Text></View>
+
+        <View style={styles.columB}>
+          {
+            viernes.map((item, index) => (
+              <View style={styles.columC}>
+                <View>
+                  <Icon name={'timer-outline'} size={25} color={colors.primary} />
+                </View>
+                <View>
+                  {/*@ts-ignore */}
+                  <Text style={styles.txtHora}>{item.horas.horaI}</Text>
+                  {/*@ts-ignore */}
+                  <Text style={styles.txtHora}>{item.horas.horaF}</Text>
+                </View>
+                <View>
+                  {/*@ts-ignore */}
+                  <Text style={styles.txtBody}>{item.materia}</Text>
+                </View>
+              </View>
+            ))
+          }
+        </View>
+
+      </View>
+      <View style={styles.blockDay}>
+        <View style={styles.weekDay}><Text style={styles.weekDayTxt}>Sabado</Text></View>
+
+        <View style={styles.columB}>
+          {
+            sabado.map((item, index) => (
+              <View style={styles.columC}>
+                <View>
+                  <Icon name={'timer-outline'} size={25} color={colors.primary} />
+                </View>
+                <View>
+                  {/*@ts-ignore */}
+                  <Text style={styles.txtHora}>{item.horas.horaI}</Text>
+                  {/*@ts-ignore */}
+                  <Text style={styles.txtHora}>{item.horas.horaF}</Text>
+                </View>
+                <View>
+                  {/*@ts-ignore */}
+                  <Text style={styles.txtBody}>{item.materia}</Text>
+                </View>
+              </View>
+            ))
+          }
+        </View>
+
+      </View>
+      <View style={styles.blockDay}>
+        <View style={styles.weekDay}><Text style={styles.weekDayTxt}>Domingo</Text></View>
+
+        <View style={styles.columB}>
+          {
+            domingo.map((item, index) => (
+              <View style={styles.columC}>
+                <View>
+                  <Icon name={'timer-outline'} size={25} color={colors.primary} />
+                </View>
+                <View>
+                  {/*@ts-ignore */}
+                  <Text style={styles.txtHora}>{item.horas.horaI}</Text>
+                  {/*@ts-ignore */}
+                  <Text style={styles.txtHora}>{item.horas.horaF}</Text>
+                </View>
+                <View>
+                  {/*@ts-ignore */}
+                  <Text style={styles.txtBody}>{item.materia}</Text>
+                </View>
+              </View>
+            ))
+          }
+        </View>
+
+      </View>
     </View>
   )
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: 'withe',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontStyle: {
-      color: 'black'
-    }
+    borderColor: '#DEDEDE',
+    borderTopWidth: 1,
+    marginTop: 20
   },
+  weekDay: {
+    borderBottomWidth: 1,
+    borderRightWidth: 1,
+    borderColor: '#DEDEDE',
+    paddingVertical: 20,
+    width: 90,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  blockDay: {
+    flexDirection: 'row'
+  },
+  columB: {
+    flex: 1,
+    borderBottomWidth: 1,
+    borderColor: '#DEDEDE',
+  },
+  columC: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderColor: '#E8E8E8',
+    alignItems: 'center',
+    paddingLeft: 10
+  },
+  weekDayTxt: {
+    color: colors.primary,
+    fontWeight: 'bold',
+    fontSize: 18
+  },
+  txtHora: {
+    padding: 10,
+    color: 'black',
+    fontSize: 15
+  },
+  txtBody: {
+    paddingLeft: 30,
+    color: 'black',
+    fontSize: 15
+  }
 });

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
-import { Text, View, TouchableOpacity, SafeAreaView, ScrollView, RefreshControl, ActivityIndicator, Button } from 'react-native';
+import { Text, View, TouchableOpacity, SafeAreaView, ScrollView, RefreshControl, ActivityIndicator, Button, StyleSheet } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack'
 import { stylesApp } from '../../../Themes/AppThemes';
 import firestore from '@react-native-firebase/firestore';
@@ -41,14 +41,14 @@ export const AgendaScreen = ({ navigation, route }: Props) => {
     var unsubscribe = firestore().collection("Notas_agenda").where('codUser', '==', authState.uid)
       .onSnapshot((querySnapshot) => {
         let notasArray = []
- // @ts-ignore
+        // @ts-ignore
         for (let i in querySnapshot._docs) {
-           // @ts-ignore
+          // @ts-ignore
           notasArray.push(querySnapshot._docs[i])
         }
-         // @ts-ignore
+        // @ts-ignore
         setnotasGet(notasArray);
-        
+
       });
 
     return unsubscribe;
@@ -67,23 +67,24 @@ export const AgendaScreen = ({ navigation, route }: Props) => {
             refreshing={refreshing}
             onRefresh={onRefresh}
           />}>
-        <View>
+        <View style={styles.item}>
           {
             notasGet.map((item, index) => (
-
-              <NoteCard note={item}></NoteCard>
+              <View style={styles.styleCard}>
+                <NoteCard note={item}></NoteCard>
+              </View>
             ))
 
           }
 
 
-
-
-          <Button
-            color={colors.primary}
-            title='Agregar nota'
-            onPress={() => navigation.navigate('newNoteScreen')}
-          ></Button>
+          <View style={styles.btnAddNote}>
+            <Button
+              color={colors.primary}
+              title='Agregar nota'
+              onPress={() => navigation.navigate('newNoteScreen')}
+            ></Button>
+          </View>
 
 
         </View>
@@ -91,3 +92,26 @@ export const AgendaScreen = ({ navigation, route }: Props) => {
     </SafeAreaView>
   )
 }
+
+
+const styles = StyleSheet.create({
+  item: {
+    paddingVertical: 20,
+    paddingHorizontal: 20
+  },
+  btnAddNote: {
+    paddingTop: 30
+  },
+  styleCard: {
+    paddingVertical: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 22,
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 16.00,
+
+    elevation: 24,
+  }
+})

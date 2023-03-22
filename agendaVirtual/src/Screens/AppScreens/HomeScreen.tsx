@@ -11,62 +11,74 @@ import { IdentitiCard } from '../../Components/HomeComponets/IdentitiCard';
 import { useIdentification } from '../../Hooks/UserHooks/useIdentification';
 import { infoUser } from '../../Hooks/UserHooks/infoUser';
 import { async } from '@firebase/util';
+import firestore from '@react-native-firebase/firestore';
+import { AuthContext } from '../../Context/ContextUser/AuthContext';
+import { useContext } from 'react';
 
-
-interface Props extends StackScreenProps<any, any> {};
+interface Props extends StackScreenProps<any, any> { };
 export const HomeScreen = ({ navigation, route }: Props) => {
 
-const {getTareas,tareas,isLoading}=useTareas();
-const{getPuntos,puntaje,isLoadingP} = usePuntaje();
-const {info,getInfoUser,isLoadingIn} = useIdentification();
+  const { getTareas, tareas, isLoading } = useTareas();
+  const { getPuntos, puntaje, isLoadingP } = usePuntaje();
+  const { info, getInfoUser, isLoadingIn } = useIdentification();
 
-let dimencionSWind = (Dimensions.get('window').width) - 50;
-
-
-async function callInfoFuntion() {
-  await getTareas()
-}
-
-React.useEffect(() => {
-  const focusHandler = navigation.addListener('focus', () => {
-    callInfoFuntion()
-  });
-  return focusHandler;
-}, [navigation]);
+  let dimencionSWind = (Dimensions.get('window').width) - 50;
+  const { authState } = useContext(AuthContext);
 
 
-  if(isLoading||isLoadingP||isLoadingIn){
+/*   useLayoutEffect(() => {
+    var unsubscribe = firestore().collection("user").doc(authState.uid)
+      .onSnapshot((querySnapshot) => {
+        getInfoUser()
+      });
+    return unsubscribe;
+  }, []); */
+
+  async function callInfoFuntion() {
+    await getTareas()
+    getInfoUser()
+  }
+
+  React.useEffect(() => {
+    const focusHandler = navigation.addListener('focus', () => {
+      callInfoFuntion()
+    });
+    return focusHandler;
+  }, [navigation]);
+
+
+  if (isLoading || isLoadingP || isLoadingIn) {
     return (
-      <View style={{flex: 1, justifyContent:'center', alignContent: 'center' }}>
+      <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
         <ActivityIndicator color={colors.primary} size={100}></ActivityIndicator>
       </View>
     )
   }
-    return (
-          <ScrollView style={{
-            flex:1
-          }}>
-            <View  style={stylesApp.stylHome}>
-              <View  style={stylesApp.styleCarruserHome}>
-                <Carousel
-                data={tareas}
-                renderItem={({item}:any)=><TaskCard tarea={item}></TaskCard>}
-                sliderWidth={400}
-                itemWidth={dimencionSWind}
-                />
-              </View>
-              <View  style={stylesApp.stylePuntajeHome}>
-                <PuntajeComp
-                puntaje={puntaje}
-                ></PuntajeComp>
-              </View>
-              <View  style={stylesApp.styleidentitiHome}>
-                <IdentitiCard
-                infoUser={info}
-                ></IdentitiCard>
-              </View>
-            </View>
-          </ScrollView>
-    )
-  
+  return (
+    <ScrollView style={{
+      flex: 1
+    }}>
+      <View style={stylesApp.stylHome}>
+        <View style={stylesApp.styleCarruserHome}>
+          <Carousel
+            data={tareas}
+            renderItem={({ item }: any) => <TaskCard tarea={item}></TaskCard>}
+            sliderWidth={400}
+            itemWidth={dimencionSWind}
+          />
+        </View>
+        <View style={stylesApp.stylePuntajeHome}>
+          <PuntajeComp
+            puntaje={puntaje}
+          ></PuntajeComp>
+        </View>
+        <View style={stylesApp.styleidentitiHome}>
+          <IdentitiCard
+            infoUser={info}
+          ></IdentitiCard>
+        </View>
+      </View>
+    </ScrollView>
+  )
+
 }

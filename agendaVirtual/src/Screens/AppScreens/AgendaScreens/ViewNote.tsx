@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useState } from 'react'
 import { colors, stylesApp } from '../../../Themes/AppThemes';
-import { Button, RefreshControl, SafeAreaView, ScrollView, Text, TextInput, View } from 'react-native'
+import { Button, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import { useGetInfoNote } from '../../../Hooks/AgendaHooks/useGetInfoNote';
 import { useNavigation } from '@react-navigation/native';
@@ -45,45 +45,89 @@ export const ViewNote = ({ route }) => {
     return (
         <SafeAreaView>
             <ScrollView>
-                <View>
-                    <Text style={stylesApp.titles}>
-                        Editar nota
-                    </Text>
+                <View style={styles.block}>
+                    <View style={styles.item}>
+                        <Text style={stylesApp.titles}>
+                            Editar nota
+                        </Text>
+                    </View>
 
-                    <Text style={stylesApp.generalText}>
-                        Titulo / Nombre
-                    </Text>
-                    <TextInput
-                        style={stylesApp.generalText}
-                        onChangeText={settitulo}
-                        value={titulo}
-                    ></TextInput>
-                    <Text style={stylesApp.generalText}>
-                        Contenido
-                    </Text>
-                    <TextInput
-                        style={stylesApp.generalText}
-                        onChangeText={setbody}
-                        value={body}
-                    ></TextInput>
 
-                    <Button
-                        color={colors.primary}
-                        title='Editar nota'
-                        onPress={() => {
-                            setNote()
-                        }}
-                    ></Button>
-                    <Button
-                        color={colors.primary}
-                        title='Elimianr nota'
-                        onPress={() => {
-                            delNote()
-                        }}
-                    ></Button>
+                    <View>
+                        <Text style={styles.titulos}>
+                            Titulo / Nombre
+                        </Text>
+                        <TextInput
+                            style={styles.titelInput}
+                            onChangeText={settitulo}
+                            value={titulo}
+                        ></TextInput>
+                    </View>
+
+                    <View>
+                        <Text style={styles.titulos}>Contenido</Text>
+                        <TextInput
+                            style={styles.bodyInput}
+                            onChangeText={setbody}
+                            value={body}
+                            multiline={true}
+                            numberOfLines={9}
+                        ></TextInput>
+                    </View>
+                    <View style={styles.btnfuntion}>
+                        <View style={styles.btnSingel}>
+                            <Button
+                                color={colors.primary}
+                                title='Editar nota'
+                                onPress={() => {
+                                    setNote()
+                                }}
+                            ></Button>
+                        </View>
+                        <View style={styles.btnSingel}>
+                            <Button
+                                color={colors.secundary}
+                                title='Elimianr nota'
+                                onPress={() => {
+                                    delNote()
+                                }}
+                            ></Button>
+                        </View>
+                    </View>
 
                 </View>
             </ScrollView>
         </SafeAreaView>
     )
 }
+const styles = StyleSheet.create({
+    item: {
+        alignItems: 'center'
+    },
+    titulos: {
+        fontWeight: 'bold',
+        paddingTop: 15
+    },
+    titelInput: {
+        borderBottomWidth: 1,
+        borderColor: '#DEDEDE',
+        fontSize:20
+    },
+    bodyInput: {
+        borderWidth: 1,
+        borderColor: '#DEDEDE',
+        marginVertical: 20,
+        fontSize:18
+    },
+    block: {
+        paddingHorizontal: 25,
+        paddingVertical: 10
+    },
+    btnfuntion:{
+        flexDirection:'row',
+        justifyContent:'center'
+    },
+    btnSingel:{
+        paddingHorizontal:10
+    }
+})

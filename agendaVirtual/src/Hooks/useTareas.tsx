@@ -11,24 +11,12 @@ const [tareas, settareas] = useState([])
 
 const { authState } = useContext(AuthContext);
 
-const getCod = async () =>{  
 
-
-  const codCal = await firestore()
-  .collection('calendario')
-  .where('cudUser', '==', authState.uid)
-  .get()
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  return codCal._docs[0]._data.codCalendar
-
-  }  
   const getTareas = async () =>{ 
-    const codCalDB = await getCod () 
+
     const tareasArray = await firestore()
     .collection('Tareas')
-    .where('idCalendario', '==', codCalDB)
+    .where('cudUser', '==',authState.uid )
     .get();
     
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment

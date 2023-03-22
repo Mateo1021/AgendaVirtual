@@ -92,7 +92,7 @@ export const ForoScreen = ({ route }) => {
       placeholder='Mensaje'
       user={{
         _id: authState.uid,
-        avatar: 'https://i.pravatar.cc/300',
+        avatar: authState.photoURL ,
         name: authState.displayName
       }}
     />

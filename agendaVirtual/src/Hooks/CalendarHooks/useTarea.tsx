@@ -9,10 +9,7 @@ export const useTarea = () => {
 
     const addTarea = async (data: {}) => {
 
-        const calendar = await firestore().collection("calendario")
-            .where("cudUser", "==", authState.uid).get();
-        // @ts-ignore
-        const idCalendar = await calendar._docs[0]._data.codCalendar
+
         const collection = await firestore().collection('Tareas').get();
         collection.forEach(doc => tareasId.push(doc.id));
 
@@ -32,7 +29,7 @@ export const useTarea = () => {
             fechaAlerta: data.fechaAlerta,
             // @ts-ignore
             fechaEntrega: data.fechaEntrega,
-            idCalendario: idCalendar,
+            cudUser: authState.uid,
             // @ts-ignore
             materia: data.materia,
             // @ts-ignore

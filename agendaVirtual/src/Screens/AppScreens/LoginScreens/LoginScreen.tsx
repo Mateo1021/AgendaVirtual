@@ -32,6 +32,7 @@ export const LoginScreen = ({ navigation }: Props) => {
   let uidLeg = '';
   let docUserLog: string = '';
   let nameUser:string='';
+  let urlImage:string= ''
   let userGlobal: any = []
   const [state, setState] = useState({
     email: '',
@@ -65,9 +66,11 @@ export const LoginScreen = ({ navigation }: Props) => {
                 docUserLog = documentSnapshot.id;
                 // @ts-ignore
                 nameUser = documentSnapshot._data.Nombres;
+                // @ts-ignore
+                urlImage = documentSnapshot._data.foto
               });
 
-              setDataUser(userGlobal.email, nameUser, userGlobal.phoneNumber, userGlobal.photoURL, userGlobal.providerData, docUserLog);
+              setDataUser(userGlobal.email, nameUser, userGlobal.phoneNumber, urlImage, userGlobal.providerData, docUserLog);
 
               navigation.navigate('MenuLateralNavigator')
 

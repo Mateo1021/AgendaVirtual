@@ -40,8 +40,10 @@ const [ select, setselect ] = useState("");
 const [ selectDia, setselectDia ] = useState("");
 
 return (
-  <View>
+  <View style={styles.generalContainer}>
+ 
     <View style={styles.container}>
+        <Text>Selecciona la materia</Text>
         <RNPickerSelect
             placeholder={{ label: "Selecciona una opcion", value: null }}
             onValueChange={(select) => setselect(select)}
@@ -50,6 +52,7 @@ return (
         />
     </View>
     <View style={styles.container}>
+    <Text>Selecciona el dia</Text>
         <RNPickerSelect
             placeholder={{ label: "Selecciona una opcion", value: null }}
             onValueChange={(selectD) => setselectDia(selectD)}
@@ -57,7 +60,6 @@ return (
             style={pickerSelectStyles}
         />
     </View>
-    <Text style={stylesApp.titles}>Agregar Horas</Text>
 
     <PickerHora 
     materia={select}
@@ -80,7 +82,11 @@ const styles = StyleSheet.create({
 container: {
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    paddingVertical:10
+},
+generalContainer:{
+    padding:10
 }
 });
 
