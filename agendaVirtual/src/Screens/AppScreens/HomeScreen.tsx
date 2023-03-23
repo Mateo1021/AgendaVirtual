@@ -1,5 +1,5 @@
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useLayoutEffect } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import { ActivityIndicator, Button, Dimensions, RefreshControl, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { TaskCard } from '../../Components/TaskCard';
 import { useTareas } from '../../Hooks/useTareas';
@@ -19,24 +19,27 @@ interface Props extends StackScreenProps<any, any> { };
 export const HomeScreen = ({ navigation, route }: Props) => {
 
   const { getTareas, tareas, isLoading } = useTareas();
-  const { getPuntos, puntaje, isLoadingP } = usePuntaje();
+
   const { info, getInfoUser, isLoadingIn } = useIdentification();
 
   let dimencionSWind = (Dimensions.get('window').width) - 50;
   const { authState } = useContext(AuthContext);
 
+  const [puntaje, setpuntaje] = useState('')
 
-/*   useLayoutEffect(() => {
-    var unsubscribe = firestore().collection("user").doc(authState.uid)
+  useLayoutEffect(() => {
+    var unsubscribe = firestore().collection("Usuarios").doc(authState.uid)
       .onSnapshot((querySnapshot) => {
-        getInfoUser()
+        //@ts-ignore
+        setpuntaje(querySnapshot.data().Puntaje);
+
       });
     return unsubscribe;
-  }, []); */
+  }, []);
 
   async function callInfoFuntion() {
     await getTareas()
-    getInfoUser()
+    await getInfoUser()
   }
 
   React.useEffect(() => {
@@ -47,7 +50,7 @@ export const HomeScreen = ({ navigation, route }: Props) => {
   }, [navigation]);
 
 
-  if (isLoading || isLoadingP || isLoadingIn) {
+  if (isLoading || isLoadingIn) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
         <ActivityIndicator color={colors.primary} size={100}></ActivityIndicator>
