@@ -5,6 +5,7 @@ import { lookProyectoScreen } from '../../Screens/AppScreens/ProyectosScreens/lo
 import { ForoScreen } from '../../Screens/AppScreens/ProyectosScreens/ForoScreen';
 import { ForoDocenteScreen } from '../../Screens/AppScreens/ProyectosScreens/ForoDocenteScreen';
 import { ResponseForo } from '../../Screens/AppScreens/ProyectosScreens/ResponseForo';
+import { infoCursoScreen } from '../../Screens/AppScreens/ProyectosScreens/infoCursoScreen';
 
 const Stack = createStackNavigator();
 
@@ -13,21 +14,25 @@ export const newProyectoNavigator=()=> {
     <Stack.Navigator
     
     screenOptions={{
-      headerShown:false,
+      headerShown:true,
       headerStyle:{
         elevation:0,
-        shadowColor:'transparent'
+        shadowColor:'transparent',
+
       },
       cardStyle:{
         backgroundColor:'white'
-      }
+      },
+
     }}
     >
-      <Stack.Screen name="ProyectosScreen"   component={ProyectosScreen} />
-      <Stack.Screen name="lookProyectoScreen"  component={lookProyectoScreen} />
-      <Stack.Screen name="ForoScreen"  component={ForoScreen} />
-      <Stack.Screen name="ForoDocenteScreen" options={{title:' ', headerBackTitle:'Salir',headerBackTitleVisible:true}} component={ForoDocenteScreen} />
-      <Stack.Screen name="ResponseForo"  component={ResponseForo} />
+      <Stack.Screen name="ProyectosScreen"  options={{headerShown:false}} component={ProyectosScreen} />
+      <Stack.Screen name="lookProyectoScreen" options={{title:'Atras'}}  component={lookProyectoScreen} />
+      <Stack.Screen name="ForoScreen" options={{title:'Atras'}} component={ForoScreen} />
+      <Stack.Screen name="ForoDocenteScreen" options={{title:'Atras'}} component={ForoDocenteScreen} />
+      <Stack.Screen name="ResponseForo" options={{title:'Atras'}} component={ResponseForo} />
+      <Stack.Screen name="infoCursoScreen" options={{title:'Atras'}} component={infoCursoScreen} />
+      
       
     </Stack.Navigator>
   );

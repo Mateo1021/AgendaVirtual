@@ -27,7 +27,8 @@ export const PerfilScreen = () => {
     idHorario: '',
     idMaterias: '',
     idNotas: '',
-    uid: ''
+    uid: '',
+    tel:''
   })
   const [response, setResponse] = React.useState<any>(null);
 
@@ -38,6 +39,7 @@ export const PerfilScreen = () => {
       .onSnapshot((querySnapshot) => {
         // @ts-ignore
         setdataUser(querySnapshot._data);
+        
       });
 
     return unsubscribe2;
@@ -48,6 +50,8 @@ export const PerfilScreen = () => {
   const [apellidoUser, setapellidoUser] = useState('')
   const [correUser, setcorreUser] = useState('')
   const [descpripUser, setdescpripUser] = useState('')
+  const [edad, setedad] = useState('')
+  const [tel, settel] = useState('')
 
   const editUser = () => {
 
@@ -56,7 +60,9 @@ export const PerfilScreen = () => {
       Nombres: nombreUser !== '' ? nombreUser : dataUser.Nombres,
       Correo: correUser !== '' ? correUser : dataUser.Correo,
       descripcion: descpripUser !== '' ? descpripUser : dataUser.descripcion,
-      idUser: authState.uid
+      idUser: authState.uid,
+      Edad:edad !== '' ? edad : dataUser.Edad,
+      tel:tel !== '' ? tel : dataUser.tel,
     }
     editUserinfo(dataToEdit)
   }
@@ -108,6 +114,11 @@ export const PerfilScreen = () => {
           <View style={styles.nombre}>
             <TextInput style={styles.txtNombre} placeholder={dataUser.Nombres} onChangeText={setnombreUser}></TextInput>
             <TextInput style={styles.txtApellido} placeholder={dataUser.Apellidos} onChangeText={setapellidoUser}></TextInput>
+          </View>
+
+          <View style={styles.nombre}>
+            <TextInput style={styles.txtNombre} placeholder={dataUser.Edad +' Años'} onChangeText={setedad}></TextInput>
+            <TextInput style={styles.txtApellido} placeholder={dataUser.tel} onChangeText={settel}></TextInput>
           </View>
 
           <TextInput style={styles.txtCorreo} placeholder={dataUser.Correo} onChangeText={setcorreUser} editable={false}></TextInput>

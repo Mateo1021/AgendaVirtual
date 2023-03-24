@@ -52,25 +52,25 @@ export const ForoDocenteScreen = ({ route }) => {
   function ScrollViewForo() {
 
     return (
-      <ScrollView style={styles.container}>
+      <View style={styles.container}>
         {
           messages.map((item, index) => (
             <View style={styles.item} key={index}>
               <View style={styles.itemTitel}>
                 <Text style={styles.textTitel}>{
-                /*@ts-ignore */}
+               /*@ts-ignore */}
                   {item.titulo}
                 </Text>
               </View>
               <View style={styles.itemBody}>
                 <Text style={styles.textBody}>{
-                /*@ts-ignore */}
+               /*@ts-ignore */}
                   {item.body}
                 </Text>
               </View>
               <View style={styles.itemBtn}>
                 <TouchableOpacity
-                
+
                   //@ts-ignore
                   onPress={() => navigation.navigate('ResponseForo', {
                     //@ts-ignore
@@ -83,16 +83,23 @@ export const ForoDocenteScreen = ({ route }) => {
             </View>
           ))
         }
-      </ScrollView>
+      </View>
+
     )
   }
 
-
   return (
-    <View style={styles.blok}>
-      <Text style={stylesApp.titles}>Foro</Text>
-      <ScrollViewForo></ScrollViewForo>
-    </View>
+
+      <View style={styles.blok}>
+        <Text style={stylesApp.titles}>Foro</Text>
+        <ScrollView>
+          <ScrollViewForo></ScrollViewForo>
+        <View style={styles.footerComp}>
+
+        </View>
+        </ScrollView>
+      </View>
+
   )
 }
 
@@ -111,7 +118,8 @@ const styles = StyleSheet.create({
     borderColor: '#E6E6E6',
   },
   blok: {
-    alignItems: 'center'
+    alignItems: 'center',
+
   },
   itemTitel: {
     alignItems: 'center',
@@ -128,13 +136,16 @@ const styles = StyleSheet.create({
   textBody: {
     color: 'black',
     fontSize: 20,
-   marginLeft:10,
+    marginLeft: 10,
   },
-  itemBtn:{
-    alignItems:'flex-end'
+  itemBtn: {
+    alignItems: 'flex-end'
   },
-  textBtn:{
-  color:colors.primary,
-  fontSize:15
+  textBtn: {
+    color: colors.primary,
+    fontSize: 15
+  },
+  footerComp:{
+    marginBottom:80
   }
 })

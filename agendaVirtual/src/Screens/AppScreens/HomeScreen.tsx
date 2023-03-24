@@ -66,20 +66,24 @@ export const HomeScreen = ({ navigation, route }: Props) => {
           <Carousel
             data={tareas}
             renderItem={({ item }: any) => <TaskCard tarea={item}></TaskCard>}
-            sliderWidth={400}
+            sliderWidth={410}
             itemWidth={dimencionSWind}
           />
         </View>
-        <View style={stylesApp.stylePuntajeHome}>
-          <PuntajeComp
-            puntaje={puntaje}
-          ></PuntajeComp>
-        </View>
+
+
         <View style={stylesApp.styleidentitiHome}>
           <IdentitiCard
             infoUser={info}
           ></IdentitiCard>
         </View>
+
+        <View style={stylesApp.stylePuntajeHome}>
+          <PuntajeComp
+            puntaje={puntaje}
+          ></PuntajeComp>
+        </View>
+
       </View>
     </ScrollView>
   )

@@ -14,6 +14,7 @@ import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
 import { SelectComp } from '../../../Components/GeneralComponets/SelectComp';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { generalFunctions } from '../../../core/generalFunctions';
+import { LocaleConfig } from 'react-native-calendars';
 interface Props extends StackScreenProps<any, any> { }
 
 export const EditTareaScreen = ({ route, navigation }: Props) => {
@@ -44,10 +45,11 @@ export const EditTareaScreen = ({ route, navigation }: Props) => {
     }
   ]);
   const [date, setDate] = useState(new Date(dateTareaRoute));
+
+  
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
   const [dateShow, setdateShow] = useState(parseDate(dataTarea.fechaEntrega.seconds))
-
   const [priori, onChangepriori] = React.useState('');
 
   const [titulo, onChangetitulo] = React.useState(dataTarea.titulo);
@@ -85,11 +87,11 @@ export const EditTareaScreen = ({ route, navigation }: Props) => {
     setDate(currentDate);
 
 
-    let mesText: number = selectedDate.getMonth() < 9 ? '0' + (selectedDate.getMonth() + 1) : (selectedDate.getMonth() + 1);
-    let diaText: number = selectedDate.getDate() < 9 ? '0' + selectedDate.getDate() : selectedDate.getDate()
+    let mesText: number = selectedDate.getMonth() <= 9 ? '0' + (selectedDate.getMonth() + 1) : (selectedDate.getMonth() + 1);
+    let diaText: number = selectedDate.getDate() <= 9 ? '0' + selectedDate.getDate() : selectedDate.getDate()
     setdateShow(diaText + '/' + mesText + '/' + selectedDate.getFullYear())
   };
-
+ 
   const showMode = (currentMode: any) => {
     setShow(true);
     setMode(currentMode);
@@ -181,7 +183,7 @@ export const EditTareaScreen = ({ route, navigation }: Props) => {
           <View style={styles.btnAdd}>
             <Button
               color={colors.primary}
-              title='Agregar Tarea'
+              title='Editar Tarea'
               onPress={() => {
                 agrupInfoTareo();
                 navigation.goBack();

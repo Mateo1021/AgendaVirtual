@@ -15,14 +15,18 @@ export const RankingScreen = () => {
 
   const { authState } = useContext(AuthContext);
   const [puntaje, setpuntaje] = useState('')
-  const [insignias, setinsignias] = useState([])
+  const [insignias, setinsignias] = useState(["1"])
   useLayoutEffect(() => {
     var unsubscribe = firestore().collection("Usuarios").doc(authState.uid)
       .onSnapshot((querySnapshot) => {
         //@ts-ignore
         setpuntaje(querySnapshot.data().Puntaje);
-        //@ts-ignore
-        setinsignias(querySnapshot.data().insignias)
+//@ts-ignore
+        if(querySnapshot.data().insignias.length >0){
+
+          //@ts-ignore
+          setinsignias(querySnapshot.data().insignias)
+        }
       });
     return unsubscribe;
   }, []);
@@ -71,6 +75,9 @@ const styles = StyleSheet.create({
     fontSize:17
   },
   insigniasImg:{
-    paddingBottom:50
+    paddingBottom:50,
+    alignItems:'center',
+    justifyContent:'center',
+    alignContent:'center'
   }
 });

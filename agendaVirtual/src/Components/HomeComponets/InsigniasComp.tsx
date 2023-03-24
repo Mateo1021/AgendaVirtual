@@ -52,15 +52,15 @@ export const InsigniasComp = ({ idImg }) => {
                     </View>
                 )
                 break;
-            /*             case '5':
-                            return (
-                                <View>
-                                    <Image
-                                        source={require('./insignias/5i.png')}
-                                    />
-                                </View>
-                            )
-                            break; */
+            case 5:
+                return (
+                    <View>
+                        <Image
+                            source={require('./insignias/5i.png')}
+                        />
+                    </View>
+                )
+                break;
             case 6:
                 setmsjInsig('Insignia por buena navegacion web')
                 return (
@@ -81,15 +81,15 @@ export const InsigniasComp = ({ idImg }) => {
                     </View>
                 )
                 break;
-            /*             case '8':
-                            return (
-                                <View>
-                                    <Image
-                                        source={require('./insignias/8i.png')}
-                                    />
-                                </View>
-                            )
-                            break; */
+            case 8:
+                return (
+                    <View>
+                        <Image
+                            source={require('./insignias/8i.png')}
+                        />
+                    </View>
+                )
+                break;
             case 9:
                 setmsjInsig('Insignia alta participacion en la app')
                 return (
@@ -111,10 +111,11 @@ export const InsigniasComp = ({ idImg }) => {
                 )
                 break;
             default:
+                setmsjInsig('Participa y usa la app para que tus docentes te den insignias')
                 return (
                     <View>
                         <Image
-                            source={require('./insignias/1i.png')}
+                            source={require('./insignias/11i.png')}
                         />
                     </View>
                 )
@@ -123,7 +124,7 @@ export const InsigniasComp = ({ idImg }) => {
     }
 
     return (
-        <View>
+        <View >
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -143,10 +144,13 @@ export const InsigniasComp = ({ idImg }) => {
                     </View>
                 </View>
             </Modal>
+
+
+
             <TouchableOpacity
-            onPress={() => setModalVisible(true)}
+                onPress={() => setModalVisible(true)}
             >
-            <ImgInsig></ImgInsig>
+                <ImgInsig></ImgInsig>
             </TouchableOpacity>
         </View>
     )
@@ -154,44 +158,45 @@ export const InsigniasComp = ({ idImg }) => {
 
 const styles = StyleSheet.create({
     centeredView: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginTop: 22,
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22,
     },
     modalView: {
-      margin: 20,
-      backgroundColor: 'white',
-      borderRadius: 20,
-      padding: 35,
-      alignItems: 'center',
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
-      elevation: 5,
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
     },
     button: {
-      borderRadius: 20,
-      padding: 10,
-      elevation: 2,
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2,
     },
     buttonOpen: {
-      backgroundColor: '#F194FF',
+        backgroundColor: '#F194FF',
     },
     buttonClose: {
-      backgroundColor: '#2196F3',
+        backgroundColor: '#2196F3',
     },
     textStyle: {
-      color: 'white',
-      fontWeight: 'bold',
-      textAlign: 'center',
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
     },
     modalText: {
-      marginBottom: 15,
-      textAlign: 'center',
+        marginBottom: 15,
+        textAlign: 'center',
     },
-  });
+    
+});

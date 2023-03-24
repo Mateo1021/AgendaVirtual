@@ -140,7 +140,8 @@ export const stylesApp = StyleSheet.create({
 
     },
     styleidentitiHome:{
-
+padding:15,
+paddingTop:30
     }
 
 });
