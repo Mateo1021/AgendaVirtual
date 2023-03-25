@@ -159,6 +159,7 @@ export const useCalificaciones = () => {
             }
 
         }
+
         let ene = []
         let feb = []
         let Mar = []
@@ -173,47 +174,47 @@ export const useCalificaciones = () => {
         let Dic = []
         for (let k in calificacionesByFecha) {
             switch (calificacionesByFecha[k].fecha.split('-')[1]) {
-                case '1':
+                case '01':
                     if (calificacionesByFecha[k].tipo == tipoCali) {
                         ene.push(calificacionesByFecha[k])
                     }
                     break;
-                case '2':
+                case '02':
                     if (calificacionesByFecha[k].tipo == tipoCali) {
                         feb.push(calificacionesByFecha[k])
                     }
                     break;
-                case '3':
+                case '03':
                     if (calificacionesByFecha[k].tipo == tipoCali) {
                         Mar.push(calificacionesByFecha[k])
                     }
                     break;
-                case '4':
+                case '04':
                     if (calificacionesByFecha[k].tipo == tipoCali) {
                         Abr.push(calificacionesByFecha[k])
                     }
                     break;
-                case '5':
+                case '05':
                     if (calificacionesByFecha[k].tipo == tipoCali) {
                         May.push(calificacionesByFecha[k])
                     }
                     break;
-                case '6':
+                case '06':
                     if (calificacionesByFecha[k].tipo == tipoCali) {
                         Jun.push(calificacionesByFecha[k])
                     }
                     break;
-                case '7':
+                case '07':
                     if (calificacionesByFecha[k].tipo == tipoCali) {
                         Jul.push(calificacionesByFecha[k])
                     }
                     break;
-                case '8':
+                case '08':
                     if (calificacionesByFecha[k].tipo == tipoCali) {
                         ago.push(calificacionesByFecha[k])
                     }
                     break;
-                case '9':
+                case '09':
                     if (calificacionesByFecha[k].tipo == tipoCali) {
                         sep.push(calificacionesByFecha[k])
                     }

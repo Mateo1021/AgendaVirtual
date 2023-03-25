@@ -71,6 +71,7 @@ const [dataArrayMounth, setdataArrayMounth] = useState([0.0, 0.0, 0.0, 0.0,0.0, 
     }
     return (
       <LineChart
+      fromZero={true}
         data={dataByMounth}
         width={Dimensions.get("window").width} // from react-native
         height={220}
@@ -109,9 +110,12 @@ const [dataArrayMounth, setdataArrayMounth] = useState([0.0, 0.0, 0.0, 0.0,0.0, 
           data: dataArrayMate
         }
       ]
+      
     };
+
     return (
       <BarChart
+      fromZero={true}
         yAxisLabel=""
         yAxisSuffix=""
         yAxisInterval={1} // optional, defaults to 1

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Text, View, Alert } from 'react-native'
+import { Text, View, Alert, StyleSheet } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -39,39 +39,49 @@ export const ProyectoCard = ({ pro }: any) => {
       .update({
         idCurso: id
       })
-// @ts-ignore
-      navigation.pop()
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      navigation.navigate('HomeScreen')
+    // @ts-ignore
+    navigation.pop()
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    navigation.navigate('HomeScreen')
 
   }
 
 
   return (
-    <View style={stylesApp.cardTaskStyle}>
-      <Card>
-        <CardTitle
-          titleStyle={stylesApp.textCardTitle}
-          style={stylesApp.styleCardTitel}
-          title={pro._data.nombreCurso}
-        />
-        <CardContent textStyle={stylesApp.textCardBody} text={pro._data.apellidosDocente} />
-        <CardAction
-          textStyle={stylesApp.textCardFooter}
-          separator={true}
-          inColumn={false}>
-
-          <CardButton
-            textStyle={stylesApp.textCardFooterButtom}
-            onPress={() => createTwoButtonAlert(pro._data.nombreCurso, pro._data.codCurso)}
-            title='Seleccionar'
-            color='black'
-          />
-        </CardAction>
-      </Card>
+    <View style={styles.generalContainer}>
+      <View style={styles.contTitel}>
+        <Text style={styles.txtTitel}>{pro._data.nombreCurso}</Text>
+      </View>
+      <View style={styles.contBody}>
+        <Text style={styles.txtBody}>{pro._data.shortDescrip}</Text>
+      </View>
     </View>
 
 
   )
 }
+const styles = StyleSheet.create({
+  generalContainer: {
+    backgroundColor: 'white',
+    borderBottomWidth:1,
+    borderColor:'#D6D6D6'
+  },
+  contTitel: {
+    alignItems: 'center',
+    marginVertical: 20
+  },
+  txtTitel: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 18
+  },
+  contBody: {
+marginHorizontal:20
+  },
+  txtBody: {
+    color: 'black',
+    fontSize: 15,
+    paddingBottom:20
+  }
+});

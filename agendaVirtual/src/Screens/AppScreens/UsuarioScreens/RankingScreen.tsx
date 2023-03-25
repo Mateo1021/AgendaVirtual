@@ -30,8 +30,6 @@ export const RankingScreen = () => {
       });
     return unsubscribe;
   }, []);
-  console.log(insignias);
-
 
   return (
     <ScrollView>

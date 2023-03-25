@@ -67,8 +67,7 @@ export const PerfilScreen = () => {
     editUserinfo(dataToEdit)
   }
   addImg()
-  console.log(response);
-  
+
   async function addImg() {
     if(response!=='null'){
       const reference = storage().ref('userImgs/' + authState.uid);
@@ -76,8 +75,7 @@ export const PerfilScreen = () => {
   
       reference.getDownloadURL()
           .then((url) => {
-              console.log(url);
-              
+
               addImgUser(url)
               setResponse(null)
           })

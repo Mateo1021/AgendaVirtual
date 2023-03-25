@@ -99,7 +99,7 @@ export const HorarioComp = (idHorario: any) => {
         setviernes(vie)
         setsabado(sab)
         setdomingo(dom)
-        console.log(lun);
+
 
       });
     return unsubscribe2;

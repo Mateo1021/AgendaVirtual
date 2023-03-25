@@ -103,7 +103,9 @@ export const HorarioScreen = ({ navigation }: Props) => {
           title='Crear un nuevo Horario'
           onPress={() => {
             createHora()
-            navigation.navigate('editarHorarioScreen')
+
+              codCalendar()
+
           }}
         ></Button>
       </View>

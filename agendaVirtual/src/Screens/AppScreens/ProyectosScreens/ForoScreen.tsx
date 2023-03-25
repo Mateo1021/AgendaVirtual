@@ -20,9 +20,28 @@ import { database } from '../../../DataBase/requestFirebase';
 import { AuthContext } from '../../../Context/ContextUser/AuthContext';
 import { useContext } from 'react';
 import firestore from '@react-native-firebase/firestore';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+import dayjs from 'dayjs';
+import 'dayjs/locale/es'
+import { colors } from '../../../Themes/AppColors';
 
 // @ts-ignore
 export const ForoScreen = ({ route }) => {
+
+
+
+  function sumarFechasConHoras(fechaHora: any, horasASumar: any) {
+    // Convertir la fecha con hora a objeto Date
+    let fechaHoraObj = new Date(fechaHora);
+
+    // Sumar las horas
+    fechaHoraObj.setHours(fechaHoraObj.getHours() + horasASumar);
+
+    // Devolver la nueva fecha con hora
+    return fechaHoraObj;
+  }
+
 
 
   const [messages, setMessages] = useState([]);
@@ -40,7 +59,7 @@ export const ForoScreen = ({ route }) => {
             msj.push(
               {
                 _id: doc.data()._id,
-                createdAt: doc.data().createdAt.toDate(),
+                createdAt: sumarFechasConHoras(doc.data().createdAt.toDate(), -5),
                 text: doc.data().text,
                 cours: doc.data().cours,
                 user: doc.data().user
@@ -74,6 +93,24 @@ export const ForoScreen = ({ route }) => {
       })
   }, []);
 
+
+
+  const renderSend = (sendProps: any) => {
+    const {text,messageIdGenerator,user, onSend} = sendProps
+
+    if (text.trim().length > 0) {
+      return (
+        <TouchableOpacity
+        style={{padding:10}}
+        onPress={()=>onSend({ text: text.trim(), user:user,_id:messageIdGenerator()}, true)}
+        >
+          <Icon name={'rocket'} size={25} color={colors.primary} />
+        </TouchableOpacity>
+      );
+    }
+    return null;
+  }
+
   return (
     // <>
     //   {messages.map(message => (
@@ -81,6 +118,8 @@ export const ForoScreen = ({ route }) => {
     //   ))}
     // </>
     <GiftedChat
+      renderSend={renderSend}
+      locale="es"
       renderUsernameOnMessage={true}
       messages={messages}
       showAvatarForEveryMessage={false}
@@ -92,7 +131,7 @@ export const ForoScreen = ({ route }) => {
       placeholder='Mensaje'
       user={{
         _id: authState.uid,
-        avatar: authState.photoURL ,
+        avatar: authState.photoURL,
         name: authState.displayName
       }}
     />

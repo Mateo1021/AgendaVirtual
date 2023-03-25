@@ -14,9 +14,13 @@ import { async } from '@firebase/util';
 import firestore from '@react-native-firebase/firestore';
 import { AuthContext } from '../../Context/ContextUser/AuthContext';
 import { useContext } from 'react';
+import { ProyectContext } from '../../Context/ContextProyecto/ProyectContext';
+import { generalArray } from '../../Context/ContexGeneralVar/generalArray';
 
 interface Props extends StackScreenProps<any, any> { };
 export const HomeScreen = ({ navigation, route }: Props) => {
+
+  const {addCours} =generalArray()
 
   const { getTareas, tareas, isLoading } = useTareas();
 
@@ -28,6 +32,7 @@ export const HomeScreen = ({ navigation, route }: Props) => {
   const [puntaje, setpuntaje] = useState('')
 
   useLayoutEffect(() => {
+    //@ts-ignore
     var unsubscribe = firestore().collection("Usuarios").doc(authState.uid)
       .onSnapshot((querySnapshot) => {
         //@ts-ignore
@@ -49,6 +54,11 @@ export const HomeScreen = ({ navigation, route }: Props) => {
     return focusHandler;
   }, [navigation]);
 
+
+
+/*   const { setDataProyect } = useContext(ProyectContext)
+
+  addCours('test') */
 
   if (isLoading || isLoadingIn) {
     return (

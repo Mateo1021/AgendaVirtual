@@ -167,7 +167,7 @@ export const calculoRapidoScreen = () => {
               </View>
               <View style={styles.blockResult}>
                 <Text  style={styles.titelNota}>
-                  La nota para un 4.5
+                  La nota para un 4.0
                 </Text>
                 <Text style={styles.notaResult}>
                   {notaExe}
@@ -175,7 +175,7 @@ export const calculoRapidoScreen = () => {
               </View>
               <View style={styles.blockResult}>
                 <Text style={styles.titelNota}>
-                  La nota para un 5.0
+                  La nota para un 4.5
                 </Text>
                 <Text style={styles.notaResult}>
                 {notaPerf}
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
   },
   styleinput: {
     width: 50,
-    height: 40,
+    height: 50,
     borderColor: colors.primary,
     margin: 5,
     borderWidth: 1,
@@ -252,7 +252,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
     borderRadius: 20,
-
   },
   inputContainer: {
     flex: 1,

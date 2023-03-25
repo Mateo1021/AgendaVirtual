@@ -31,8 +31,8 @@ export const LoginScreen = ({ navigation }: Props) => {
   let flagLogin = 0;
   let uidLeg = '';
   let docUserLog: string = '';
-  let nameUser:string='';
-  let urlImage:string= ''
+  let nameUser: string = '';
+  let urlImage: string = ''
   let userGlobal: any = []
   const [state, setState] = useState({
     email: '',
@@ -63,14 +63,17 @@ export const LoginScreen = ({ navigation }: Props) => {
             .get()
             .then(querySnapshot => {
               querySnapshot.forEach(documentSnapshot => {
+
                 docUserLog = documentSnapshot.id;
+              
                 // @ts-ignore
                 nameUser = documentSnapshot._data.Nombres;
                 // @ts-ignore
                 urlImage = documentSnapshot._data.foto
+
+                setDataUser(userGlobal.email, nameUser, userGlobal.phoneNumber, urlImage, userGlobal.providerData, docUserLog);
               });
 
-              setDataUser(userGlobal.email, nameUser, userGlobal.phoneNumber, urlImage, userGlobal.providerData, docUserLog);
 
               navigation.navigate('MenuLateralNavigator')
 
@@ -117,6 +120,25 @@ export const LoginScreen = ({ navigation }: Props) => {
         navigation.navigate('MenuLateralNavigator') */
   }
 
+  function resetPass() {
+    if (state.email !== '') {
+      firebase.auth().sendPasswordResetEmail(state.email)
+        .then(() => {
+          // Password reset email sent!
+          // ..
+          Alert.alert('Correo enviado con exito por favor realiza el proceso mediante el link que se envio a tu correo')
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          Alert.alert('Correo incorrecto')
+          // ..
+        });
+
+    } else {
+      Alert.alert('Primero ingresa el correo de la cuenta que deseas recuperar')
+    }
+  }
   return (
 
 
@@ -146,6 +168,7 @@ export const LoginScreen = ({ navigation }: Props) => {
             borderRadius: 15,
           }}
           onChangeText={(value) => setState({ ...state, email: value })}
+          keyboardType={'email-address'}
         ></TextInput>
       </View>
 
@@ -168,34 +191,7 @@ export const LoginScreen = ({ navigation }: Props) => {
       </View>
 
       <View style={{ alignItems: 'center' }}>
-        <TouchableOpacity
-          style={{
-            alignItems: 'center',
-            flex: 1,
-            marginBottom: 10,
-            marginTop: 20
-          }}
-          onPress={() => navigation.navigate('CreateUserScreen')}
-        >
-          <Text style={{
-            textDecorationLine: 'underline',
-            color: 'blue'
-          }}>Registrarse</Text>
-        </TouchableOpacity>
 
-        <TouchableOpacity
-          style={{
-            alignItems: 'center',
-            flex: 1,
-            marginBottom: 10,
-          }}
-          onPress={() => console.log('1')}
-        >
-          <Text style={{
-            textDecorationLine: 'underline',
-            color: 'blue'
-          }}>Recordar Contraseña</Text>
-        </TouchableOpacity>
 
 
         <TouchableOpacity
@@ -216,6 +212,40 @@ export const LoginScreen = ({ navigation }: Props) => {
             color: 'white',
             alignItems: 'center',
           }}>Ingresar</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={{marginTop:70}}>
+
+      <TouchableOpacity
+          style={{
+            alignItems: 'center',
+            marginBottom: 10,
+            marginTop: 20
+          }}
+          onPress={() => navigation.navigate('CreateUserScreen')}
+        >
+          <Text style={{
+            color: colors.primary,
+            fontWeight:'bold'
+          }}>Registrarse</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{
+            alignItems: 'center',
+            marginBottom: 10,
+            borderTopWidth:3,
+            borderColor:colors.primary,
+            marginHorizontal:120,
+            paddingTop:10
+          }}
+          onPress={() => resetPass()}
+        >
+          <Text style={{
+            color: colors.primary,
+            fontWeight:'bold'
+          }}>Recordar Contraseña</Text>
         </TouchableOpacity>
       </View>
 

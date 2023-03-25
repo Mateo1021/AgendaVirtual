@@ -46,7 +46,7 @@ export const TopTapCalendarNavigator = () => {
     
     >
       <Tab.Screen name="CalendarioScreen" options={{title:'Calendario'}} component={calendarNavigator} />
-      <Tab.Screen name="HorarioScreen" options={{title:'Horario'}} component={newHorarioNavigator} />
+      <Tab.Screen name="HorarioScreen" options={{title:'Horario',swipeEnabled:false}} component={newHorarioNavigator} />
     </Tab.Navigator>
   );
 }

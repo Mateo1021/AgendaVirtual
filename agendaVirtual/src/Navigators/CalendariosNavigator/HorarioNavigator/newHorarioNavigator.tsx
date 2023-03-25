@@ -3,6 +3,7 @@ import React from 'react';
 import { HorarioScreen } from '../../../Screens/AppScreens/CalendarioScreens/HorarioScreen';
 import { addMateriasScreen } from '../../../Screens/AppScreens/CalendarioScreens/HorariosScreens/addMateriasScreen';
 import { editarHorarioScreen } from '../../../Screens/AppScreens/CalendarioScreens/HorariosScreens/editarHorarioScreen';
+import { editMateriaScreen } from '../../../Screens/AppScreens/CalendarioScreens/HorariosScreens/editMateriaScreen';
 import { NewHorario } from '../../../Screens/AppScreens/CalendarioScreens/HorariosScreens/NewHorario';
 import { viewHorarioScreen } from '../../../Screens/AppScreens/CalendarioScreens/HorariosScreens/viewHorarioScreen';
 
@@ -13,7 +14,7 @@ export const newHorarioNavigator=()=> {
     <Stack.Navigator
     
     screenOptions={{
-      headerShown:false,
+      headerShown:true,
       headerStyle:{
         elevation:0,
         shadowColor:'transparent'
@@ -23,11 +24,13 @@ export const newHorarioNavigator=()=> {
       }
     }}
     >
-      <Stack.Screen name="HorarioScreen"  component={HorarioScreen} />
-      <Stack.Screen name="NewHorario"  component={NewHorario} />
-      <Stack.Screen name="addMateriasScreen"  component={addMateriasScreen} />
-      <Stack.Screen name="editarHorarioScreen"  component={editarHorarioScreen} />
-      <Stack.Screen name="viewHorarioScreen"  component={viewHorarioScreen} />
+      <Stack.Screen name="HorarioScreen" options={{headerShown:false}}  component={HorarioScreen} />
+      <Stack.Screen name="NewHorario" options={{headerShown:false}}  component={NewHorario} />
+      <Stack.Screen name="addMateriasScreen"  options={{headerShown:true,title:'Atras'}}  component={addMateriasScreen} />
+      <Stack.Screen name="editarHorarioScreen" options={{headerShown:true,title:'Atras'}}  component={editarHorarioScreen} />
+      <Stack.Screen name="viewHorarioScreen"  options={{headerShown:true,title:'Atras'}}  component={viewHorarioScreen} />
+      <Stack.Screen name="editMateriaScreen"  options={{headerShown:true,title:'Atras'}}  component={editMateriaScreen} />
+    
 
     </Stack.Navigator>
   );

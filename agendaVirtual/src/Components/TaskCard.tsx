@@ -15,7 +15,6 @@ export const TaskCard = ({ tarea }: any) => {
   let secondsToDate = (tarea._data.fechaEntrega.seconds) * 1000;
   let date = new Date(secondsToDate);
   let mounthAdd = date.getMonth().toString().length > 1 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1)
-  /*   console.log(mounthAdd); */
 
   let datePrint = date.getDate() + "/" + mounthAdd + "/" + date.getFullYear();
 

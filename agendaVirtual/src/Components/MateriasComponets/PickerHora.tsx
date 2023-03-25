@@ -82,7 +82,7 @@ export const PickerHora = (materia: any, dia: any) => {
             createHora(materia.materia, timeiDB, timefDB, materia.dia)
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            navigation.navigate('editarHorarioScreen')
+            navigation.goBack()
           }}
         ></Button>
       </View>
@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     padding: 10
   },
   btnAdd:{
-    paddingTop:50
+    paddingTop:50,
+    marginBottom:30
   }
 });
