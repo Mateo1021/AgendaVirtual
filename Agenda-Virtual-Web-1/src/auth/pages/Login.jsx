@@ -53,11 +53,13 @@ export const Login = () => {
   return (
 
 
-    <div >
+    <div  style={{ 
+      backgroundImage: `url(${Background})` 
+    }}>
       <div style={{ display: 'flex', justifyContent: 'center', width: '100%', height: '100vh' }} >
         <Card className='m-auto' style={{ width: '90%', alignItems: 'center' }}>
-          <Card.Img variant="top" src={Logo} style={{ width: '70%' }} />
-          <Card.Body>
+          <Card.Img variant="top" src={Logo} style={{ width: '70%',  }} />
+          <Card.Body style={{ opacity: '0.5' }}>
             <Card.Title>Módulo Web</Card.Title>
             <Card.Text>
               Fundación sin ánimo de lucro que hace 50 años brinda educación, primaria, secundaria y mediatéc
