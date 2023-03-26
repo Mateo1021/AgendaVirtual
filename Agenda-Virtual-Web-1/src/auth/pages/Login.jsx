@@ -29,7 +29,7 @@ export const Login = () => {
           querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
             console.log(doc.id, " => ", doc.data());
-            sessionStorage.setItem('codUserWb',JSON.stringify(doc.data()))
+            sessionStorage.setItem('codUserWb', JSON.stringify(doc.data()))
             if (doc.data().cargo != "profesor") {
               alert('Este modulo es solo para profesores')
               navigate('/login', { replace: true })
@@ -54,31 +54,33 @@ export const Login = () => {
   return (
 
 
-    <div  style={{ 
-      backgroundImage: `url(${Background})` 
+    <div style={{
+      backgroundImage: `url(${Background})`
     }}>
       <div style={{ display: 'flex', justifyContent: 'center', width: '100%', height: '100vh' }} >
-        <Card className='m-auto' style={{ width: '90%', alignItems: 'center' }}>
-          <Card.Img variant="top" src={Logo} style={{ width: '70%',  }} />
-          <Card.Body style={{ opacity: '0.5' }}>
+        <Card className='m-auto' style={{ width: '90%', alignItems: 'center', opacity: '0.85'  }}>
+          <Card.Img variant="top" src={Logo} style={{ width: '70%', }} />
+          <Card.Body>
             <Card.Title>Módulo Web</Card.Title>
             <Card.Text>
               Fundación sin ánimo de lucro que hace 50 años brinda educación, primaria, secundaria y mediatéc
             </Card.Text>
             <form className="bg-white shado-md rounded px8 pt-6 pb-8 mb-4">
               <div className="mb-3 row">
-                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Email</label>
+                <label htmlFor="staticEmail" className="col-sm-2 col-form-label" >Email</label>
                 <div className="col-sm-10">
-                  <input type="text" className="form-control" id="staticEmail" value={user} onChange={e => setUser(e.target.value)} />
+                  <input type="text" className="form-control" id="staticEmail" value={user} placeholder={'Correo'} onChange={e => setUser(e.target.value)} />
                 </div>
               </div>
               <div className="mb-3 row">
-                <label htmlFor="inputPassword" className="col-sm-2 col-form-label">Password</label>
+                <label htmlFor="inputPassword" className="col-sm-2 col-form-label" >Password</label>
                 <div className="col-sm-10">
-                  <input type="password" className="form-control" id="inputPassword" value={pass} onChange={e => setPass(e.target.value)} />
+                  <input type="password" className="form-control" id="inputPassword" value={pass} placeholder={'Contraseña'} onChange={e => setPass(e.target.value)} />
                 </div>
               </div>
-              <button type="button" className="btn btn-primary" onClick={logIn}>Iniciar sesión</button>
+              <div style={{display: 'flex', justifyContent: 'center' }}>
+                <Button type="button" className="btn btn-primary" style={{backgroundColor: '#ED7C23', border: '3px solid #492013' ,}} onClick={logIn}>Iniciar sesión</Button>
+              </div>
             </form>
           </Card.Body>
         </Card>
