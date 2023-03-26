@@ -5,6 +5,7 @@ import { initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 import { getFirestore } from "firebase/firestore";
 import { getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -24,6 +25,6 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 const at = getAuth(app);
+const storage = getStorage(app);
 
-
-export default {db, at}
+export default {db, at, storage}
