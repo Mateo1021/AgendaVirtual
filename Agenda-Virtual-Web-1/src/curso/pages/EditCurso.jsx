@@ -22,28 +22,13 @@ export const EditCurso = () => {
 
 
 
-  const [selected, setSelected] = React.useState([]);
-  const [position, setPosition] = React.useState(0);
-  const isItemSelected = (id) => !!selected.find((el) => el === id);
 
-  const handleClick =
-    (id) =>
-      ({ getItemById, scrollToItem }) => {
-        const itemSelected = isItemSelected(id);
-
-        setSelected((currentSelected) =>
-          itemSelected
-            ? currentSelected.filter((el) => el !== id)
-            : currentSelected.concat(id)
-        );
-      };
 
 
 
   useLayoutEffect(() => {
     const unsub = onSnapshot(doc(db.db, "Cursos", id), (doc) => {
       setinfoCours(doc.data());
-      console.log(doc.data());
     });
 
   }, [])
@@ -69,7 +54,6 @@ export const EditCurso = () => {
         foros.push(doc.data());
       });
       setforos(foros)
-      console.log(foros);
     });
 
   }, [])
@@ -77,18 +61,21 @@ export const EditCurso = () => {
 
   function CardRend(info) {
     const visibility = React.useContext(VisibilityContext);
-console.log(info);
     return (
-      <Card style={{ width: '18rem' ,margin:'20px' ,height:'200px'}}>
-      <Card.Img variant="top" src="holder.js/100px180" />
-      <Card.Body>
-        <Card.Title>{info.info.titulo}</Card.Title>
-        <Card.Text>
-          {info.info.body}
-        </Card.Text>
-        <Button variant="primary">Go somewhere</Button>
-      </Card.Body>
-    </Card>
+      <button style={{ backgroundColor: 'white', borderWidth: '0'}}
+      onClick={()=> {console.log(info.info.codEvento)}}
+      >
+      <Card style={{ width: '18rem', margin: '20px', height: '200px' }}
+        key={info.info.codEvento}
+      >
+        <Card.Body style={{display:'flex', justifyContent: 'space-evenly' ,flexDirection:'column'}}>
+          <Card.Title>{info.info.titulo}</Card.Title>
+          <Card.Text>
+            {info.info.body}
+          </Card.Text>
+        </Card.Body>
+      </Card>
+      </button>
     );
   }
 
@@ -97,8 +84,8 @@ console.log(info);
       React.useContext(VisibilityContext);
 
     return (
-      <button disabled={isFirstItemVisible} onClick={() => scrollPrev()} 
-      style={{backgroundColor:"white",borderWidth:"0"}}>
+      <button disabled={isFirstItemVisible} onClick={() => scrollPrev()}
+        style={{ backgroundColor: "white", borderWidth: "0" }}>
         <IoChevronBackSharp >
 
         </IoChevronBackSharp>
@@ -113,7 +100,59 @@ console.log(info);
 
     return (
       <button disabled={isLastItemVisible} onClick={() => scrollNext()}
-      style={{backgroundColor:"white",borderWidth:"0"}}
+        style={{ backgroundColor: "white", borderWidth: "0" }}
+      >
+        <IoChevronForwardSharp></IoChevronForwardSharp>
+      </button>
+
+    );
+  }
+
+
+
+
+  function CardRendF(info) {
+    const visibility = React.useContext(VisibilityContext);
+    return (
+      <button style={{ backgroundColor: 'white', borderWidth: '0'}}
+      onClick={()=> {console.log(info.info.idRegistro)}}
+      >
+      <Card style={{ width: '18rem', margin: '20px', height: '200px' }}
+        key={info.info.idRegistro}
+      >
+        <Card.Body style={{display:'flex', justifyContent: 'space-evenly' ,flexDirection:'column'}}>
+          <Card.Title>{info.info.titulo}</Card.Title>
+          <Card.Text>
+            {info.info.body}
+          </Card.Text>
+        </Card.Body>
+      </Card>
+      </button>
+    );
+  }
+
+  function LeftArrowF() {
+    const { isFirstItemVisible, scrollPrev } =
+      React.useContext(VisibilityContext);
+
+    return (
+      <button disabled={isFirstItemVisible} onClick={() => scrollPrev()}
+        style={{ backgroundColor: "white", borderWidth: "0" }}>
+        <IoChevronBackSharp >
+
+        </IoChevronBackSharp>
+      </button>
+
+
+    );
+  }
+
+  function RightArrowF() {
+    const { isLastItemVisible, scrollNext } = React.useContext(VisibilityContext);
+
+    return (
+      <button disabled={isLastItemVisible} onClick={() => scrollNext()}
+        style={{ backgroundColor: "white", borderWidth: "0" }}
       >
         <IoChevronForwardSharp></IoChevronForwardSharp>
       </button>
@@ -125,16 +164,48 @@ console.log(info);
     <>
       <div>
         {<img src={infoCours.banerCurso} className="banner" />}
-        <h1>{infoCours.nombreCurso} </h1>
+        <h1 className='titelPage'>{infoCours.nombreCurso} </h1>
+
+        <div className='eventos'>
+          <div className='subTitels'>
+            <h4>Eventos</h4>
+          </div>
+          <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow} >
+            {eventos.map((id) => (
+              <CardRend
+                info={id}
+              />
+            ))}
+          </ScrollMenu>
+          <div className='btnAdd'>
+            <button class="btn orange text-white ">
+              Crear nuevo evento
+            </button>
+          </div>
+        </div>
 
 
-        <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow} >
-          {eventos.map((id) => (
-            <CardRend
-            info={id}
-            />
-          ))}
-        </ScrollMenu>
+        <div className='actividades'>
+          <div>
+            <h4 className='subTitels'>
+              Actividades
+            </h4>
+          </div>
+
+          <ScrollMenu LeftArrow={LeftArrowF} RightArrow={RightArrowF} >
+            {foros.map((id) => (
+              <CardRendF
+                info={id}
+              />
+            ))}
+          </ScrollMenu>
+
+          <div className='btnAdd'>
+            <button class="btn orange text-white ">
+              Crear nueva actividad
+            </button>
+          </div>
+        </div>
 
 
       </div>

@@ -2,3 +2,23 @@
 width: 100vw;
 height: 30vw;
 }
+.btnAdd{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+}
+.eventos{
+    margin-top: 30px;
+}
+.actividades{
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.subTitels{
+    margin-left: 30px;
+}
+.titelPage{
+    margin-left: 10px;
+    margin-top: 20px;
+}
