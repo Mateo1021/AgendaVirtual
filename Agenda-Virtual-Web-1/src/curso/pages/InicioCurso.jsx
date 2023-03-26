@@ -33,13 +33,11 @@ export const InicioCurso = () => {
         cursos.push(doc.data());
       });
       setCursos(cursos)
-      console.log(cursos);
     });
   }, [])
 
   function CardRend(info) {
     const visibility = React.useContext(VisibilityContext);
-    console.log(info.info.codCurso);
     return (
       <Card style={{display: 'flex', justifyContent: 'space-evenly', width: '18rem', margin: '20px', height: '400px' }}>
         <Card.Img variant="top" src={info.info.banerCurso} />
@@ -91,6 +89,7 @@ export const InicioCurso = () => {
           {Cursos.map((id) => (
             <CardRend
               info={id}
+              key={id.codCurso}
             />
           ))}
         </ScrollMenu>
