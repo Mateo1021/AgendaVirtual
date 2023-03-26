@@ -98,10 +98,6 @@ export const CreateCours = () => {
     let infoDocente = JSON.parse(sessionStorage.getItem('codUserWb'))
 
 
-
-    console.log(passRemove, infoDocente.apellidos, banner, 0, 0, isResponse, infoDocente.id, descL, courseName, infoDocente.nombre, descShort, temaCou);
-
-
     await setDoc(doc(base.db, "Cursos", isResponse), {
       ClaveDSalida: passRemove,
       apellidosDocente: infoDocente.apellidos,

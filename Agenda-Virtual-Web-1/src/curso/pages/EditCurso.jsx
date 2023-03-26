@@ -13,6 +13,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { IoChevronBackSharp } from "react-icons/io5";
 import { IoChevronForwardSharp } from "react-icons/io5";
+import { useNavigate } from 'react-router-dom';
 
 export const EditCurso = () => {
   const { id } = useParams();
@@ -23,8 +24,19 @@ export const EditCurso = () => {
 
 
 
+    const navigate = useNavigate();
+    const sedCeate =(id)=>{
+      navigate('/curso/creatActiv/' + id,{replace:true})
+    }
 
 
+
+    const sedNewAc =()=>{
+      navigate('/curso/newActiv',{replace:true})
+    }
+    const sedNewEve =()=>{
+      navigate('/curso/newEvent',{replace:true})
+    }
 
   useLayoutEffect(() => {
     const unsub = onSnapshot(doc(db.db, "Cursos", id), (doc) => {
@@ -42,7 +54,6 @@ export const EditCurso = () => {
         eventos.push(doc.data());
       });
       seteventos(eventos)
-      console.log(eventos);
     });
   }, [])
 
@@ -63,7 +74,7 @@ export const EditCurso = () => {
     const visibility = React.useContext(VisibilityContext);
     return (
       <button style={{ backgroundColor: 'white', borderWidth: '0'}}
-      onClick={()=> {console.log(info.info.codEvento)}}
+      onClick={()=> {sedCeate(info.info.codEvento)}}
       >
       <Card style={{ width: '18rem', margin: '20px', height: '200px' }}
         key={info.info.codEvento}
@@ -117,7 +128,7 @@ export const EditCurso = () => {
       <button style={{ backgroundColor: 'white', borderWidth: '0'}}
       onClick={()=> {console.log(info.info.idRegistro)}}
       >
-      <Card style={{ width: '18rem', margin: '20px', height: '200px' }}
+      <Card style={{ width: '18rem', margin: '20px', height: '200px' , flexDirection:''}}
         key={info.info.idRegistro}
       >
         <Card.Body style={{display:'flex', justifyContent: 'space-evenly' ,flexDirection:'column'}}>
@@ -174,11 +185,14 @@ export const EditCurso = () => {
             {eventos.map((id) => (
               <CardRend
                 info={id}
+                key={id.codEvento}
               />
             ))}
           </ScrollMenu>
           <div className='btnAdd'>
-            <button class="btn orange text-white ">
+            <button className="btn orange text-white "
+            onClick={()=>{sedNewEve()}}
+            >
               Crear nuevo evento
             </button>
           </div>
@@ -196,12 +210,15 @@ export const EditCurso = () => {
             {foros.map((id) => (
               <CardRendF
                 info={id}
+                key={id.idRegistro}
               />
             ))}
           </ScrollMenu>
 
           <div className='btnAdd'>
-            <button class="btn orange text-white ">
+            <button className="btn orange text-white "
+            onClick={()=> {sedNewAc()}}
+            >
               Crear nueva actividad
             </button>
           </div>

@@ -35,17 +35,17 @@ export const InicioCurso = () => {
       if (cursos.length < 1) {
         setMensaje("No tiene ningun curso registrado")
         document.getElementById("containerScroll").style.display = "none"
-        
+
       } else {
         setCursos(cursos)
       }
+
 
     });
   }, [])
 
   function CardRend(info) {
     const visibility = React.useContext(VisibilityContext);
-    console.log(info.info.codCurso);
     return (
       <Card style={{ display: 'flex', justifyContent: 'space-evenly', width: '18rem', margin: '20px', height: '400px' }}>
         <Card.Img variant="top" src={info.info.banerCurso} />
@@ -92,6 +92,7 @@ export const InicioCurso = () => {
   return (
     <>
       <div>
+
         <div style={styles.contStyle}>
           <BtnCreateCours></BtnCreateCours>
           <h1>{Mensaje}</h1>
@@ -105,6 +106,7 @@ export const InicioCurso = () => {
             ))}
           </ScrollMenu>
         </div>
+
       </div>
     </>
   )
@@ -121,7 +123,7 @@ const styles = {
     padding: "10px",
     color: "red",
   },
-  contStyle:{
+  contStyle: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center"
