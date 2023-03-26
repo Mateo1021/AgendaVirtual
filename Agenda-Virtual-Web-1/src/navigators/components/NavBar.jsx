@@ -21,8 +21,7 @@ export const NavBar = () => {
       <Navbar key={expand} bg="light" expand={expand} className="mb-3">
         <Container fluid>
           <Navbar.Brand href="/home">Inicio</Navbar.Brand>
-          <Navbar.Brand href="/perfil">Perfil</Navbar.Brand>
-          <Navbar.Brand href="/curso">Curso</Navbar.Brand>
+          <Navbar.Brand href="/curso/iniCurso">Curso</Navbar.Brand>
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
           <Navbar.Offcanvas
             id={`offcanvasNavbar-expand-${expand}`}
@@ -37,8 +36,7 @@ export const NavBar = () => {
             <Offcanvas.Body>
               <Nav className="justify-content-end flex-grow-1 pe-3">
                 <Nav.Link href="/home">Inicio</Nav.Link>
-                <Nav.Link href="/perfil">Perfil</Nav.Link>
-                <Nav.Link href="/curso">Curso</Nav.Link>
+                <Nav.Link href="/curso/iniCurso">Curso</Nav.Link>
                 <Nav.Link href="/login" onClick={onLogut}>Salir</Nav.Link>
               </Nav>
             </Offcanvas.Body>
