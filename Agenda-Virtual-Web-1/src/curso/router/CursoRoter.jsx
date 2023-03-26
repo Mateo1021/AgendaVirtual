@@ -8,10 +8,10 @@ import { Cours } from './../components/Cours';
 export const CursoRoter = () => {
   return (
     <>
-    <Cours></Cours>   
+
     <Routes>
-        <Route path="/curso/editCurso" element={<EditCurso></EditCurso>}/>
         <Route path="/curso/iniCurso" element={<InicioCurso></InicioCurso>}/>
+        <Route path="/curso/editCurso" element={<EditCurso></EditCurso>}/>
         <Route path="/curso/listEstud" element={<ListaEstud></ListaEstud>}/>
     </Routes>
     </>
