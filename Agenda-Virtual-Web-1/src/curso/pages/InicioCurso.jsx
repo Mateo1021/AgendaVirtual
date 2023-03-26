@@ -16,24 +16,30 @@ import { IoChevronForwardSharp } from "react-icons/io5";
 
 export const InicioCurso = () => {
   const navigate = useNavigate();
-  const sendCours =(id)=>{
-    navigate('/curso/editCurso/' + id,{replace:true})
+  const sendCours = (id) => {
+    navigate('/curso/editCurso/' + id, { replace: true })
   }
 
   const [Cursos, setCursos] = useState([])
-
+  const [Mensaje, setMensaje] = useState("")
   useLayoutEffect(() => {
 
     const infoPro = JSON.parse(sessionStorage.getItem("codUserWb"))
 
-    const q = query(collection(db.db, "Cursos"), where("codDocente", "==", infoPro.id));
+    const q = query(collection(db.db, "Cursos"), where("codDocente", "==", "infoPro.id"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const cursos = [];
       querySnapshot.forEach((doc) => {
         cursos.push(doc.data());
       });
-      setCursos(cursos)
-      console.log(cursos);
+      if (cursos.length < 1) {
+        setMensaje("No tiene ningun curso registrado")
+        document.getElementById("containerScroll").style.display = "none"
+        
+      } else {
+        setCursos(cursos)
+      }
+
     });
   }, [])
 
@@ -41,14 +47,14 @@ export const InicioCurso = () => {
     const visibility = React.useContext(VisibilityContext);
     console.log(info.info.codCurso);
     return (
-      <Card style={{display: 'flex', justifyContent: 'space-evenly', width: '18rem', margin: '20px', height: '400px' }}>
+      <Card style={{ display: 'flex', justifyContent: 'space-evenly', width: '18rem', margin: '20px', height: '400px' }}>
         <Card.Img variant="top" src={info.info.banerCurso} />
         <Card.Body>
           <Card.Title>{info.info.nombreCurso}</Card.Title>
           <Card.Text>
             {info.info.largeDescription}
           </Card.Text>
-          <Button variant="primary" onClick={() => {sendCours(info.info.codCurso)}}>Ver curso</Button>
+          <Button variant="primary" onClick={() => { sendCours(info.info.codCurso) }}>Ver curso</Button>
         </Card.Body>
       </Card>
     );
@@ -86,16 +92,19 @@ export const InicioCurso = () => {
   return (
     <>
       <div>
-
-        <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow} >
-          {Cursos.map((id) => (
-            <CardRend
-              info={id}
-            />
-          ))}
-        </ScrollMenu>
-
-
+        <div style={styles.contStyle}>
+          <BtnCreateCours></BtnCreateCours>
+          <h1>{Mensaje}</h1>
+        </div>
+        <div id='containerScroll'>
+          <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow} >
+            {Cursos.map((id) => (
+              <CardRend
+                info={id}
+              />
+            ))}
+          </ScrollMenu>
+        </div>
       </div>
     </>
   )
@@ -112,4 +121,9 @@ const styles = {
     padding: "10px",
     color: "red",
   },
+  contStyle:{
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center"
+  }
 };
