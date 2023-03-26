@@ -29,6 +29,7 @@ export const Login = () => {
           querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
             console.log(doc.id, " => ", doc.data());
+            sessionStorage.setItem('codUserWb',JSON.stringify(doc.data()))
             if (doc.data().cargo != "profesor") {
               alert('Este modulo es solo para profesores')
               navigate('/login', { replace: true })
