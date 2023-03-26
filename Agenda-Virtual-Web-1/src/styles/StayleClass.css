@@ -1,6 +1,11 @@
 .orange{
-    background-color: #fd7e14;
+    color: white;
+    background-color: #ED7C23;
+    border: 3px solid #492013;
+    
 }
 .orange:hover{
+    color: white;
     background-color: #974507;
+    border: 3px solid #ED7C23;
 }
