@@ -13,6 +13,7 @@ import { CreateCours } from './../../curso/pages/CreateCours';
 import { CreatActiv } from '../../curso/pages/CreatActiv'
 import { NewActivi } from '../../curso/pages/NewActivi'
 import { NewEvent } from '../../curso/pages/NewEvent'
+import { CreateEvent } from '../../curso/pages/createEvent'
 
 export const HomeRouter = () => {
   return (
@@ -28,9 +29,10 @@ export const HomeRouter = () => {
         <Route path="/curso/iniCurso" element={<InicioCurso></InicioCurso>}/>
         <Route path="/curso/listEstud" element={<ListaEstud></ListaEstud>}/>
         <Route path="/curso/createCours" element={<CreateCours></CreateCours>}/>
-        <Route path="/curso/creatActiv/:idA" element={<CreatActiv></CreatActiv>} />
-        <Route path="/curso/newActiv" element={<NewActivi></NewActivi>} />
-        <Route path="/curso/newEvent" element={<NewEvent></NewEvent>} />
+        <Route path="/curso/creatActiv/:idA/:idC" element={<CreatActiv></CreatActiv>} />
+        <Route path="/curso/newActiv/:idC" element={<NewActivi></NewActivi>} />
+        <Route path="/curso/newEvent/:idC" element={<NewEvent></NewEvent>} />
+        <Route path="/curso/createEvent/:idE/:idC" element={<CreateEvent></CreateEvent>} />
    </Routes>
    </>
   )

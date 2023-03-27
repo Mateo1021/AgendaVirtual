@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom';
 import { CreatActiv } from '../pages/CreatActiv';
+import { CreateEvent } from '../pages/createEvent';
 import { EditCurso } from '../pages/EditCurso';
 import { InicioCurso } from '../pages/InicioCurso';
 import { ListaEstud } from '../pages/ListaEstud';
@@ -15,10 +16,10 @@ export const CursoRoter = () => {
           <Route path="/curso/iniCurso" element={<InicioCurso></InicioCurso>} />
           <Route path="/curso/editCurso/:id" element={<EditCurso></EditCurso>} />
           <Route path="/curso/listEstud" element={<ListaEstud></ListaEstud>} />
-          <Route path="/curso/creatActiv/:idA" element={<CreatActiv></CreatActiv>} />
-          <Route path="/curso/newActiv" element={<NewActivi></NewActivi>} />
-          <Route path="/curso/newEvent" element={<NewEvent></NewEvent>} />
-          
+          <Route path="/curso/creatActiv/:idA/:idC" element={<CreatActiv></CreatActiv>} />
+          <Route path="/curso/newActiv/:idC" element={<NewActivi></NewActivi>} />
+          <Route path="/curso/newEvent/:idC" element={<NewEvent></NewEvent>} />
+          <Route path="/curso/createEvent/:idE/:idC" element={<CreateEvent></CreateEvent>} />
 
         </Routes>
 

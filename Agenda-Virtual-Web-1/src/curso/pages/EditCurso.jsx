@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useState, Arrow } from 'react'
 import { Cours } from './../components/Cours';
 import { BtnCreateCours } from '../components/BtnCreateCours';
 import { useParams } from "react-router-dom";
-import { collection, query, where, onSnapshot, doc } from "firebase/firestore";
+import { collection, query, where, onSnapshot, doc, orderBy } from "firebase/firestore";
 import db from '../../../firebase/firebaseConfig'
 import "../../styles/styleCours.css"
 
@@ -24,19 +24,21 @@ export const EditCurso = () => {
 
 
 
-    const navigate = useNavigate();
-    const sedCeate =(id)=>{
-      navigate('/curso/creatActiv/' + id,{replace:true})
-    }
+  const navigate = useNavigate();
+  const sedCreateActv = (idA) => {
+    navigate('/curso/creatActiv/' + idA+'/'+id)
+  }
 
+  const sedCreateEven = (idE) => {
+    navigate('/curso/createEvent/' + idE+'/'+id)
+  }
 
-
-    const sedNewAc =()=>{
-      navigate('/curso/newActiv',{replace:true})
-    }
-    const sedNewEve =()=>{
-      navigate('/curso/newEvent',{replace:true})
-    }
+  const sedNewAc = () => {
+    navigate('/curso/newActiv/' + id)
+  }
+  const sedNewEve = () => {
+    navigate('/curso/newEvent/' + id)
+  }
 
   useLayoutEffect(() => {
     const unsub = onSnapshot(doc(db.db, "Cursos", id), (doc) => {
@@ -47,7 +49,9 @@ export const EditCurso = () => {
 
   useLayoutEffect(() => {
 
-    const q = query(collection(db.db, "evento"), where("idCurso", "==", id));
+
+    const evetRef = collection(db.db, "evento");
+    const q = query(evetRef, where("idCurso", "==", id), orderBy("createdAt", "asc"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const eventos = [];
       querySnapshot.forEach((doc) => {
@@ -58,7 +62,8 @@ export const EditCurso = () => {
   }, [])
 
   useLayoutEffect(() => {
-    const q = query(collection(db.db, "registrosForo"), where("codProyecto", "==", id));
+    const regRef = collection(db.db, "registrosForo");
+    const q = query(regRef, where("codProyecto", "==", id), orderBy("createdAt", "asc"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const foros = [];
       querySnapshot.forEach((doc) => {
@@ -73,19 +78,19 @@ export const EditCurso = () => {
   function CardRend(info) {
     const visibility = React.useContext(VisibilityContext);
     return (
-      <button style={{ backgroundColor: 'white', borderWidth: '0'}}
-      onClick={()=> {sedCeate(info.info.codEvento)}}
+      <button style={{ backgroundColor: 'white', borderWidth: '0' }}
+        onClick={() => { sedCreateEven(info.info.codEvento) }}
       >
-      <Card style={{ width: '18rem', margin: '20px', height: '200px' }}
-        key={info.info.codEvento}
-      >
-        <Card.Body style={{display:'flex', justifyContent: 'space-evenly' ,flexDirection:'column'}}>
-          <Card.Title>{info.info.titulo}</Card.Title>
-          <Card.Text>
-            {info.info.body}
-          </Card.Text>
-        </Card.Body>
-      </Card>
+        <Card style={{ width: '18rem', margin: '20px', height: '200px' }}
+          key={info.info.codEvento}
+        >
+          <Card.Body style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'column' }}>
+            <Card.Title>{info.info.titulo}</Card.Title>
+            <Card.Text>
+              {info.info.body}
+            </Card.Text>
+          </Card.Body>
+        </Card>
       </button>
     );
   }
@@ -125,19 +130,19 @@ export const EditCurso = () => {
   function CardRendF(info) {
     const visibility = React.useContext(VisibilityContext);
     return (
-      <button style={{ backgroundColor: 'white', borderWidth: '0'}}
-      onClick={()=> {console.log(info.info.idRegistro)}}
+      <button style={{ backgroundColor: 'white', borderWidth: '0' }}
+        onClick={() => { sedCreateActv(info.info.idRegistro) }}
       >
-      <Card style={{ width: '18rem', margin: '20px', height: '200px' , flexDirection:''}}
-        key={info.info.idRegistro}
-      >
-        <Card.Body style={{display:'flex', justifyContent: 'space-evenly' ,flexDirection:'column'}}>
-          <Card.Title>{info.info.titulo}</Card.Title>
-          <Card.Text>
-            {info.info.body}
-          </Card.Text>
-        </Card.Body>
-      </Card>
+        <Card style={{ width: '18rem', margin: '20px', height: '200px', flexDirection: '' }}
+          key={info.info.idRegistro}
+        >
+          <Card.Body style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'column' }}>
+            <Card.Title>{info.info.titulo}</Card.Title>
+            <Card.Text>
+              {info.info.body}
+            </Card.Text>
+          </Card.Body>
+        </Card>
       </button>
     );
   }
@@ -191,7 +196,7 @@ export const EditCurso = () => {
           </ScrollMenu>
           <div className='btnAdd'>
             <button className="btn orange text-white "
-            onClick={()=>{sedNewEve()}}
+              onClick={() => { sedNewEve() }}
             >
               Crear nuevo evento
             </button>
@@ -217,7 +222,7 @@ export const EditCurso = () => {
 
           <div className='btnAdd'>
             <button className="btn orange text-white "
-            onClick={()=> {sedNewAc()}}
+              onClick={() => { sedNewAc() }}
             >
               Crear nueva actividad
             </button>

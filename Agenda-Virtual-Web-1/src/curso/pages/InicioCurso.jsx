@@ -26,7 +26,7 @@ export const InicioCurso = () => {
 
     const infoPro = JSON.parse(sessionStorage.getItem("codUserWb"))
 
-    const q = query(collection(db.db, "Cursos"), where("codDocente", "==", "infoPro.id"));
+    const q = query(collection(db.db, "Cursos"), where("codDocente", "==", infoPro.id));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const cursos = [];
       querySnapshot.forEach((doc) => {
@@ -102,6 +102,7 @@ export const InicioCurso = () => {
             {Cursos.map((id) => (
               <CardRend
                 info={id}
+                key={id.codCurso}
               />
             ))}
           </ScrollMenu>

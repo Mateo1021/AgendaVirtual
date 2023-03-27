@@ -22,3 +22,21 @@ height: 30vw;
     margin-left: 10px;
     margin-top: 20px;
 }
+.cardResponse{
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-color: rgb(178, 178, 178);
+    margin-top: 30px;
+}
+.containerCard{
+    margin-top: 50px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+}
+.titelCard{
+    display: flex;
+   justify-content: center;
+}
