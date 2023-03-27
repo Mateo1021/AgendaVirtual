@@ -62,6 +62,7 @@ export const CreateCours = () => {
     setFile(event.target.files[0]);
   }
   const handleUpload = () => {
+    console.log(2);
     if (!file) {
       alert("Please upload an image first!");
     }

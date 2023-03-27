@@ -15,6 +15,10 @@ import { IoChevronBackSharp } from "react-icons/io5";
 import { IoChevronForwardSharp } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 
+
+import Linkify from 'react-linkify';
+
+
 export const EditCurso = () => {
   const { id } = useParams();
   const [infoCours, setinfoCours] = useState({})
@@ -139,7 +143,9 @@ export const EditCurso = () => {
           <Card.Body style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'column' }}>
             <Card.Title>{info.info.titulo}</Card.Title>
             <Card.Text>
+            <Linkify> 
               {info.info.body}
+            </Linkify>
             </Card.Text>
           </Card.Body>
         </Card>

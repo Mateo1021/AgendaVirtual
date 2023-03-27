@@ -14,6 +14,7 @@ import { IoChevronBackSharp } from "react-icons/io5";
 import { IoChevronForwardSharp } from "react-icons/io5";
 
 
+
 export const InicioCurso = () => {
   const navigate = useNavigate();
   const sendCours = (id) => {
@@ -47,12 +48,14 @@ export const InicioCurso = () => {
   function CardRend(info) {
     const visibility = React.useContext(VisibilityContext);
     return (
-      <Card style={{ display: 'flex', justifyContent: 'space-evenly', width: '18rem', margin: '20px', height: '400px' }}>
+      <Card style={{ display: 'flex', justifyContent: 'space-evenly', width: '18rem', margin: '20px', height: '600px' }}>
         <Card.Img variant="top" src={info.info.banerCurso} />
         <Card.Body>
           <Card.Title>{info.info.nombreCurso}</Card.Title>
           <Card.Text>
+        
             {info.info.largeDescription}
+            
           </Card.Text>
           <Button variant="primary" onClick={() => { sendCours(info.info.codCurso) }}>Ver curso</Button>
         </Card.Body>
@@ -93,10 +96,6 @@ export const InicioCurso = () => {
     <>
       <div>
 
-        <div style={styles.contStyle}>
-          <BtnCreateCours></BtnCreateCours>
-          <h1>{Mensaje}</h1>
-        </div>
         <div id='containerScroll'>
           <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow} >
             {Cursos.map((id) => (
@@ -106,6 +105,11 @@ export const InicioCurso = () => {
               />
             ))}
           </ScrollMenu>
+        </div>
+
+        <div style={styles.contStyle}>
+          <BtnCreateCours></BtnCreateCours>
+          <h1>{Mensaje}</h1>
         </div>
 
       </div>
