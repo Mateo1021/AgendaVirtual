@@ -12,7 +12,8 @@ import { Cours } from './../components/Cours';
 export const CursoRoter = () => {
   return (
     <>
-        <Routes>
+       
+       <Routes>
           <Route path="/curso/iniCurso" element={<InicioCurso></InicioCurso>} />
           <Route path="/curso/editCurso/:id" element={<EditCurso></EditCurso>} />
           <Route path="/curso/listEstud" element={<ListaEstud></ListaEstud>} />
@@ -22,6 +23,7 @@ export const CursoRoter = () => {
           <Route path="/curso/createEvent/:idE/:idC" element={<CreateEvent></CreateEvent>} />
 
         </Routes>
+      
 
     </>
   )

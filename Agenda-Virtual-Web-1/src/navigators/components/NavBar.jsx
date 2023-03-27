@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -6,12 +7,16 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../auth';
 
 export const NavBar = () => {
 
   const navigate = useNavigate() 
 
+  const { logout } = useContext( AuthContext );
+
   const onLogut = () =>{
+    logout();
     navigate('/login',{replace: true})
   }
 

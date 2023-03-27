@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AuthContext } from '../../auth'
 
 export const HomeMenu = () => {
+
+  const { user } = useContext( AuthContext );
+
   return (
-    <div>HomeMenu</div>
+    <div>
+      <h1>{user?.name.nombre}</h1>
+    </div>
+
+
   )
 }

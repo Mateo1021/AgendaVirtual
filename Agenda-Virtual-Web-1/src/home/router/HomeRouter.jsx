@@ -1,10 +1,10 @@
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
-import {NavBar} from '../../navigators/components/NavBar'
-import {HomeMenu} from '../../home/pages/HomeMenu'
-import {PerfilUser} from '../../home/pages/PerfilUser'
-import {Cours} from '../../curso/components/Cours'
+import { NavBar } from '../../navigators/components/NavBar'
+import { HomeMenu } from '../../home/pages/HomeMenu'
+import { PerfilUser } from '../../home/pages/PerfilUser'
+import { Cours } from '../../curso/components/Cours'
 import { CursoRoter } from '../../curso/router/CursoRoter';
 import { EditCurso } from './../../curso/pages/EditCurso';
 import { InicioCurso } from './../../curso/pages/InicioCurso';
@@ -17,9 +17,10 @@ import { CreateEvent } from '../../curso/pages/createEvent'
 
 export const HomeRouter = () => {
   return (
-   <>
-   <NavBar></NavBar>
+    <>
+      <NavBar></NavBar>
 
+<<<<<<< HEAD
    <Routes>
        <Route path="home/*" element={<HomeMenu/>}/>
        <Route path="/perfil" element={<PerfilUser/>}/>
@@ -35,5 +36,24 @@ export const HomeRouter = () => {
         <Route path="/curso/createEvent/:idE/:idC" element={<CreateEvent></CreateEvent>} />
    </Routes>
    </>
+=======
+       
+          <Routes>
+            <Route path="home/*" element={<HomeMenu />} />
+            <Route path="/perfil" element={<PerfilUser />} />
+            <Route path="/curso//*" element={<CursoRoter />} />
+            <Route path="/" element={<Navigate to="/home" />} />
+            <Route path="/curso/editCurso/:id" element={<EditCurso></EditCurso>} />
+            <Route path="/curso/iniCurso" element={<InicioCurso></InicioCurso>} />
+            <Route path="/curso/listEstud" element={<ListaEstud></ListaEstud>} />
+            <Route path="/curso/createCours" element={<CreateCours></CreateCours>} />
+            <Route path="/curso/creatActiv/:idA" element={<CreatActiv></CreatActiv>} />
+            <Route path="/curso/newActiv" element={<NewActivi></NewActivi>} />
+            <Route path="/curso/newEvent" element={<NewEvent></NewEvent>} />
+          </Routes>
+       
+
+    </>
+>>>>>>> 54f2c9c5b4415b91a865dc673e85bfdf191fed7b
   )
 }
