@@ -11,6 +11,8 @@ import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 
 import { Alert, Modal, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ResponseForo } from './ResponseForo';
+import { Linking} from 'react-native'
+import Hyperlink from 'react-native-hyperlink'
 
 // @ts-ignore
 export const ForoDocenteScreen = ({ route }) => {
@@ -36,6 +38,7 @@ export const ForoDocenteScreen = ({ route }) => {
                 file: doc.data().file,
                 titulo: doc.data().titulo,
                 idRegistro: doc.data().idRegistro,
+                active:doc.data().active,
               }
             );
           }
@@ -63,10 +66,19 @@ export const ForoDocenteScreen = ({ route }) => {
                 </Text>
               </View>
               <View style={styles.itemBody}>
-                <Text style={styles.textBody}>{
+                <Hyperlink onPress={(url, text) => Alert.alert('Deseas ingresar al siguiente link', url, [
+                  {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                  },
+                  { text: 'OK', onPress: () => Linking.openURL(url) },
+                ])}>
+                  <Text style={styles.textBody}>{
                /*@ts-ignore */}
-                  {item.body}
-                </Text>
+                    {item.body}
+                  </Text>
+                </Hyperlink>
               </View>
               <View style={styles.itemBtn}>
                 <TouchableOpacity
@@ -75,6 +87,8 @@ export const ForoDocenteScreen = ({ route }) => {
                   onPress={() => navigation.navigate('ResponseForo', {
                     //@ts-ignore
                     idForo: item.idRegistro,
+                    //@ts-ignore
+                    isActive:item.active
                   })}
                 >
                   <Text style={styles.textBtn}>Agrega una participacion</Text>
@@ -90,15 +104,14 @@ export const ForoDocenteScreen = ({ route }) => {
 
   return (
 
-      <View style={styles.blok}>
-        <Text style={stylesApp.titles}>Foro</Text>
-        <ScrollView>
-          <ScrollViewForo></ScrollViewForo>
+    <View style={styles.blok}>
+      <Text style={stylesApp.titles}>Foro</Text>
+      <ScrollView>
+        <ScrollViewForo></ScrollViewForo>
         <View style={styles.footerComp}>
-
         </View>
-        </ScrollView>
-      </View>
+      </ScrollView>
+    </View>
 
   )
 }
@@ -145,7 +158,7 @@ const styles = StyleSheet.create({
     color: colors.primary,
     fontSize: 15
   },
-  footerComp:{
-    marginBottom:80
+  footerComp: {
+    marginBottom: 80
   }
 })

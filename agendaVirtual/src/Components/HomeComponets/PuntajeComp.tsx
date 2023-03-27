@@ -130,6 +130,7 @@ export const PuntajeComp = ({ puntaje }: any) => {
             <TouchableOpacity
                 //@ts-ignore
                 onPress={() => { navigation.navigate('RankingScreen') }}
+                style={styles.contImg}
             >
                 <LogoImg></LogoImg>
             </TouchableOpacity>
@@ -143,8 +144,13 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     tinyLogo: {
-        width: 200,
-        height: 200,
+        flex: 1,
+        width: 250,
+        height: 250,
+        resizeMode: 'contain'
     },
+    contImg:{
+        height: 400,
+    }
 
 });

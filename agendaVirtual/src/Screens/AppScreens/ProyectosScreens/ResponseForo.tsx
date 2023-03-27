@@ -18,7 +18,12 @@ export const ResponseForo = ({ route }) => {
     const [respuestas, setrespuestas] = useState([])
     const [response, setresponse] = useState('')
     const [titelForo, settitelForo] = useState('')
+
+    const [isActive, setisActive] = useState(false)
+
     useLayoutEffect(() => {
+
+        setisActive(route.params.isActive==1?true:false)
         var unsubscribe2 = firestore().collection("respuestas").orderBy('createdAt', 'asc')
             .onSnapshot((querySnapshot) => {
                 var res: any = [];
@@ -100,7 +105,7 @@ export const ResponseForo = ({ route }) => {
             <ScrollView>
                 <RenderInfoRegistro></RenderInfoRegistro>
             </ScrollView>
-            <TextInput style={styles.textInput} onChangeText={setresponse} value={response} ></TextInput>
+            <TextInput style={styles.textInput} onChangeText={setresponse} value={response} editable={isActive} ></TextInput>
             <Button
                 color={colors.primary}
                 title='Enviar'
