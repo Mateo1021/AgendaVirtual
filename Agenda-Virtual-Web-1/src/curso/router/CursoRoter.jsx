@@ -11,6 +11,7 @@ import { Cours } from './../components/Cours';
 export const CursoRoter = () => {
   return (
     <>
+       
         <Routes>
           <Route path="/curso/iniCurso" element={<InicioCurso></InicioCurso>} />
           <Route path="/curso/editCurso/:id" element={<EditCurso></EditCurso>} />
@@ -18,9 +19,8 @@ export const CursoRoter = () => {
           <Route path="/curso/creatActiv/:idA" element={<CreatActiv></CreatActiv>} />
           <Route path="/curso/newActiv" element={<NewActivi></NewActivi>} />
           <Route path="/curso/newEvent" element={<NewEvent></NewEvent>} />
-          
-
         </Routes>
+      
 
     </>
   )

@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useContext, useLayoutEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import at from '../../../firebase/firebaseConfig'
 import db from '../../../firebase/firebaseConfig'
@@ -8,14 +8,17 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Logo from '../../images/LogoFundacion.png';
 import Background from '../../images/LoginBackground.jpg';
+import { AuthContext } from '../context/AuthContext';
 
 
 export const Login = () => {
+ 
+  const {login} = useContext( AuthContext )
   const navigate = useNavigate();
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
 
-  const logIn = () => {
+  const onLogIn = () => {
     const auth = at;
     const base = db;
 
@@ -32,14 +35,17 @@ export const Login = () => {
             sessionStorage.setItem('codUserWb', JSON.stringify(doc.data()))
             if (doc.data().cargo != "profesor") {
               alert('Este modulo es solo para profesores')
-              navigate('/login', { replace: true })
+              /* navigate('/login', { replace: true }) */
             }
           });
           if (ValidUSer == 0) {
             alert('Este modulo es solo para profesores')
-            navigate('/login', { replace: true })
+            /* navigate('/login', { replace: true }) */
           } else {
-            navigate('/home', { replace: true })
+            login(JSON.parse(sessionStorage.getItem('codUserWb')))
+            setTimeout(() => {
+              navigate('/home', {  })
+            });
           }
 
         }
@@ -79,7 +85,7 @@ export const Login = () => {
                 </div>
               </div>
               <div style={{display: 'flex', justifyContent: 'center' }}>
-                <Button type="button" className="btn btn-primary" style={{backgroundColor: '#ED7C23', border: '3px solid #492013' ,}} onClick={logIn}>Iniciar sesión</Button>
+                <Button type="button" className="btn btn-primary" style={{backgroundColor: '#ED7C23', border: '3px solid #492013' ,}} onClick={onLogIn}>Iniciar sesión</Button>
               </div>
             </form>
           </Card.Body>
