@@ -1,6 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useLayoutEffect, useState } from 'react'
-import { ActivityIndicator, Button, Dimensions, RefreshControl, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Button, Dimensions, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { TaskCard } from '../../Components/TaskCard';
 import { useTareas } from '../../Hooks/useTareas';
 import { colors, stylesApp } from '../../Themes/AppThemes';
@@ -72,11 +72,20 @@ export const HomeScreen = ({ navigation, route }: Props) => {
       flex: 1
     }}>
       <View style={stylesApp.stylHome}>
+<View style={styles.conte}>
+  <Text style={stylesApp.titles}>Bienvenido {authState.displayName}</Text>
+</View>
+      <View style={stylesApp.stylePuntajeHome}>
+        <PuntajeComp
+          puntaje={puntaje}
+        ></PuntajeComp>
+      </View>
+
         <View style={stylesApp.styleCarruserHome}>
           <Carousel
             data={tareas}
             renderItem={({ item }: any) => <TaskCard tarea={item}></TaskCard>}
-            sliderWidth={410}
+            sliderWidth={400}
             itemWidth={dimencionSWind}
           />
         </View>
@@ -88,14 +97,14 @@ export const HomeScreen = ({ navigation, route }: Props) => {
           ></IdentitiCard>
         </View>
 
-        <View style={stylesApp.stylePuntajeHome}>
-          <PuntajeComp
-            puntaje={puntaje}
-          ></PuntajeComp>
-        </View>
 
       </View>
     </ScrollView>
   )
 
 }
+const styles = StyleSheet.create({
+  conte:{
+    alignItems:'center'
+  }
+});

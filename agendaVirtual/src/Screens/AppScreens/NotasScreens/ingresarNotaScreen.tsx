@@ -83,7 +83,7 @@ export const ingresarNotaScreen = () => {
       <SafeAreaView >
         <View>
           <View style={styles.container}>
-            <Text style={stylesApp.titles}>Agregar Notas</Text>
+            <Text style={stylesApp.titles}>AGREGAR NOTAS</Text>
             <RNPickerSelect
               placeholder={{ label: "Selecciona una opcion", value: 0 }}
               onValueChange={(select) => slectMateria(select)}
@@ -97,10 +97,10 @@ export const ingresarNotaScreen = () => {
               style={pickerSelectStyles}
             />
 
-            <TextInput style={styles.txtInput} placeholder='Nombre nota' value={nombreCalif} onChangeText={setnombreCalif} />
+            <TextInput placeholderTextColor = "#949494" style={styles.txtInput} placeholder='Nombre nota' value={nombreCalif} onChangeText={setnombreCalif} />
             <View style={styles.containerNota}>
-              <TextInput style={styles.notaInput} keyboardType='numeric' placeholder='Nota' value={valorCalif} onChangeText={setvalorCalif} />
-              <TextInput style={styles.porcenInput} keyboardType='numeric' placeholder='Porcentaje (%)' value={porcentajeCalif} onChangeText={setporcentajeCalif} />
+              <TextInput placeholderTextColor = "#949494" style={styles.notaInput} keyboardType='numeric' placeholder='Nota' value={valorCalif} onChangeText={setvalorCalif} />
+              <TextInput placeholderTextColor = "#949494" style={styles.porcenInput} keyboardType='numeric' placeholder='Porcentaje (%)' value={porcentajeCalif} onChangeText={setporcentajeCalif} />
             </View>
 
             <View>
@@ -190,16 +190,19 @@ const styles = StyleSheet.create({
   txtInput: {
     borderBottomWidth: 1,
     borderColor: '#EAEAEA',
-    width: 350
+    width: 350,
+    color:'black'
   },
   notaInput: {
     borderBottomWidth: 1,
     borderColor: '#EAEAEA',
-    width: 175
+    width: 175,
+    color:'black'
   },
   porcenInput: {
     borderBottomWidth: 1,
     borderColor: '#EAEAEA',
-    width: 175
+    width: 175,
+    color:'black'
   }
 });

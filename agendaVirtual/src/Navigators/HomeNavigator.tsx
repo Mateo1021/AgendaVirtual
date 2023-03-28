@@ -23,8 +23,8 @@ export const HomeNavigator=()=> {
     }}
     >
       <Stack.Screen name="HomeScreen" options={{title:' ', headerBackTitle:'Salir',headerBackTitleVisible:true}} component={HomeScreen} />
-      <Stack.Screen name="PerfilScreen"  component={PerfilScreen} />
-      <Stack.Screen name="RankingScreen" component={RankingScreen} />
+      <Stack.Screen name="PerfilScreen"  options={{title:'Perfil'}} component={PerfilScreen} />
+      <Stack.Screen name="RankingScreen" options={{title:'Puntaje'}} component={RankingScreen} />
       <Stack.Screen name="EditTareaScreen" options={{headerShown:false}} component={EditTareaScreen} />
     </Stack.Navigator>
   );

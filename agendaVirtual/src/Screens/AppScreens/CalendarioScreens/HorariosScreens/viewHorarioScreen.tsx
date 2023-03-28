@@ -47,7 +47,7 @@ export const viewHorarioScreen = () => {
                 <Text style={stylesApp.titles}>CONFIGURAR HORARIO</Text>
                 </View>
                 <View style={styles.container}>
-                    <Text>Selecciona la materia</Text>
+                    <Text style={{color:'black'}}>Selecciona la materia</Text>
                     <RNPickerSelect
                         placeholder={{ label: "Selecciona una opcion", value: null }}
                         onValueChange={(select) => setselect(select)}
@@ -56,7 +56,7 @@ export const viewHorarioScreen = () => {
                     />
                 </View>
                 <View style={styles.container}>
-                    <Text>Selecciona el dia</Text>
+                    <Text style={{color:'black'}}>Selecciona el dia</Text>
                     <RNPickerSelect
                         placeholder={{ label: "Selecciona una opcion", value: null }}
                         onValueChange={(selectD) => setselectDia(selectD)}

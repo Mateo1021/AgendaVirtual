@@ -120,22 +120,22 @@ createNewUser()
 
         <View style={styles.contFullName} >
           <View style={styles.contName}>
-            <Text>Nombre</Text>
+            <Text style={{color:'black'}}>Nombre</Text>
             <TextInput style={styles.inptTextFull} onChangeText={setnameU}></TextInput>
           </View>
           <View style={styles.contName}>
-            <Text>Apellido</Text>
+            <Text style={{color:'black'}}>Apellido</Text>
             <TextInput style={styles.inptTextFull} onChangeText={setapellidos}></TextInput>
           </View>
         </View>
 
         <View style={styles.contFullName}>
           <View style={styles.contName}>
-            <Text>Edad</Text>
+            <Text style={{color:'black'}}>Edad</Text>
             <TextInput style={styles.inptTextFull} onChangeText={setedad} keyboardType={'numeric'}></TextInput>
           </View>
           <View style={styles.contName}>
-            <Text>Telefono</Text>
+            <Text style={{color:'black'}}>Telefono</Text>
             <TextInput style={styles.inptTextFull} onChangeText={settel} keyboardType={'phone-pad'} ></TextInput>
           </View>
         </View>
@@ -143,7 +143,7 @@ createNewUser()
 
 
         <View style={styles.descCont}>
-          <Text>Descripcion</Text>
+          <Text style={{color:'black'}}>Descripcion</Text>
           <TextInput style={styles.inptTextFull} onChangeText={setdescrip}></TextInput>
         </View>
 
@@ -152,18 +152,18 @@ createNewUser()
 
         <View>
           <View style={styles.descCont}>
-            <Text>Correo</Text>
+            <Text style={{color:'black'}}>Correo</Text>
             <TextInput style={styles.inptTextFull} onChangeText={setemail} keyboardType={'email-address'}></TextInput>
           </View>
           <View style={styles.descCont}>
-            <Text>Contraseña</Text>
+            <Text style={{color:'black'}}>Contraseña</Text>
             <TextInput style={styles.inptTextFull} onChangeText={setpassw}  secureTextEntry={true} ></TextInput>
           </View>
           <View style={styles.descCont}>
-            <Text>Confirmar contraseña</Text>
+            <Text style={{color:'black'}}>Confirmar contraseña</Text>
             <TextInput style={styles.inptTextFull} onChangeText={setconfirm} secureTextEntry={true}></TextInput>
           </View>
-          <Text>{textConfirm}</Text>
+          <Text style={{color:'black'}}>{textConfirm}</Text>
         </View>
       </View>
 

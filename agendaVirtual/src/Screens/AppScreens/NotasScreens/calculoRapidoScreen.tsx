@@ -133,14 +133,14 @@ export const calculoRapidoScreen = () => {
       <SafeAreaView style={{ justifyContent: 'flex-end' }}>
         <View>
           <View style={styles.parent}>
-            <Text style={stylesApp.titles}>Calculo rapido de notas</Text>
+            <Text style={styles.titlesNotas}>CALCULAR NOTAS</Text>
             <View style={styles.containerNotas}>
               <TextInput keyboardType='numeric' style={styles.styleinput} value={nota1Show} onChangeText={(value) => validNumber1(value)} />
               <TextInput keyboardType='numeric' style={styles.styleinput} value={nota2Show} onChangeText={(value) => validNumber2(value)} />
               <TextInput keyboardType='numeric' style={styles.styleinput} value={nota3Show} onChangeText={(value) => validNumber3(value)} />
             </View>
             <View style={styles.containerMsj}>
-              <Text>Nota: Ingresa las notas que tengas a la fecha, si dejas un espacio en blanco ese sera ignorado.</Text>
+              <Text style={{color:'black'}}>Nota: Ingresa las notas que tengas a la fecha, si dejas un espacio en blanco ese sera ignorado.</Text>
             </View>
             <TouchableOpacity
               onPress={() => calNotas()}
@@ -184,12 +184,12 @@ export const calculoRapidoScreen = () => {
             </View>
 
 
-            <Text style={stylesApp.titles}>Calcular nota</Text>
+            <Text style={styles.titlesNotas}>CALCULAR NOTA</Text>
             <View style={styles.containerNotas}>
               <TextInput keyboardType='numeric' style={styles.styleinput} value={nota4Show} onChangeText={(value) => validNumber4(value)} />
             </View>
             <View style={styles.containerMsj}>
-              <Text>Nota: Ingresa las nota que desas sacar.</Text>
+              <Text style={{color:'black'}}>Nota: Ingresa las nota que desas sacar.</Text>
             </View>
             <TouchableOpacity
               onPress={() => calValorEspecifico()}
@@ -279,15 +279,16 @@ const styles = StyleSheet.create({
   titelNota: {
     fontWeight: 'bold',
     color: 'black',
-    fontSize: 18
+    fontSize: 16
   },
   blockResult: {
     alignItems: 'center',
     borderBottomWidth: 1,
     borderColor: '#E6E6E6',
     width:1000,
-    paddingVertical:10,
-    borderBottomEndRadius:20
+    paddingVertical:20,
+    borderBottomEndRadius:20,
+    paddingHorizontal:15
   },
   notaResult: {
     color: 'black',
@@ -302,6 +303,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
     fontSize: 18,
-    paddingHorizontal:300
+    paddingHorizontal:300,
+    textAlign:'center',
+    alignItems:'center'
   },
+  titlesNotas:{
+    fontWeight:'bold',
+    fontSize:25
+  }
 })
