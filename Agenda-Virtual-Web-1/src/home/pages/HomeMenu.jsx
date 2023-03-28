@@ -15,7 +15,7 @@ export const HomeMenu = () => {
   const navigate = useNavigate();
 
   const sendActiv = (idReg, idCour) => {
-    navigate('/curso/creatActiv/'+ idReg+'/'+idCour)
+    navigate('/curso/creatActiv/' + idReg + '/' + idCour)
   }
 
 
@@ -107,29 +107,31 @@ export const HomeMenu = () => {
 
   return (
     <div className='fondo'>
-      <h1> Hola s{user?.name.nombre}</h1>
-
-
-      <div className='containerCard'>
+      <h1 className='titulo'> Bienvenido {user?.name.nombre} {user?.name.apellidos}</h1>
+      <div className='containerCard' >
         <div className='titelCard'>
-          <h4>Respuestas de los estudiantes</h4>
+          <h4 className='titulomenor'>Actividad reciente en sus cursos</h4>
         </div>
-        {notifi.map((id, index) => (
-          <button
-          onClick={()=>{sendActiv(id.codReg,id.idCours)}}
-          key={index}
-          >
-            <div className="cardResponse">
-              <h5>{id.cours}</h5>
-
-              <h6>{id.tituloRes}</h6>
-              <h6>{id.msj}</h6>
-              <h6>{id.userPlublic}</h6>
-            </div>
-          </button>
-        ))}
+        <div className='contenedor'>
+          {notifi.map((id, index) => (
+            <button
+              className='btnComentario' onClick={() => { sendActiv(id.codReg, id.idCours) }}
+              key={index}
+            >
+              <div className="cardResponse" >
+                <div >
+                  <div className='tituloAct'>
+                    <h5 class>{id.cours}</h5>
+                  </div>
+                  <h6>{id.tituloRes}</h6>
+                  <h6>{id.msj}</h6>
+                  <h6>{id.userPlublic}</h6>
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
       </div>
-
     </div>
 
 

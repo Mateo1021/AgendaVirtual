@@ -98,7 +98,7 @@ export const InicioCurso = () => {
     <>
       <div>
 
-        <div id='containerScroll'>
+        <div id='containerScroll'  >
           <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow} >
             {Cursos.map((id) => (
               <CardRend

@@ -2,7 +2,7 @@
 import React, { useLayoutEffect } from 'react'
 import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
-import { doc, setDoc, query, collection, getDocs, onSnapshot, where, orderBy,updateDoc} from "firebase/firestore";
+import { doc, setDoc, query, collection, getDocs, onSnapshot, where, orderBy, updateDoc } from "firebase/firestore";
 import db from '../../../firebase/firebaseConfig'
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form'
@@ -57,24 +57,24 @@ export const CreatActiv = () => {
   }, [])
 
 
-const updateActiv= async ()=>{
-  const washingtonRef = doc(db.db, "registrosForo", idA);
+  const updateActiv = async () => {
+    const washingtonRef = doc(db.db, "registrosForo", idA);
 
-  // Set the "capital" field of the city 'DC'
-  await updateDoc(washingtonRef, {
-    titulo: titelShow,
-    body:bodyShow,
-    active:activeAct == true ? '1':0
-  });
-}
+    // Set the "capital" field of the city 'DC'
+    await updateDoc(washingtonRef, {
+      titulo: titelShow,
+      body: bodyShow,
+      active: activeAct == true ? '1' : 0
+    });
+  }
 
 
   return (
     <div>
-      <h1>Tesssst{idA}</h1>
+      <h1>{idA}</h1>
 
       <Form.Group className="mb-3" >
-        <Form.Label htmlFor="titel">Titulo del Evento evento</Form.Label>
+        <Form.Label htmlFor="titel" className='titulo'>Evento</Form.Label>
         <Form.Control
           type="text"
           id="titel"
@@ -83,9 +83,7 @@ const updateActiv= async ()=>{
           value={titelShow}
         />
 
-      </Form.Group>
-      <Form.Group className="mb-3" >
-        <Form.Label htmlFor="bodyEvent">Example textarea</Form.Label>
+        <Form.Label htmlFor="bodyEvent">Descripción</Form.Label>
         <Form.Control as="textarea" id="bodyEvent" rows={3}
           onChange={e => setbodyShow(e.target.value)}
           value={bodyShow} />
@@ -115,7 +113,7 @@ const updateActiv= async ()=>{
 
       <div className='containerCard'>
         <div className='titelCard'>
-          <h4>Respuestas de los estudiantes</h4>
+          <h4>Comentarios</h4>
         </div>
         {responsEstud.map((id, index) => (
           <div key={index} className="cardResponse">

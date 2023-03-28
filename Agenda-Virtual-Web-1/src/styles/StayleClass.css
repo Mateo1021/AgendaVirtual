@@ -1,6 +1,6 @@
 .orange {
     color: white;
-    background-color: #ED7C23;
+    background-color: rgba(237, 124, 35, 1);
     border: 3px solid #492013;
 
 }
@@ -8,7 +8,7 @@
 .orange:hover {
     color: white;
     background-color: #974507;
-    border: 3px solid #ED7C23;
+    border: 3px solid rgba(237, 124, 35, 1);
 }
 
 .input {
@@ -26,7 +26,8 @@
 .input:focus {
     color: white;
     background-color: rgba(237, 124, 35, 0.3);
-    border: 3px solid #492013b3;
+    border: 3px solid rgba(73, 32, 19, 0.7)
+    ;
     box-shadow: 0 0 0 0.2rem rgba(224, 134, 24, 0.36);
 }
 
@@ -38,11 +39,14 @@
 .input:hover {
     color: white;
     background-color: rgba(237, 124, 35, 0.5);
-    border: 3px solid #492013b3;
+    border: 3px solid rgba(73, 32, 19, 0.7)
+    ;
     box-shadow: 0 0 0 0.2rem rgba(224, 134, 24, 0.36);
 }
 
 .fondo {
+    width: 100%;
+    height: 92vh;
     background: rgb(255, 162, 0);
     background: linear-gradient(45deg, rgba(255, 162, 0, 0.9052871148459384) 2%, rgba(248, 219, 178, 1) 67%, rgba(248, 219, 178, 1) 100%);
 }
@@ -65,4 +69,41 @@
 .tarjeta-btn{
     display: flex;
     justify-self: center;
+}
+
+.titulo{
+    color: rgba(73, 32, 19, 0.856);   
+}
+
+.btnComentario{
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    color: white;
+    border: 3px solid #492013;
+    background-color: rgba(71, 34, 5, 0.46);
+}
+
+.btnComentario:hover {
+    color: white;
+    background-color: rgba(237, 124, 35, 0.3);
+    border: 3px solid rgba(71, 34, 5, 0.46);
+}
+
+.tituloAct{
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
+    border: #492013;
+    background-color: #492013;
+    
+}
+
+.contenedor{
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    background-color: white;
 }

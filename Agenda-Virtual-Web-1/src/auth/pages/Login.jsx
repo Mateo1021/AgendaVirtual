@@ -78,7 +78,7 @@ export const Login = () => {
               </div>
               <div style={{ width: '50%', marginLeft: '25%', marginRight: '25%' , paddingTop: '2%' }}>
                 <label htmlFor="inputPassword" className="" >Password</label>
-                <input type="password" className="form-control" id="inputPassword" value={pass} placeholder={'Contraseña'} onChange={e => setPass(e.target.value)} />
+                <input type="password" className="input form-control" id="inputPassword" value={pass} placeholder={'Contraseña'} onChange={e => setPass(e.target.value)} />
               </div>
               <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '2%' }}>
                 <Button type="button" className="btn orange"  onClick={onLogIn}>Iniciar sesión</Button>
