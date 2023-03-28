@@ -16,7 +16,7 @@ export const MenuLateralNavigator = ()=> {
       drawerContent={(props)=><MenuInterno {...props}/>}
     >
       <Drawer.Screen name="Inicio" options={{title:'Agenda Virtual'}} component={BottonTabs} />
-      <Drawer.Screen name="PerfilScreen"  component={PerfilScreen} />
+      <Drawer.Screen name="PerfilScreen"  options={{title:'Perfil'}} component={PerfilScreen} />
       <Drawer.Screen name="ConfigScreen" component={ConfigScreen} />
     </Drawer.Navigator>
   );

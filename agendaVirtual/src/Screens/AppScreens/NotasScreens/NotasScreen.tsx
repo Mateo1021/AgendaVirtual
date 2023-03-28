@@ -28,7 +28,7 @@ export const NotasScreen = () => {
   const [labelArrayMate, setlabelArrayMate] = useState([])
   const [dataArrayMate, setdataArrayMate] = useState([])
   const [tipoSelect, settipoSelect] = useState(0)
-const [dataArrayMounth, setdataArrayMounth] = useState([0.0, 0.0, 0.0, 0.0,0.0, 0.0, 0.0,0.0, 0.0,0.0, 0.0, 0.0])
+  const [dataArrayMounth, setdataArrayMounth] = useState([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
 
 
   const selectTipo = (tipoSelect: any) => {
@@ -36,9 +36,9 @@ const [dataArrayMounth, setdataArrayMounth] = useState([0.0, 0.0, 0.0, 0.0,0.0, 
     callInfo(tipoSelect)
     callInfoMounth(tipoSelect)
   }
-  
-  const callInfo = async (type:number) => {
-/*     callInfoMounth(type) */
+
+  const callInfo = async (type: number) => {
+    /*     callInfoMounth(type) */
     setlabelArrayMate([])
     setdataArrayMate([])
     let info = await getInfoCalificaciones(type)
@@ -54,7 +54,7 @@ const [dataArrayMounth, setdataArrayMounth] = useState([0.0, 0.0, 0.0, 0.0,0.0, 
     setdataArrayMate(dataArray)
   }
 
-  const callInfoMounth = async (type:number) => {
+  const callInfoMounth = async (type: number) => {
 
     let info = await getInfoCalificacionesbyMounth(type)
     setdataArrayMounth(info)
@@ -71,9 +71,9 @@ const [dataArrayMounth, setdataArrayMounth] = useState([0.0, 0.0, 0.0, 0.0,0.0, 
     }
     return (
       <LineChart
-      fromZero={true}
+        fromZero={true}
         data={dataByMounth}
-        width={Dimensions.get("window").width} // from react-native
+        width={(Dimensions.get("window").width)-20} // from react-native
         height={220}
         yAxisLabel=""
         yAxisSuffix=""
@@ -110,18 +110,18 @@ const [dataArrayMounth, setdataArrayMounth] = useState([0.0, 0.0, 0.0, 0.0,0.0, 
           data: dataArrayMate
         }
       ]
-      
+
     };
 
     return (
       <BarChart
-      fromZero={true}
+        fromZero={true}
         yAxisLabel=""
         yAxisSuffix=""
         yAxisInterval={1} // optional, defaults to 1
         data={dataByMatsRender}
-        width={Dimensions.get("window").width}
-        height={260}
+        width={(Dimensions.get("window").width)-20}
+        height={220}
         style={{
           marginVertical: 8,
           borderRadius: 16
@@ -160,17 +160,25 @@ const [dataArrayMounth, setdataArrayMounth] = useState([0.0, 0.0, 0.0, 0.0,0.0, 
 
   return (
     <ScrollView>
-      <View>
-      <RNPickerSelect
+      <View style={styles.generalCont}>
+        <View style={styles.contTitel}>
+          <Text style={styles.titulosNotas}>MODULO DE NOTAS</Text>
+        </View>
+        <Text style={styles.txtNotas}>Selecciona el tipo de calificacion</Text>
+        <RNPickerSelect
           placeholder={{ label: "Selecciona una opcion", value: null }}
           onValueChange={(select) => selectTipo(select)}
           items={tiposNotasArray}
           style={pickerSelectStyles}
         />
-        <Text style={stylesApp.titles}>Grafica Promedios</Text>
+        <View style={styles.contSubtitil}>
+          <Text style={styles.txtNotasSub}>Grafica Promedios</Text>
+        </View>
         <GraficMounth></GraficMounth>
 
-        <Text style={stylesApp.titles}>Grafica Notas por materia</Text>
+        <View style={styles.contSubtitil}>
+          <Text style={styles.txtNotasSub}>Grafica Notas por materia</Text>
+        </View>
         <RenderItem></RenderItem>
 
       </View>
@@ -186,6 +194,30 @@ const styles = StyleSheet.create({
   },
   chart: {
     flex: 1
+  },
+  txtNotas: {
+    fontSize: 17,
+    fontWeight: 'bold'
+  },
+  titulosNotas: {
+    fontSize: 25,
+    fontWeight: 'bold'
+  },
+  contTitel: {
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: 10
+  },
+  contSubtitil:{
+    alignItems: 'center',
+  },  
+  txtNotasSub: {
+    fontSize: 20,
+    fontWeight: 'bold'
+  },
+  generalCont:{
+    marginHorizontal:10,
+    marginBottom:10
   }
 });
 const pickerSelectStyles = StyleSheet.create({

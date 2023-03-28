@@ -66,11 +66,11 @@ export const PickerHora = (materia: any, dia: any) => {
   return (
     <View >
       <View style={styles.container}>
-        <Text>Agrega la hora de inicio</Text>
+        <Text style={{color:'black'}}>Agrega la hora de inicio</Text>
       </View>
       <Button color={colors.primary} onPress={showMode} title={dateString} />
       <View style={styles.container}>
-        <Text>Agrega la hora de fin</Text>
+        <Text style={{color:'black'}}>Agrega la hora de fin</Text>
       </View>
       <Button color={colors.secundary} onPress={showModeF} title={dateStringF} />
       <View style={styles.btnAdd}>

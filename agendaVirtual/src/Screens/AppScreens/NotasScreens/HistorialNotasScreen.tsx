@@ -14,7 +14,7 @@ import DataTable, { COL_TYPES } from 'react-native-datatable-component';
 export const HistorialNotasScreen = () => {
   const { materias } = useMaterias();
   const { tiposNotasArray } = generalArray()
-  const { searchCalificacione ,deletCalificacion} = useCalificaciones()
+  const { searchCalificacione, deletCalificacion } = useCalificaciones()
 
   const [selectMate, setselectMate] = useState('')
   const [selectTp, setselectTp] = useState(0)
@@ -79,18 +79,20 @@ export const HistorialNotasScreen = () => {
         {
           text: "Cancel",
           onPress: () => console.log('cancel')
-          
+
           ,
           style: "cancel"
         },
-        { text: "OK", onPress: () => {
-          for (let x in arrayDeleet) {
-            if (arrayDeleet[x].Elimnar) {
-              deletCalificacion(arrayDeleet[x].id);
+        {
+          text: "OK", onPress: () => {
+            for (let x in arrayDeleet) {
+              if (arrayDeleet[x].Elimnar) {
+                deletCalificacion(arrayDeleet[x].id);
+              }
             }
+            searchMats()
           }
-          searchMats()
-        }}
+        }
       ]
     );
 
@@ -101,7 +103,9 @@ export const HistorialNotasScreen = () => {
 
       <View>
         <View style={{ padding: 20 }}>
-          <Text style={stylesApp.titles}>Historias de Notas</Text>
+          <View style={styles.alingItem}>
+            <Text style={stylesApp.titles}>HISTORIAL DE NOTAS</Text>
+          </View>
           <RNPickerSelect
             placeholder={{ label: "Selecciona una opcion", value: 0 }}
             onValueChange={(select) => slectMateria(select)}
@@ -158,7 +162,7 @@ const pickerSelectStyles = StyleSheet.create({
     backgroundColor: '#EAEAEA',
     marginVertical: 10
 
-  },
+  }
 });
 
 const styles = StyleSheet.create({
@@ -171,4 +175,7 @@ const styles = StyleSheet.create({
   tableHeader: {
     backgroundColor: '#DCDCDC',
   },
+  alingItem:{
+    alignItems:'center'
+  }
 });

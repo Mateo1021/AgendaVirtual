@@ -18,7 +18,7 @@ export const InputNotas = () => {
         <TextInput 
           placeholder='Correo' 
           style={stylesApp.generalText}
-         
+          placeholderTextColor = "#949494"
         ></TextInput>
       </View>
 

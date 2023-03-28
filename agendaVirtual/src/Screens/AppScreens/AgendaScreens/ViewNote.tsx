@@ -48,7 +48,7 @@ export const ViewNote = ({ route }) => {
                 <View style={styles.block}>
                     <View style={styles.item}>
                         <Text style={stylesApp.titles}>
-                            Editar nota
+                            EDITAR NOTA
                         </Text>
                     </View>
 
@@ -58,6 +58,7 @@ export const ViewNote = ({ route }) => {
                             Titulo / Nombre
                         </Text>
                         <TextInput
+                            placeholderTextColor="#949494"
                             style={styles.titelInput}
                             onChangeText={settitulo}
                             value={titulo}
@@ -67,6 +68,7 @@ export const ViewNote = ({ route }) => {
                     <View>
                         <Text style={styles.titulos}>Contenido</Text>
                         <TextInput
+                            placeholderTextColor="#949494"
                             style={styles.bodyInput}
                             onChangeText={setbody}
                             value={body}
@@ -111,23 +113,25 @@ const styles = StyleSheet.create({
     titelInput: {
         borderBottomWidth: 1,
         borderColor: '#DEDEDE',
-        fontSize:20
+        fontSize: 20,
+        color:'black'
     },
     bodyInput: {
         borderWidth: 1,
         borderColor: '#DEDEDE',
         marginVertical: 20,
-        fontSize:18
+        fontSize: 18,
+        color:'black'
     },
     block: {
         paddingHorizontal: 25,
         paddingVertical: 10
     },
-    btnfuntion:{
-        flexDirection:'row',
-        justifyContent:'center'
+    btnfuntion: {
+        flexDirection: 'row',
+        justifyContent: 'center'
     },
-    btnSingel:{
-        paddingHorizontal:10
+    btnSingel: {
+        paddingHorizontal: 10
     }
 })

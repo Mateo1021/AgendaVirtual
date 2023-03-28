@@ -37,7 +37,7 @@ export const RankingScreen = () => {
         <PuntajeComp
           puntaje={puntaje}
         ></PuntajeComp>
-        <Text>Hola {authState.displayName} tu puntaje actual es {puntaje}</Text>
+        <Text style={{color:'black'}}>Hola {authState.displayName} tu puntaje actual es {puntaje}</Text>
         <Text style={styles.txtBody}>Realiza actividades, participa en el foro y usa las
           herramientas de la app para obtener mas puntos y subir de rango</Text>
 
@@ -64,7 +64,8 @@ const styles = StyleSheet.create({
   txtBody: {
     paddingTop: 20,
     paddingHorizontal: 20,
-    textAlign: 'center'
+    textAlign: 'center',
+    color:'black'
   },
   insignias: {
     fontWeight: 'bold',

@@ -39,10 +39,10 @@ export const newNoteScreen = ({ navigation, route }: Props) => {
             refreshing={refreshing}
             onRefresh={onRefresh}
           />}>
-       <View style={styles.block}>
+        <View style={styles.block}>
           <View style={styles.item}>
             <Text style={stylesApp.titles}>
-              Agregar nueva nota
+              AGREGAR NOTA
             </Text>
           </View>
 
@@ -50,17 +50,21 @@ export const newNoteScreen = ({ navigation, route }: Props) => {
             Titulo / Nombre
           </Text>
           <TextInput
+            placeholderTextColor="#949494"
             style={styles.titelInput}
             onChangeText={(value) => setStateNote({ ...stateNote, titulo: value })}
+            placeholder='Apuntes Fisica'
           ></TextInput>
           <Text style={styles.titulos}>
             Contenido
           </Text>
           <TextInput
+            placeholderTextColor="#949494"
             style={styles.bodyInput}
             multiline={true}
             numberOfLines={9}
             onChangeText={(value) => setStateNote({ ...stateNote, body: value })}
+            placeholder='El movimiento rectilíneo uniforme (m.r.u.), es aquel con velocidad constante y cuya trayectoria es una línea recta...'
           ></TextInput>
 
           <Button
@@ -90,13 +94,15 @@ const styles = StyleSheet.create({
   titelInput: {
     borderBottomWidth: 1,
     borderColor: '#DEDEDE',
-    fontSize: 20
+    fontSize: 20,
+    color:'black'
   },
   bodyInput: {
     borderWidth: 1,
     borderColor: '#DEDEDE',
     marginVertical: 20,
-    fontSize: 18
+    fontSize: 18,
+    color:'black'
   },
   block: {
     paddingHorizontal: 25,

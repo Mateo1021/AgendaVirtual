@@ -45,6 +45,7 @@ export const addMateriasScreen = () => {
           </View>
 
           <TextInput
+            placeholderTextColor="#949494"
             placeholder='Nombre'
             style={styles.imputMat}
             onChangeText={(value) => setMateriData({ ...materiData, nombre: value })}
@@ -78,8 +79,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#EAEAEA',
-  marginHorizontal:20,
-  textAlign:'center'
+    marginHorizontal: 20,
+    textAlign: 'center'
   },
 
 });

@@ -96,13 +96,13 @@ export const ForoScreen = ({ route }) => {
 
 
   const renderSend = (sendProps: any) => {
-    const {text,messageIdGenerator,user, onSend} = sendProps
+    const { text, messageIdGenerator, user, onSend } = sendProps
 
     if (text.trim().length > 0) {
       return (
         <TouchableOpacity
-        style={{padding:10}}
-        onPress={()=>onSend({ text: text.trim(), user:user,_id:messageIdGenerator()}, true)}
+          style={{ padding: 10 }}
+          onPress={() => onSend({ text: text.trim(), user: user, _id: messageIdGenerator() }, true)}
         >
           <Icon name={'rocket'} size={25} color={colors.primary} />
         </TouchableOpacity>
@@ -118,6 +118,8 @@ export const ForoScreen = ({ route }) => {
     //   ))}
     // </>
     <GiftedChat
+      //@ts-ignore
+      textInputStyle={{ color: 'black' }}
       renderSend={renderSend}
       locale="es"
       renderUsernameOnMessage={true}
@@ -128,6 +130,7 @@ export const ForoScreen = ({ route }) => {
       messagesContainerStyle={{
         backgroundColor: '#fff'
       }}
+
       placeholder='Mensaje'
       user={{
         _id: authState.uid,

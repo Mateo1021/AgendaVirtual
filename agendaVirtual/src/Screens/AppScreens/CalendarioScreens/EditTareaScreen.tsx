@@ -46,7 +46,7 @@ export const EditTareaScreen = ({ route, navigation }: Props) => {
   ]);
   const [date, setDate] = useState(new Date(dateTareaRoute));
 
-  
+
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
   const [dateShow, setdateShow] = useState(parseDate(dataTarea.fechaEntrega.seconds))
@@ -91,7 +91,7 @@ export const EditTareaScreen = ({ route, navigation }: Props) => {
     let diaText: number = selectedDate.getDate() <= 9 ? '0' + selectedDate.getDate() : selectedDate.getDate()
     setdateShow(diaText + '/' + mesText + '/' + selectedDate.getFullYear())
   };
- 
+
   const showMode = (currentMode: any) => {
     setShow(true);
     setMode(currentMode);
@@ -134,10 +134,13 @@ export const EditTareaScreen = ({ route, navigation }: Props) => {
   return (
     <ScrollView>
       <View style={stylesApp.globalMargin}>
-        <Text style={stylesApp.titles}>Editar Tarea</Text>
+        <View  style={styles.alingItems}>
+          <Text style={stylesApp.titles}>EDITAR TAREA</Text>
+        </View>
 
         <Text style={styles.textLabel}>Titulo</Text>
         <TextInput
+          placeholderTextColor="#949494"
           style={styles.textTitel}
           placeholder="Nueva Tarea"
           onChangeText={onChangetitulo}
@@ -145,6 +148,7 @@ export const EditTareaScreen = ({ route, navigation }: Props) => {
         />
         <Text style={styles.textLabel}>Descripcion</Text>
         <TextInput
+          placeholderTextColor="#949494"
           style={styles.textBody}
           multiline={true}
           numberOfLines={10}
@@ -216,11 +220,15 @@ const styles = StyleSheet.create({
   },
   textTitel: {
     borderBottomWidth: 1,
+    color: 'black',
   },
   textBody: {
     borderWidth: 1,
     marginVertical: 10,
-    borderColor: '#EAEAEA'
+    borderColor: '#EAEAEA',
+    color: 'black',
+    placeholder: "something",
+    placeholderTextColor: 'black'
   },
   textLabel: {
     paddingTop: 40,
@@ -236,6 +244,10 @@ const styles = StyleSheet.create({
   },
   btnDel: {
     paddingHorizontal: 8
+  },
+  alingItems:{
+    alignItems:'center',
+    marginTop:20
   }
 });
 const pickerSelectStyles = StyleSheet.create({

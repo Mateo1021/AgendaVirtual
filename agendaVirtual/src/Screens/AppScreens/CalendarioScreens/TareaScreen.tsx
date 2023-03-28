@@ -130,13 +130,16 @@ export const TareaScreen = ({ route, navigation }: Props) => {
     return (
       <ScrollView>
         <View style={stylesApp.globalMargin}>
-          <Text style={stylesApp.titles}>Nueva Tarea</Text>
+          <View style={styles.alingItems}>
+            <Text style={stylesApp.titles}>NUEVA TAREA</Text>
+          </View>
 
           <Text style={styles.textLabel}>Titulo</Text>
           <TextInput
             style={styles.textTitel}
             placeholder="Nueva Tarea"
             onChangeText={onChangetitulo}
+            placeholderTextColor="#949494"
           />
 
           <Text style={styles.textLabel}>Descripcion</Text>
@@ -146,6 +149,7 @@ export const TareaScreen = ({ route, navigation }: Props) => {
             numberOfLines={10}
             placeholder="Hacer informe"
             onChangeText={onChangedescrip}
+            placeholderTextColor="#949494"
           />
           <RNPickerSelect
             placeholder={{ label: "Selecciona una opcion", value: null }}
@@ -201,11 +205,13 @@ const styles = StyleSheet.create({
   },
   textTitel: {
     borderBottomWidth: 1,
+    color: 'black'
   },
   textBody: {
     borderWidth: 1,
     marginVertical: 10,
-    borderColor: '#EAEAEA'
+    borderColor: '#EAEAEA',
+    color: 'black'
   },
   textLabel: {
     paddingTop: 40,
@@ -221,6 +227,10 @@ const styles = StyleSheet.create({
   },
   btnDel: {
     paddingHorizontal: 8
+  },
+  alingItems:{
+    alignItems:'center',
+    marginTop:20
   }
 });
 const pickerSelectStyles = StyleSheet.create({

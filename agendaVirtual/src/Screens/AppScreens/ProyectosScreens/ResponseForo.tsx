@@ -19,11 +19,14 @@ export const ResponseForo = ({ route }) => {
     const [response, setresponse] = useState('')
     const [titelForo, settitelForo] = useState('')
 
+    const [msjPlace, setmsjPlace] = useState('')
     const [isActive, setisActive] = useState(false)
 
     useLayoutEffect(() => {
 
         setisActive(route.params.isActive==1?true:false)
+        setmsjPlace(route.params.isActive==1?'Mensaje...':'Foro desactivado...')
+
         var unsubscribe2 = firestore().collection("respuestas").orderBy('createdAt', 'asc')
             .onSnapshot((querySnapshot) => {
                 var res: any = [];
@@ -105,7 +108,13 @@ export const ResponseForo = ({ route }) => {
             <ScrollView>
                 <RenderInfoRegistro></RenderInfoRegistro>
             </ScrollView>
-            <TextInput style={styles.textInput} onChangeText={setresponse} value={response} editable={isActive} ></TextInput>
+            <TextInput 
+            placeholderTextColor = "#949494"
+            style={styles.textInput} 
+            placeholder={msjPlace} 
+            onChangeText={setresponse} 
+            value={response} 
+            editable={isActive} ></TextInput>
             <Button
                 color={colors.primary}
                 title='Enviar'
@@ -122,7 +131,8 @@ const styles = StyleSheet.create({
     textInput: {
         borderWidth: 1,
         borderColor: '#E6E6E6',
-        borderRadius: 20
+        borderRadius: 20,
+        color:'black'
     },
     responseOters: {
         borderWidth: 1,

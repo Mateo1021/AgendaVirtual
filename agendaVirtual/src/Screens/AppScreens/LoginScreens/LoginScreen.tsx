@@ -65,7 +65,7 @@ export const LoginScreen = ({ navigation }: Props) => {
               querySnapshot.forEach(documentSnapshot => {
 
                 docUserLog = documentSnapshot.id;
-              
+
                 // @ts-ignore
                 nameUser = documentSnapshot._data.Nombres;
                 // @ts-ignore
@@ -159,6 +159,7 @@ export const LoginScreen = ({ navigation }: Props) => {
       }}>
 
         <TextInput
+          placeholderTextColor="#949494"
           placeholder='Correo'
           style={{
             ...stylesApp.generalText,
@@ -182,6 +183,7 @@ export const LoginScreen = ({ navigation }: Props) => {
       }}>
 
         <TextInput
+          placeholderTextColor="#949494"
           secureTextEntry={true}
           textContentType='password'
           placeholder='Contraseña'
@@ -215,9 +217,9 @@ export const LoginScreen = ({ navigation }: Props) => {
         </TouchableOpacity>
       </View>
 
-      <View style={{marginTop:70}}>
+      <View style={{ marginTop: 70 }}>
 
-      <TouchableOpacity
+        <TouchableOpacity
           style={{
             alignItems: 'center',
             marginBottom: 10,
@@ -227,7 +229,7 @@ export const LoginScreen = ({ navigation }: Props) => {
         >
           <Text style={{
             color: colors.primary,
-            fontWeight:'bold'
+            fontWeight: 'bold'
           }}>Registrarse</Text>
         </TouchableOpacity>
 
@@ -235,16 +237,16 @@ export const LoginScreen = ({ navigation }: Props) => {
           style={{
             alignItems: 'center',
             marginBottom: 10,
-            borderTopWidth:3,
-            borderColor:colors.primary,
-            marginHorizontal:120,
-            paddingTop:10
+            borderTopWidth: 3,
+            borderColor: colors.primary,
+            marginHorizontal: 120,
+            paddingTop: 10
           }}
           onPress={() => resetPass()}
         >
           <Text style={{
             color: colors.primary,
-            fontWeight:'bold'
+            fontWeight: 'bold'
           }}>Recordar Contraseña</Text>
         </TouchableOpacity>
       </View>

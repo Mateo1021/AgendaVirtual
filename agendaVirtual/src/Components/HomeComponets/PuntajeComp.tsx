@@ -14,8 +14,6 @@ export const PuntajeComp = ({ puntaje }: any) => {
     let stringUrl: string
     let puntInt: number = Number(puntaje)
 
-
-
     const navigation = useNavigation();
     function LogoImg() {
         switch (puntInt) {

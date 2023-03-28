@@ -104,24 +104,24 @@ export const PerfilScreen = () => {
               style={stylesApp.avatar}
             ></Image>
           </TouchableOpacity>
-          <Text>Hola {dataUser.Nombres}</Text>
-          <Text> Esta es tu informacion personal </Text>
+          <Text style={{color:'black'}}>Hola {dataUser.Nombres}</Text>
+          <Text style={{color:'black'}}> Esta es tu informacion personal </Text>
         </View>
 
         <View style={styles.bloqueInfo}>
           <View style={styles.nombre}>
-            <TextInput style={styles.txtNombre} placeholder={dataUser.Nombres} onChangeText={setnombreUser}></TextInput>
-            <TextInput style={styles.txtApellido} placeholder={dataUser.Apellidos} onChangeText={setapellidoUser}></TextInput>
+            <TextInput placeholderTextColor = "black" style={styles.txtNombre} placeholder={dataUser.Nombres} onChangeText={setnombreUser}></TextInput>
+            <TextInput placeholderTextColor = "black" style={styles.txtApellido} placeholder={dataUser.Apellidos} onChangeText={setapellidoUser}></TextInput>
           </View>
 
           <View style={styles.nombre}>
-            <TextInput style={styles.txtNombre} placeholder={dataUser.Edad +' Años'} onChangeText={setedad}></TextInput>
-            <TextInput style={styles.txtApellido} placeholder={dataUser.tel} onChangeText={settel}></TextInput>
+            <TextInput placeholderTextColor = "black" style={styles.txtNombre} placeholder={dataUser.Edad +' Años'} onChangeText={setedad}></TextInput>
+            <TextInput placeholderTextColor = "black" style={styles.txtApellido} placeholder={dataUser.tel} onChangeText={settel}></TextInput>
           </View>
 
-          <TextInput style={styles.txtCorreo} placeholder={dataUser.Correo} onChangeText={setcorreUser} editable={false}></TextInput>
+          <TextInput placeholderTextColor = "black" style={styles.txtCorreo} placeholder={dataUser.Correo} onChangeText={setcorreUser} editable={false}></TextInput>
 
-          <TextInput style={styles.txtDescrip} placeholder={dataUser.descripcion} onChangeText={setdescpripUser}></TextInput>
+          <TextInput placeholderTextColor = "black" style={styles.txtDescrip} placeholder={dataUser.descripcion} onChangeText={setdescpripUser}></TextInput>
 
           <Text style={styles.txtPuntaje}>Tu puntaje actual es de: {dataUser.Puntaje}</Text>
         </View>
@@ -160,27 +160,34 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginHorizontal: 1,
     borderColor: colors.primary,
-    width: 150
+    width: 150,
+    placeholder:"something",
+    placeholderTextColor:'black',
+    color:'black'
   },
   txtApellido: {
     borderBottomWidth: 1,
     marginHorizontal: 1,
     borderColor: colors.primary,
-    width: 150
+    width: 150,
+    color:'black'
   }
   ,
   txtCorreo: {
     borderBottomWidth: 1,
     borderColor: colors.primary,
-    width: 300
+    width: 300,
+    color:'black'
   },
   txtDescrip: {
     borderBottomWidth: 1,
     borderColor: colors.primary,
     width: 300,
-    marginBottom: 40
+    marginBottom: 40,
+    color:'black'
   },
   txtPuntaje: {
-    marginBottom: 40
+    marginBottom: 40,
+    color:'black'
   }
 })
