@@ -1,11 +1,68 @@
-.orange{
+.orange {
     color: white;
     background-color: #ED7C23;
     border: 3px solid #492013;
-    
+
 }
-.orange:hover{
+
+.orange:hover {
     color: white;
     background-color: #974507;
     border: 3px solid #ED7C23;
+}
+
+.input {
+    color: white;
+    background-color: rgba(237, 124, 35, 0.3);
+    border: 3px solid #492013;
+
+}
+
+.input::placeholder {
+    color: #492013;
+    opacity: 0.7;
+}
+
+.input:focus {
+    color: white;
+    background-color: rgba(237, 124, 35, 0.3);
+    border: 3px solid #492013b3;
+    box-shadow: 0 0 0 0.2rem rgba(224, 134, 24, 0.36);
+}
+
+.input::selection {
+    background-color: rgba(237, 124, 35, 0.3);
+}
+
+
+.input:hover {
+    color: white;
+    background-color: rgba(237, 124, 35, 0.5);
+    border: 3px solid #492013b3;
+    box-shadow: 0 0 0 0.2rem rgba(224, 134, 24, 0.36);
+}
+
+.fondo {
+    background: rgb(255, 162, 0);
+    background: linear-gradient(45deg, rgba(255, 162, 0, 0.9052871148459384) 2%, rgba(248, 219, 178, 1) 67%, rgba(248, 219, 178, 1) 100%);
+}
+
+
+.tarjeta{
+    background-color: rgba(237, 124, 35, 0.4);
+}
+
+.tarjeta-img{
+
+    margin-top: 2%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    width: 95%;
+    height: 30%;
+    background-color: rgba(237, 124, 35, 0.4);
+}
+
+.tarjeta-btn{
+    display: flex;
+    justify-self: center;
 }

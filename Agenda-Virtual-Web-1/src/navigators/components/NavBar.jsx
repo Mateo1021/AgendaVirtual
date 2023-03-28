@@ -23,7 +23,7 @@ export const NavBar = () => {
   return (
     <>
     {[false].map((expand) => (
-      <Navbar key={expand} bg="light" expand={expand} >
+      <Navbar className='navbar' key={expand} bg="light" expand={expand} >
         <Container fluid>
           <Navbar.Brand href="/home">Inicio</Navbar.Brand>
           <Navbar.Brand href="/curso/iniCurso">Curso</Navbar.Brand>
