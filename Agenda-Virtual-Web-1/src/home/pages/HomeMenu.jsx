@@ -6,6 +6,8 @@ import db from '../../../firebase/firebaseConfig'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import '../../styles/StayleClass.css'
+
 
 export const HomeMenu = () => {
 
@@ -104,7 +106,7 @@ export const HomeMenu = () => {
 
 
   return (
-    <div>
+    <div className='fondo'>
       <h1> Hola s{user?.name.nombre}</h1>
 
 

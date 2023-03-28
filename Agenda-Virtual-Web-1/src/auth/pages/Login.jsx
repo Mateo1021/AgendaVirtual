@@ -6,14 +6,16 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { AuthContext } from '../context/AuthContext';
+
+import '../../styles/StayleClass.css'
 import Logo from '../../images/LogoFundacion.png';
 import Background from '../../images/LoginBackground.jpg';
-import { AuthContext } from '../context/AuthContext';
 
 
 export const Login = () => {
- 
-  const {login} = useContext( AuthContext )
+
+  const { login } = useContext(AuthContext)
   const navigate = useNavigate();
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
@@ -44,7 +46,7 @@ export const Login = () => {
           } else {
             login(JSON.parse(sessionStorage.getItem('codUserWb')))
             setTimeout(() => {
-              navigate('/home', {  })
+              navigate('/home', {})
             });
           }
 
@@ -60,32 +62,26 @@ export const Login = () => {
   return (
 
 
-    <div style={{
-      backgroundImage: `url(${Background})`
-    }}>
-      <div style={{ display: 'flex', justifyContent: 'center', width: '100%', height: '100vh' }} >
-        <Card className='m-auto' style={{ width: '90%', alignItems: 'center', opacity: '0.85'  }}>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%', height: '100vh', backgroundImage: `url(${Background})` }}>
+      <div style={{ display: 'flex', justifyContent: 'center', width: '70%', height: '90vh' }} >
+        <Card className='m-auto' style={{ width: '90%', alignItems: 'center', opacity: '0.95' }}>
           <Card.Img variant="top" src={Logo} style={{ width: '70%', }} />
           <Card.Body>
             <Card.Title>Módulo Web</Card.Title>
             <Card.Text>
               Fundación sin ánimo de lucro que hace 50 años brinda educación, primaria, secundaria y mediatéc
             </Card.Text>
-            <form className="bg-white shado-md rounded px8 pt-6 pb-8 mb-4">
-              <div className="mb-3 row">
-                <label htmlFor="staticEmail" className="col-sm-2 col-form-label" >Email</label>
-                <div className="col-sm-10">
-                  <input type="text" className="form-control" id="staticEmail" value={user} placeholder={'Correo'} onChange={e => setUser(e.target.value)} />
-                </div>
+            <form className="">
+              <div style={{ width: '50%', marginLeft: '25%', marginRight: '25%' , paddingTop: '2%' }}>
+                <label htmlFor="staticEmail" className="" >Email</label>
+                <input type="text" className="input form-control" id="staticEmail" value={user} placeholder={'Correo'} onChange={e => setUser(e.target.value)} />
               </div>
-              <div className="mb-3 row">
-                <label htmlFor="inputPassword" className="col-sm-2 col-form-label" >Password</label>
-                <div className="col-sm-10">
-                  <input type="password" className="form-control" id="inputPassword" value={pass} placeholder={'Contraseña'} onChange={e => setPass(e.target.value)} />
-                </div>
+              <div style={{ width: '50%', marginLeft: '25%', marginRight: '25%' , paddingTop: '2%' }}>
+                <label htmlFor="inputPassword" className="" >Password</label>
+                <input type="password" className="form-control" id="inputPassword" value={pass} placeholder={'Contraseña'} onChange={e => setPass(e.target.value)} />
               </div>
-              <div style={{display: 'flex', justifyContent: 'center' }}>
-                <Button type="button" className="btn btn-primary" style={{backgroundColor: '#ED7C23', border: '3px solid #492013' ,}} onClick={onLogIn}>Iniciar sesión</Button>
+              <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '2%' }}>
+                <Button type="button" className="btn orange"  onClick={onLogIn}>Iniciar sesión</Button>
               </div>
             </form>
           </Card.Body>

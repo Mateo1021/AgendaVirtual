@@ -13,6 +13,7 @@ import Card from 'react-bootstrap/Card';
 import { IoChevronBackSharp } from "react-icons/io5";
 import { IoChevronForwardSharp } from "react-icons/io5";
 
+import '../../styles/StayleClass.css'
 
 
 export const InicioCurso = () => {
@@ -48,8 +49,9 @@ export const InicioCurso = () => {
   function CardRend(info) {
     const visibility = React.useContext(VisibilityContext);
     return (
-      <Card style={{ display: 'flex', justifyContent: 'space-evenly', width: '18rem', margin: '20px', height: '600px' }}>
-        <Card.Img variant="top" src={info.info.banerCurso} />
+      <Card className='tarjeta' style={{ display: 'flex', justifyContent: 'space-evenly', width: '18rem', margin: '20px', height: '600px' }}>
+        
+        <Card.Img className='tarjeta-img' variant="top" src={info.info.banerCurso} />
         <Card.Body>
           <Card.Title>{info.info.nombreCurso}</Card.Title>
           <Card.Text>
@@ -57,7 +59,7 @@ export const InicioCurso = () => {
             {info.info.largeDescription}
             
           </Card.Text>
-          <Button variant="primary" onClick={() => { sendCours(info.info.codCurso) }}>Ver curso</Button>
+          <Button className= 'tarjeta-btn orange' variant="primary" onClick={() => { sendCours(info.info.codCurso) }}>Ver curso</Button>
         </Card.Body>
       </Card>
     );
