@@ -2,13 +2,14 @@
 import React, { useLayoutEffect } from 'react'
 import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
-import { doc, setDoc, query, collection, getDocs, onSnapshot, where, orderBy, updateDoc } from "firebase/firestore";
+import { doc, setDoc, query, collection, getDocs, onSnapshot, where, getDoc, updateDoc } from "firebase/firestore";
 import db from '../../../firebase/firebaseConfig'
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../styles/styleCours.css"
+import { async } from '@firebase/util';
 
 
 export const CreateEvent = () => {
@@ -24,7 +25,23 @@ export const CreateEvent = () => {
   const [bodyShow, setbodyShow] = useState('')
   const [startDate, setStartDate] = useState(new Date());
 
+  const [asist, setasist] = useState([])
 
+  const [idUSers, setidUSers] = useState([])
+
+  const [inasist, setinasist] = useState([])
+
+
+  const getUserbyid = async (id) => {
+
+    let arrayTemp = []
+    for (let y of id) {
+      const coursoRef = doc(db.db, "Usuarios", y);
+      const docSnap = await getDoc(coursoRef);
+      arrayTemp.push(docSnap.data().Nombres + ' ' + docSnap.data().Apellidos)
+    }
+    setasist(arrayTemp)
+  }
 
   useLayoutEffect(() => {
 
@@ -32,20 +49,53 @@ export const CreateEvent = () => {
       settitelShow(doc.data().titulo);
       setbodyShow(doc.data().body)
       setStartDate(doc.data().createdAt.toDate())
+      setidUSers(doc.data().asistencia)
+      getUserbyid(doc.data().asistencia)
+
+
     });
 
   }, [])
 
-const uptadeEvent =async ()=>{
-  const washingtonRef = doc(db.db, "evento", idE);
-  await updateDoc(washingtonRef, {
-    titulo: titelShow,
-    body:bodyShow,
-    createdAt:startDate
-  });
+  const uptadeEvent = async () => {
+    const washingtonRef = doc(db.db, "evento", idE);
+    await updateDoc(washingtonRef, {
+      titulo: titelShow,
+      body: bodyShow,
+      createdAt: startDate
+    });
 
-  sendProyect()
-}
+    sendProyect()
+  }
+
+
+
+  const ValidAsistencia = async () => {
+    const q = query(collection(db.db, "Usuarios"), where("idCurso", "==", idC));
+    const querySnapshot = await getDocs(q);
+    let idUSerTod = []
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      idUSerTod.push(doc.data())
+    });
+    console.log(idUSerTod);
+    console.log(idUSers);
+
+
+    const diff = [];
+    idUSerTod.forEach((elem) => {
+      if (!idUSers.includes(elem.codUser)) {
+        diff.push(elem);
+      }
+    });
+
+    console.log(diff);
+
+    setinasist(diff)
+
+  }
+
+
   return (
     <div>
 
@@ -70,7 +120,7 @@ const uptadeEvent =async ()=>{
       <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
 
       <button className='btn orange'
-        onClick={() => { uptadeEvent()}}
+        onClick={() => { uptadeEvent() }}
       >
         Crear Evento
       </button>
@@ -79,6 +129,32 @@ const uptadeEvent =async ()=>{
       >
         Cancelar
       </button>
+
+      <button className='btn orange'
+        onClick={ValidAsistencia}
+      >
+        Validar asistencia
+      </button>
+
+      <div className='contAsistencia'>
+        <div className='restulValidAsis'>
+          <h1>usruairos que marcaron asistencia</h1>
+          {asist.map((id, index) => (
+            <div key={index} className="cardResponse">
+              <h5>{id}</h5>
+            </div>
+          ))}
+        </div>
+        <div className='restulValidAsis'>
+          <h1>Inasistencia</h1>
+          {inasist.map((id, index) => (
+            <div key={index} className="cardResponse">
+              <h5>{id.Nombres}</h5>
+            </div>
+          ))}
+        </div>
+      </div>
+
     </div>
   )
 }

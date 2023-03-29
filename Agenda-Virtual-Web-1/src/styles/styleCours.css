@@ -54,3 +54,14 @@ justify-content: center;
     display: flex;
 justify-content: center;
 }
+.contAsistencia{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.restulValidAsis{
+/*     border-left-style: solid;
+    border-left-width: 1px;
+    border-color: rgb(178, 178, 178);
+    margin-top: 30px; */
+}
