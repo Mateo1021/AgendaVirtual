@@ -132,7 +132,7 @@ export const LoginScreen = ({ navigation }: Props) => {
           var errorCode = error.code;
           var errorMessage = error.message;
           Alert.alert('Correo incorrecto')
-          // ..
+          // .
         });
 
     } else {
