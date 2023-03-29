@@ -18,6 +18,7 @@ import '../../styles/StayleClass.css'
 
 export const InicioCurso = () => {
   const navigate = useNavigate();
+  
   const sendCours = (id) => {
     navigate('/curso/editCurso/' + id, { replace: true })
   }

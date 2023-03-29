@@ -121,7 +121,7 @@ export const HomeMenu = () => {
               <div className="cardResponse" >
                 <div >
                   <div className='tituloAct'>
-                    <h5 class>{id.cours}</h5>
+                    <h5>{id.cours}</h5>
                   </div>
                   <h6>{id.tituloRes}</h6>
                   <h6>{id.msj}</h6>

@@ -6,6 +6,7 @@ import { ForoScreen } from '../../Screens/AppScreens/ProyectosScreens/ForoScreen
 import { ForoDocenteScreen } from '../../Screens/AppScreens/ProyectosScreens/ForoDocenteScreen';
 import { ResponseForo } from '../../Screens/AppScreens/ProyectosScreens/ResponseForo';
 import { infoCursoScreen } from '../../Screens/AppScreens/ProyectosScreens/infoCursoScreen';
+import { AsistantEventScreen } from '../../Screens/AppScreens/ProyectosScreens/AsistantEventScreen';
 
 const Stack = createStackNavigator();
 
@@ -32,8 +33,9 @@ export const newProyectoNavigator=()=> {
       <Stack.Screen name="ForoDocenteScreen" options={{title:'Atras'}} component={ForoDocenteScreen} />
       <Stack.Screen name="ResponseForo" options={{title:'Atras'}} component={ResponseForo} />
       <Stack.Screen name="infoCursoScreen" options={{title:'Atras'}} component={infoCursoScreen} />
-      
-      
+      <Stack.Screen name="AsistantEventScreen" options={{title:'Atras'}} component={AsistantEventScreen} />
+
+
     </Stack.Navigator>
   );
 }

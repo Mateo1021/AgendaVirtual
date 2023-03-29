@@ -30,17 +30,7 @@ export const ProyectosScreen = ({ navigation,route }: Props) => {
   const {idCoursGeneral,addCours} =generalArray()
 
   const { getEvents } = useGetEventos()
-
   getEvents()
-  let data = [
-    { time: 'jun - 03', title: 'Event 1', description: 'Event 1 Description' },
-    { time: 'jun - 03', title: 'Event 2', description: 'Event 2 Description' },
-    { time: 'jun - 03', title: 'Event 3', description: 'Event 3 Description' },
-    { time: 'jun - 03', title: 'Event 4', description: 'Event 4 Description' },
-    { time: 'jun - 03', title: 'Event 5', description: 'Event 5 Description' }
-  ]
-
-
   const [modalVisible, setModalVisible] = useState(false);
   const [passRemove, setpassRemove] = useState('')
 
@@ -198,6 +188,14 @@ export const ProyectosScreen = ({ navigation,route }: Props) => {
                     <Icon name={'information-circle-outline'} size={25} color='#fff' />
                   </TouchableOpacity>
 
+
+
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('AsistantEventScreen',{idCurso:idCours})}
+                    style={styles.btn}
+                  >
+                    <Icon name={'ios-person-add-outline'} size={25} color='#fff' />
+                  </TouchableOpacity>
 
 
                   <TouchableOpacity

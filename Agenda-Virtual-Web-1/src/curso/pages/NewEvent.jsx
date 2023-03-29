@@ -16,6 +16,7 @@ export const NewEvent = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [titel, settitel] = useState('')
   const [bodyEve, setbodyEve] = useState('')
+  const [claveAsis, setclaveAsis] = useState('')
 
   const navigate = useNavigate();
   const sendProyect = () => {
@@ -51,12 +52,16 @@ export const NewEvent = () => {
       codEvento: idResponse,
       idCurso: idC,
       titulo: titel,
-      createdAt: startDate
+      createdAt: startDate,
+      passAsis:claveAsis,
+      asistencia:[]
     });
     setStartDate( new Date())
     settitel('')
     setbodyEve('')
+    setclaveAsis('')
     navigate('/curso/editCurso/' + idC)
+    
   }
 
   return (
@@ -76,6 +81,11 @@ export const NewEvent = () => {
       <Form.Group className="mb-3" >
         <Form.Label htmlFor="bodyEvent">Example textarea</Form.Label>
         <Form.Control as="textarea" id="bodyEvent" rows={3} onChange={e => setbodyEve(e.target.value)} />
+      </Form.Group>
+
+      <Form.Group className="mb-3" >
+        <Form.Label htmlFor="bodyEvent">Clave asistencia</Form.Label>
+        <Form.Control type="text" id="pass"  onChange={e => setclaveAsis(e.target.value)} />
       </Form.Group>
 
 
