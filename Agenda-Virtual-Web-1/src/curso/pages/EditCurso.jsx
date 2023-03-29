@@ -43,6 +43,9 @@ export const EditCurso = () => {
   const sedNewEve = () => {
     navigate('/curso/newEvent/' + id)
   }
+  const sendStud = () => {
+    navigate('/curso/listEstud/' + id)
+  }
 
   useLayoutEffect(() => {
     const unsub = onSnapshot(doc(db.db, "Cursos", id), (doc) => {
@@ -187,7 +190,11 @@ export const EditCurso = () => {
       <div>
         {<img src={infoCours.banerCurso} className="banner" />}
         <h1 className='titelPage'>{infoCours.nombreCurso} </h1>
-
+        <button className="btn orange text-white "
+              onClick={() => { sendStud() }}
+            >
+              Lista Estudiantes
+            </button>
         <div className='eventos'>
           <div className='subTitels'>
             <h4>Eventos</h4>

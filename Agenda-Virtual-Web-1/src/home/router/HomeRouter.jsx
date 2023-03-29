@@ -27,7 +27,7 @@ export const HomeRouter = () => {
        <Route path="/" element={<Navigate to="/home"/>}/>
        <Route path="/curso/editCurso/:id" element={<EditCurso></EditCurso>}/>
         <Route path="/curso/iniCurso" element={<InicioCurso></InicioCurso>}/>
-        <Route path="/curso/listEstud" element={<ListaEstud></ListaEstud>}/>
+        <Route path="/curso/listEstud/:idC" element={<ListaEstud></ListaEstud>}/>
         <Route path="/curso/createCours" element={<CreateCours></CreateCours>}/>
         <Route path="/curso/creatActiv/:idA/:idC" element={<CreatActiv></CreatActiv>} />
         <Route path="/curso/newActiv/:idC" element={<NewActivi></NewActivi>} />

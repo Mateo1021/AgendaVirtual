@@ -16,7 +16,7 @@ export const CursoRoter = () => {
        <Routes>
           <Route path="/curso/iniCurso" element={<InicioCurso></InicioCurso>} />
           <Route path="/curso/editCurso/:id" element={<EditCurso></EditCurso>} />
-          <Route path="/curso/listEstud" element={<ListaEstud></ListaEstud>} />
+          <Route path="/curso/listEstud/:idC" element={<ListaEstud></ListaEstud>} />
           <Route path="/curso/creatActiv/:idA/:idC" element={<CreatActiv></CreatActiv>} />
           <Route path="/curso/newActiv/:idC" element={<NewActivi></NewActivi>} />
           <Route path="/curso/newEvent/:idC" element={<NewEvent></NewEvent>} />
