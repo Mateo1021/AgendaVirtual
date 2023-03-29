@@ -29,6 +29,8 @@ export const CreateEvent = () => {
 
   const [idUSers, setidUSers] = useState([])
 
+  const [inasist, setinasist] = useState([])
+
 
   const getUserbyid = async (id) => {
 
@@ -38,7 +40,6 @@ export const CreateEvent = () => {
       const docSnap = await getDoc(coursoRef);
       arrayTemp.push(docSnap.data().Nombres + ' ' + docSnap.data().Apellidos)
     }
-    console.log(arrayTemp);
     setasist(arrayTemp)
   }
 
@@ -50,6 +51,7 @@ export const CreateEvent = () => {
       setStartDate(doc.data().createdAt.toDate())
       setidUSers(doc.data().asistencia)
       getUserbyid(doc.data().asistencia)
+
 
     });
 
@@ -76,7 +78,23 @@ export const CreateEvent = () => {
       // doc.data() is never undefined for query doc snapshots
       idUSerTod.push(doc.data())
     });
+    console.log(idUSerTod);
+    console.log(idUSers);
+
+
+    const diff = [];
+    idUSerTod.forEach((elem) => {
+      if (!idUSers.includes(elem.codUser)) {
+        diff.push(elem);
+      }
+    });
+
+    console.log(diff);
+
+    setinasist(diff)
+
   }
+
 
   return (
     <div>
@@ -112,11 +130,30 @@ export const CreateEvent = () => {
         Cancelar
       </button>
 
-      {asist.map((id, index) => (
-        <div key={index} className="cardResponse">
-          <h5>{id}</h5>
+      <button className='btn orange'
+        onClick={ValidAsistencia}
+      >
+        Validar asistencia
+      </button>
+
+      <div className='contAsistencia'>
+        <div className='restulValidAsis'>
+          <h1>usruairos que marcaron asistencia</h1>
+          {asist.map((id, index) => (
+            <div key={index} className="cardResponse">
+              <h5>{id}</h5>
+            </div>
+          ))}
         </div>
-      ))}
+        <div className='restulValidAsis'>
+          <h1>Inasistencia</h1>
+          {inasist.map((id, index) => (
+            <div key={index} className="cardResponse">
+              <h5>{id.Nombres}</h5>
+            </div>
+          ))}
+        </div>
+      </div>
 
     </div>
   )
