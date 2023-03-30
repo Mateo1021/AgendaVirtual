@@ -7,16 +7,20 @@
   justify-content: center;
   margin: 0;
   padding: 0 30px;
-  height: 100%;
+  
 }
 
 .quiz-container {
   max-width: 500px;
   min-width: 250px;
-  background: #999999;
+  background: #ffffff;
   border-radius: 4px;
   margin-top: 100px;
   padding: 30px 60px;
+  border-radius: 10%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .quiz-container .active-question-no {
@@ -97,4 +101,33 @@
 .result p span {
   color: #ed7c23;
   font-size: 22px;
+}
+/* ---------------------------------------------------------------------------------------------------------------------- */
+.contLogAh{
+  font-family: 'Anek Malayalam', sans-serif;
+  display: flex;
+  justify-content: center;
+  padding-top: 50%;
+  
+}
+.divContAh{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #492013;
+  padding: 10%;
+  border-radius: 10%;
+  background-color: #ffffff;
+}
+.contActAh{
+  font-family: 'Anek Malayalam', sans-serif;
+  display: flex;
+  justify-content: center;
+  padding-top: 30%; 
+}
+.inputStyleAh{
+  text-align: center;
+  font-size: 28px;
 }

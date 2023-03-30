@@ -12,7 +12,7 @@ let correctAnswer
 let questions
 
 const Quiz = () => {
-
+    document.body.style.background = "linear-gradient(90.04deg, #e7aa7b 0.03%, #ffe3cd 99.96%)";
     const { codC, codA } = useParams();
 
 
@@ -218,10 +218,11 @@ const Quiz = () => {
                     <input type={'text'}
                         onChange={(e) => setuser(e.target.value)}
                         id='logIngin'
+                        className="form-control"
                     >
 
                     </input>
-                    <button
+                    <button className='mb-3'
                         onClick={() => loginStud()}
                     > Login </button>
                     <p>Este es tu usuario... {user.Nombres}  ?</p>
