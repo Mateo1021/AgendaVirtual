@@ -20,6 +20,8 @@ import Linkify from 'react-linkify';
 
 
 export const EditCurso = () => {
+  document.body.style.backgroundColor = "white";
+
   const { id } = useParams();
   const [infoCours, setinfoCours] = useState({})
   const [eventos, seteventos] = useState([])

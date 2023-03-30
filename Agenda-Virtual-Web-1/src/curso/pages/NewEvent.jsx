@@ -53,55 +53,59 @@ export const NewEvent = () => {
       idCurso: idC,
       titulo: titel,
       createdAt: startDate,
-      passAsis:claveAsis,
-      asistencia:[]
+      passAsis: claveAsis,
+      asistencia: []
     });
-    setStartDate( new Date())
+    setStartDate(new Date())
     settitel('')
     setbodyEve('')
     setclaveAsis('')
     navigate('/curso/editCurso/' + idC)
-    
+
   }
 
   return (
-    <div>
-      <h1>Crear Nuevo Evento</h1>
+    <div className='contCreatElement'>
+      <h1>CREAR NUEVO EVENTO</h1>
 
-      <Form.Group className="mb-3" >
-        <Form.Label htmlFor="titel">Titulo para el evento</Form.Label>
-        <Form.Control
-          type="text"
-          id="titel"
-          aria-describedby="passwordHelpBlock"
-          onChange={e => settitel(e.target.value)}
-        />
+      <div className='cardForos'>
+        <Form.Group className="mb-3" >
+          <Form.Label htmlFor="titel">Titulo para el evento</Form.Label>
+          <Form.Control
+            type="text"
+            id="titel"
+            aria-describedby="passwordHelpBlock"
+            onChange={e => settitel(e.target.value)}
+          />
 
-      </Form.Group>
-      <Form.Group className="mb-3" >
-        <Form.Label htmlFor="bodyEvent">Example textarea</Form.Label>
-        <Form.Control as="textarea" id="bodyEvent" rows={3} onChange={e => setbodyEve(e.target.value)} />
-      </Form.Group>
+        </Form.Group>
+        <Form.Group className="mb-3" >
+          <Form.Label htmlFor="bodyEvent">Example textarea</Form.Label>
+          <Form.Control as="textarea" id="bodyEvent" rows={3} onChange={e => setbodyEve(e.target.value)} />
+        </Form.Group>
 
-      <Form.Group className="mb-3" >
-        <Form.Label htmlFor="bodyEvent">Clave asistencia</Form.Label>
-        <Form.Control type="text" id="pass"  onChange={e => setclaveAsis(e.target.value)} />
-      </Form.Group>
+        <Form.Group className="mb-3" >
+          <Form.Label htmlFor="bodyEvent">Clave asistencia</Form.Label>
+          <Form.Control type="text" id="pass" onChange={e => setclaveAsis(e.target.value)} />
+        </Form.Group>
+
+        <Form.Label htmlFor="bodyEvent">Fecha evento</Form.Label>
+        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
 
 
-      <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-
-
-      <button className='btn orange'
-        onClick={() => { addEvent() }}
-      >
-        Crear Evento
-      </button>
-      <button className='btn orange'
-        onClick={sendProyect}
-      >
-        Cancelar
-      </button>
+        <div className='d-flex justify-content-between mt-3'>
+          <button className='btn orange'
+            onClick={() => { addEvent() }}
+          >
+            Crear Evento
+          </button>
+          <button className='btn orange'
+            onClick={sendProyect}
+          >
+            Cancelar
+          </button>
+        </div>
+      </div>
     </div>
   )
 }

@@ -138,7 +138,7 @@ export const CreateEvent = () => {
 
       <div className='contAsistencia'>
         <div className='restulValidAsis'>
-          <h1>usruairos que marcaron asistencia</h1>
+          <h1>Asistencia</h1>
           {asist.map((id, index) => (
             <div key={index} className="cardResponse">
               <h5>{id}</h5>

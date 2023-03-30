@@ -65,3 +65,16 @@ justify-content: center;
     border-color: rgb(178, 178, 178);
     margin-top: 30px; */
 }
+.contCreatElement{
+    padding-left: 15%;
+    padding-right: 15%;
+}
+.cardForos{
+    border-style: solid;
+    border-color: '#492013';
+    border-width: 1xp;
+    padding: 5%;
+    border-radius: 2%;
+    background-color: white;
+    box-shadow: 10px 5px 5px #492013;
+}
