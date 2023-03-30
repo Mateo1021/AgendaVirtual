@@ -65,7 +65,7 @@ export const NewEvent = () => {
   }
 
   return (
-    <div className='contCreatElement'>
+    <div className='contCreatElement mt-3'>
       <h1>CREAR NUEVO EVENTO</h1>
 
       <div className='cardForos'>

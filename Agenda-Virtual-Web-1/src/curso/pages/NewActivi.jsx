@@ -285,7 +285,7 @@ export const NewActivi = () => {
 
 
   return (
-    <div className='contCreatElement'>
+    <div className='contCreatElement mt-3'>
       <h1>CREAR NUEVA ACTIVIDAD</h1>
 
       <div className='cardForos'>

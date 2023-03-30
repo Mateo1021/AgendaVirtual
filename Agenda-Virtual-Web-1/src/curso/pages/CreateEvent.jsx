@@ -97,64 +97,71 @@ export const CreateEvent = () => {
 
 
   return (
-    <div>
+    <div className='contCreatElement mt-5'>
 
-      <Form.Group className="mb-3" >
-        <Form.Label htmlFor="titel">Titulo para el evento</Form.Label>
-        <Form.Control
-          type="text"
-          id="titel"
-          aria-describedby="passwordHelpBlock"
-          onChange={e => settitelShow(e.target.value)}
-          value={titelShow}
-        />
+      <div className='cardForos'>
+        <div className='mt-4'>
+          <Form.Group className="mb-3" >
+            <Form.Label htmlFor="titel">Titulo</Form.Label>
+            <Form.Control
+              type="text"
+              id="titel"
+              aria-describedby="passwordHelpBlock"
+              onChange={e => settitelShow(e.target.value)}
+              value={titelShow}
+            />
 
-      </Form.Group>
-      <Form.Group className="mb-3" >
-        <Form.Label htmlFor="bodyEvent">Example textarea</Form.Label>
-        <Form.Control as="textarea" id="bodyEvent" rows={3} onChange={e => setbodyShow(e.target.value)}
-          value={bodyShow}
-        />
-      </Form.Group>
+          </Form.Group>
+          <Form.Group className="mb-3" >
+            <Form.Label htmlFor="bodyEvent">Descripcion</Form.Label>
+            <Form.Control as="textarea" id="bodyEvent" rows={3} onChange={e => setbodyShow(e.target.value)}
+              value={bodyShow}
+            />
+          </Form.Group>
+          <Form.Label >Fecha</Form.Label>
+          <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
 
-      <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+          <div className='d-flex justify-content-between mt-3 mb-5'>
+            <button className='btn orange'
+              onClick={() => { uptadeEvent() }}
+            >
+              Crear Evento
+            </button>
+            <button className='btn orange'
+              onClick={ValidAsistencia}
+            >
+              Validar asistencia
+            </button>
 
-      <button className='btn orange'
-        onClick={() => { uptadeEvent() }}
-      >
-        Crear Evento
-      </button>
-      <button className='btn orange'
-        onClick={sendProyect}
-      >
-        Cancelar
-      </button>
+            <button className='btn orange'
+              onClick={sendProyect}
+            >
+              Cancelar
+            </button>
 
-      <button className='btn orange'
-        onClick={ValidAsistencia}
-      >
-        Validar asistencia
-      </button>
-
-      <div className='contAsistencia'>
-        <div className='restulValidAsis'>
-          <h1>Asistencia</h1>
-          {asist.map((id, index) => (
-            <div key={index} className="cardResponse">
-              <h5>{id}</h5>
-            </div>
-          ))}
+          </div>
         </div>
-        <div className='restulValidAsis'>
-          <h1>Inasistencia</h1>
-          {inasist.map((id, index) => (
-            <div key={index} className="cardResponse">
-              <h5>{id.Nombres}</h5>
-            </div>
-          ))}
+
+        <div className='contAsistencia'>
+          <div className='restulValidAsis'>
+            <h4>Asistencia</h4>
+            {asist.map((id, index) => (
+
+              <li key={index}>{id}</li>
+
+            ))}
+          </div>
+
+          <div className='restulValidAsis'>
+            <h4>Inasistencia</h4>
+            {inasist.map((id, index) => (
+
+              <li key={index}>{id.Nombres}</li>
+
+            ))}
+          </div>
         </div>
       </div>
-
     </div>
   )
 }

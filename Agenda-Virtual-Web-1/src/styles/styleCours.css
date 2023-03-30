@@ -59,15 +59,18 @@ justify-content: center;
     flex-direction: row;
     justify-content: space-between;
 }
-.restulValidAsis{
-/*     border-left-style: solid;
-    border-left-width: 1px;
-    border-color: rgb(178, 178, 178);
-    margin-top: 30px; */
-}
+
 .contCreatElement{
-    padding-left: 15%;
-    padding-right: 15%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+@media (min-width: 768px) {
+
+    .contCreatElement{
+        padding-left: 15%;
+        padding-right: 15%;
+    }
 }
 .cardForos{
     border-style: solid;
