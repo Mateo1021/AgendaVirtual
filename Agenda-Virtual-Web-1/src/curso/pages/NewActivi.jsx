@@ -49,7 +49,8 @@ export const NewActivi = () => {
       titulo: titulo,
       createdAt: dateReg,
       file: 'test',
-      active:'1'
+      active:'1',
+      participacion:[]
     });
     setbody('')
     settitulo('')
