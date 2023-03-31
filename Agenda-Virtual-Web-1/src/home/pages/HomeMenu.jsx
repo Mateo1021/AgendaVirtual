@@ -11,6 +11,7 @@ import '../../styles/StayleClass.css'
 
 export const HomeMenu = () => {
 
+
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 

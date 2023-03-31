@@ -21,7 +21,7 @@ let user = "";
 
 
 export const CreateCours = () => {
-
+  document.body.style.backgroundColor = "#f5f5f5";
   let base = db
 
   const [file, setFile] = useState("");
@@ -118,7 +118,7 @@ export const CreateCours = () => {
 
   return (
     <div className='p-5'>
-      <h1>Crear Curso</h1>
+      <h1>CREAR CURSO</h1>
       <div className="mb-3">
         <label className="form-label">Nombre Curso</label>
         <input type="text" className="form-control" id="nameCours" placeholder="Fotografia"
@@ -164,7 +164,7 @@ export const CreateCours = () => {
         </div>
 
       </div>
-      <button type="button" className="btn btn-primary" onClick={createCurs}>Crear</button>
+      <button type="button" className="btn orange" onClick={createCurs}>Crear</button>
 
     </div>
   )

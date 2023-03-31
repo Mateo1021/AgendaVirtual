@@ -10,7 +10,7 @@ import { async } from '@firebase/util';
 
 
 export const NewActivi = () => {
-
+  document.body.style.backgroundColor = "#f5f5f5";
 
   const { idC } = useParams();
 

@@ -8,9 +8,10 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form'
 
 import "../../styles/styleCours.css"
-import { async } from '@firebase/util';
+
 
 export const CreatActiv = () => {
+  document.body.style.backgroundColor = "#f5f5f5";
   const { idA, idC } = useParams();
 
   const navigate = useNavigate();

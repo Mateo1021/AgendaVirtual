@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 export const NewEvent = () => {
+  document.body.style.backgroundColor = "#f5f5f5";
   const { idC } = useParams();
   const [startDate, setStartDate] = useState(new Date());
   const [titel, settitel] = useState('')

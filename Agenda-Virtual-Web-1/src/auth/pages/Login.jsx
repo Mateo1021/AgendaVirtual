@@ -14,7 +14,6 @@ import Background from '../../images/LoginBackground.jpg';
 
 
 export const Login = () => {
-
   const { login } = useContext(AuthContext)
   const navigate = useNavigate();
   const [user, setUser] = useState("");
@@ -35,19 +34,21 @@ export const Login = () => {
             // doc.data() is never undefined for query doc snapshots
             console.log(doc.id, " => ", doc.data());
             sessionStorage.setItem('codUserWb', JSON.stringify(doc.data()))
-            if (doc.data().cargo != "profesor") {
-              alert('Este modulo es solo para profesores')
-              /* navigate('/login', { replace: true }) */
-            }
+
           });
           if (ValidUSer == 0) {
             alert('Este modulo es solo para profesores')
             /* navigate('/login', { replace: true }) */
           } else {
             login(JSON.parse(sessionStorage.getItem('codUserWb')))
-            setTimeout(() => {
+  
+            if(JSON.parse(sessionStorage.getItem('codUserWb')).cargo == 'admin'){
+              sessionStorage.setItem('valid','1')
+              navigate('/admin', {replace:true})
+            }else{
               navigate('/home', {})
-            });
+            }
+        
           }
 
         }

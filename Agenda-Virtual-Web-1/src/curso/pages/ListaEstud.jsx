@@ -150,8 +150,8 @@ export const ListaEstud = () => {
 
   return (
     <>
-      <div>
-        Lista de estudiantess
+      <div className='d-flex justify-content-center mb-2 mt-3'>
+        <h1>LISTA DE ESTUDIANTES</h1>
       </div>
       <div>
         <Table striped bordered hover size="sm" responsive="sm">

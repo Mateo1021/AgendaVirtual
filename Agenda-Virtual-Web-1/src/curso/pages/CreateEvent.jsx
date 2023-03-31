@@ -13,6 +13,7 @@ import { async } from '@firebase/util';
 
 
 export const CreateEvent = () => {
+  document.body.style.backgroundColor = "#f5f5f5";
   const { idE, idC } = useParams();
   const navigate = useNavigate();
 
