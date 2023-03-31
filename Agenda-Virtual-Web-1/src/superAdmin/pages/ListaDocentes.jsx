@@ -13,12 +13,17 @@ export const ListaDocentes = () => {
     navigate('/login')
   }
 
-  const sendInfoItem =(tipo,id)=>{
-    navigate('/info/'+tipo+'/'+id)
+  const sendIniAdmin = () => {
+    navigate('/admin')
+  }
+
+  const sendInfoItem = (tipo, id) => {
+    navigate('/info/' + tipo + '/' + id)
   }
   const [listElement, setlistElement] = useState([])
-
+const [saveInfo, setsaveInfo] = useState([])
   const [item, setitem] = useState('')
+  const [cantTxt, setcantTxt] = useState(0)
 
   const validSearchTable = () => {
     if (item == '1') {
@@ -38,11 +43,27 @@ export const ListaDocentes = () => {
       // doc.data() is never undefined for query doc snapshots
       arrayPrfof.push(doc.data());
     });
-    console.log(arrayPrfof);
     setlistElement(arrayPrfof)
+    setsaveInfo(arrayPrfof)
   }
 
+  const SearchinElement = (txt) => {
+    let arraySearh = []
+    let newArray = []
+    if(cantTxt>txt.length){
+      arraySearh = saveInfo;
+    }else{
+      arraySearh = listElement;
+    }
+      for (let y in arraySearh) {
+        if (JSON.stringify(arraySearh[y]).replaceAll('"'," ").toLowerCase().includes(txt.toLowerCase())) {
+          newArray.push(arraySearh[y])
+        }
+      }
+      setcantTxt(txt.length)
+      setlistElement(newArray)
 
+  }
 
 
   const RenderTable = () => {
@@ -59,7 +80,7 @@ export const ListaDocentes = () => {
           </thead>
           <tbody>
             {listElement.map((item, index) => (
-              <tr key={index} onClick={()=>sendInfoItem('pf',item.id)}>
+              <tr key={index} onClick={() => sendInfoItem('pf', item.id)}>
                 <td>{item.id}</td>
                 <td>{item.nombre} {item.apellido}</td>
                 <td>{item.correo}</td>
@@ -83,7 +104,7 @@ export const ListaDocentes = () => {
           </thead>
           <tbody>
             {listElement.map((item, index) => (
-              <tr key={index} onClick={()=>sendInfoItem('es',item.codUser)}>
+              <tr key={index} onClick={() => sendInfoItem('es', item.codUser)}>
                 <td>{item.codUser}</td>
                 <td>{item.Nombres} {item.Apellidos}</td>
                 <td>{item.Correo}</td>
@@ -110,7 +131,7 @@ export const ListaDocentes = () => {
           </thead>
           <tbody>
             {listElement.map((item, index) => (
-              <tr key={index} onClick={()=>sendInfoItem('co',item.codCurso)}>
+              <tr key={index} onClick={() => sendInfoItem('co', item.codCurso)}>
                 <td>{item.codCurso}</td>
                 <td>{item.nombreCurso}</td>
                 <td>{item.nombreDocente} {item.apellidosDocente}</td>
@@ -154,16 +175,23 @@ export const ListaDocentes = () => {
           <option value="3">Cursos</option>
         </select>
         <button
+          className='btn orange'
           onClick={validSearchTable}
         >
           Generar tabla
         </button>
 
 
-
+        <input type={'text'} className='form-control' onChange={(e) => SearchinElement(e.target.value)}  ></input>
         <RenderTable></RenderTable>
 
-
+        <div>
+          <button
+            onClick={sendIniAdmin}
+          >
+            Volver al inicio
+          </button>
+        </div>
       </div>
     )
 

@@ -101,7 +101,7 @@ export const CreateCours = () => {
 
     await setDoc(doc(base.db, "Cursos", isResponse), {
       ClaveDSalida: passRemove,
-      apellidosDocente: infoDocente.apellidos,
+      apellidosDocente: infoDocente.apellido,
       banerCurso: banner,
       cantEstudiantes: '0',
       claveDingreso: '0',
