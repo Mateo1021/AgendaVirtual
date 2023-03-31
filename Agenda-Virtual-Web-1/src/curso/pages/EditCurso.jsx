@@ -20,7 +20,7 @@ import Linkify from 'react-linkify';
 
 
 export const EditCurso = () => {
-  document.body.style.backgroundColor = "white";
+  document.body.style.backgroundColor = "#f5f5f5";
 
   const { id } = useParams();
   const [infoCours, setinfoCours] = useState({})
@@ -28,15 +28,13 @@ export const EditCurso = () => {
   const [foros, setforos] = useState([])
 
 
-
-
   const navigate = useNavigate();
   const sedCreateActv = (idA) => {
-    navigate('/curso/creatActiv/' + idA+'/'+id)
+    navigate('/curso/creatActiv/' + idA + '/' + id)
   }
 
   const sedCreateEven = (idE) => {
-    navigate('/curso/createEvent/' + idE+'/'+id)
+    navigate('/curso/createEvent/' + idE + '/' + id)
   }
 
   const sedNewAc = () => {
@@ -57,8 +55,6 @@ export const EditCurso = () => {
   }, [])
 
   useLayoutEffect(() => {
-
-
     const evetRef = collection(db.db, "evento");
     const q = query(evetRef, where("idCurso", "==", id), orderBy("createdAt", "asc"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -87,10 +83,10 @@ export const EditCurso = () => {
   function CardRend(info) {
     const visibility = React.useContext(VisibilityContext);
     return (
-      <button style={{ backgroundColor: 'white', borderWidth: '0' }}
+      <button style={{ backgroundColor: '#f5f5f5', borderWidth: '0' }}
         onClick={() => { sedCreateEven(info.info.codEvento) }}
       >
-        <Card style={{ width: '18rem', margin: '20px', height: '200px' }}
+        <Card style={{ width: '18rem', margin: '20px', height: '200px',borderColor: '#492013', boxShadow: '10px 5px 5px #492013' }}
           key={info.info.codEvento}
         >
           <Card.Body style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'column' }}>
@@ -110,7 +106,7 @@ export const EditCurso = () => {
 
     return (
       <button disabled={isFirstItemVisible} onClick={() => scrollPrev()}
-        style={{ backgroundColor: "white", borderWidth: "0" }}>
+        style={{ backgroundColor: "#f5f5f5", borderWidth: "0" }}>
         <IoChevronBackSharp >
 
         </IoChevronBackSharp>
@@ -125,7 +121,7 @@ export const EditCurso = () => {
 
     return (
       <button disabled={isLastItemVisible} onClick={() => scrollNext()}
-        style={{ backgroundColor: "white", borderWidth: "0" }}
+        style={{ backgroundColor: "#f5f5f5", borderWidth: "0" }}
       >
         <IoChevronForwardSharp></IoChevronForwardSharp>
       </button>
@@ -133,24 +129,21 @@ export const EditCurso = () => {
     );
   }
 
-
-
-
   function CardRendF(info) {
     const visibility = React.useContext(VisibilityContext);
     return (
-      <button style={{ backgroundColor: 'white', borderWidth: '0' }}
+      <button style={{ backgroundColor: '#f5f5f5', borderWidth: '0' }}
         onClick={() => { sedCreateActv(info.info.idRegistro) }}
       >
-        <Card style={{ width: '18rem', margin: '20px', height: '200px', flexDirection: '' }}
+        <Card style={{ width: '18rem', margin: '20px', height: '200px', borderColor: '#492013', boxShadow: '10px 5px 5px #492013' }}
           key={info.info.idRegistro}
         >
           <Card.Body style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'column' }}>
             <Card.Title>{info.info.titulo}</Card.Title>
             <Card.Text>
-            <Linkify> 
-              {info.info.body}
-            </Linkify>
+              <Linkify>
+                {info.info.body}
+              </Linkify>
             </Card.Text>
           </Card.Body>
         </Card>
@@ -164,7 +157,7 @@ export const EditCurso = () => {
 
     return (
       <button disabled={isFirstItemVisible} onClick={() => scrollPrev()}
-        style={{ backgroundColor: "white", borderWidth: "0" }}>
+        style={{ backgroundColor: "#f5f5f5", borderWidth: "0" }}>
         <IoChevronBackSharp >
 
         </IoChevronBackSharp>
@@ -179,7 +172,7 @@ export const EditCurso = () => {
 
     return (
       <button disabled={isLastItemVisible} onClick={() => scrollNext()}
-        style={{ backgroundColor: "white", borderWidth: "0" }}
+        style={{ backgroundColor: "#f5f5f5", borderWidth: "0" }}
       >
         <IoChevronForwardSharp></IoChevronForwardSharp>
       </button>
@@ -191,58 +184,68 @@ export const EditCurso = () => {
     <>
       <div>
         {<img src={infoCours.banerCurso} className="banner" />}
-        <h1 className='titelPage'>{infoCours.nombreCurso} </h1>
-        <button className="btn orange text-white "
+        <div>
+          <div className='d-flex justify-content-center'>
+            <h1 className='titelPage'>{infoCours.nombreCurso} </h1>
+          </div>
+          <div className='d-flex justify-content-end px-3'>
+            <button className="d-flex btn orange text-white"
               onClick={() => { sendStud() }}
             >
               Lista Estudiantes
             </button>
-        <div className='eventos'>
-          <div className='subTitels'>
-            <h4>Eventos</h4>
           </div>
-          <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow} >
-            {eventos.map((id) => (
-              <CardRend
-                info={id}
-                key={id.codEvento}
-              />
-            ))}
-          </ScrollMenu>
-          <div className='btnAdd'>
-            <button className="btn orange text-white "
-              onClick={() => { sedNewEve() }}
-            >
-              Crear nuevo evento
-            </button>
+
+
+
+          <div className='eventos'>
+            <div className='subTitels'>
+              <h4>Eventos</h4>
+            </div>
+            <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow} >
+              {eventos.map((id) => (
+                <CardRend
+                  info={id}
+                  key={id.codEvento}
+                />
+              ))}
+            </ScrollMenu>
+            <div className='btnAdd'>
+              <button className="btn orange text-white "
+                onClick={() => { sedNewEve() }}
+              >
+                Crear nuevo evento
+              </button>
+            </div>
+          </div>
+
+
+          <div className='actividades'>
+            <div>
+              <h4 className='subTitels'>
+                Actividades
+              </h4>
+            </div>
+
+            <ScrollMenu LeftArrow={LeftArrowF} RightArrow={RightArrowF} >
+              {foros.map((id) => (
+                <CardRendF
+                  info={id}
+                  key={id.idRegistro}
+                />
+              ))}
+            </ScrollMenu>
+
+            <div className='btnAdd'>
+              <button className="btn orange text-white "
+                onClick={() => { sedNewAc() }}
+              >
+                Crear nueva actividad
+              </button>
+            </div>
           </div>
         </div>
 
-
-        <div className='actividades'>
-          <div>
-            <h4 className='subTitels'>
-              Actividades
-            </h4>
-          </div>
-
-          <ScrollMenu LeftArrow={LeftArrowF} RightArrow={RightArrowF} >
-            {foros.map((id) => (
-              <CardRendF
-                info={id}
-                key={id.idRegistro}
-              />
-            ))}
-          </ScrollMenu>
-
-          <div className='btnAdd'>
-            <button className="btn orange text-white "
-              onClick={() => { sedNewAc() }}
-            >
-              Crear nueva actividad
-            </button>
-          </div>
-        </div>
 
 
       </div>

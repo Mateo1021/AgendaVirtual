@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { async } from '@firebase/util';
 import db from '../../../firebase/firebaseConfig'
-import { collection, query, where, getDoc, onSnapshot, getDocs, updateDoc, doc } from "firebase/firestore";
+import { collection, query, where, getDoc, onSnapshot, getDocs, updateDoc, doc ,addDoc} from "firebase/firestore";
 import { useParams } from 'react-router-dom';
 import { GrFormRefresh } from "react-icons/gr";
 
@@ -97,13 +97,14 @@ export const Ahorcado = () => {
 
 
     function SelectPalabra() {
+
+        let newid = idPalabra + 1
+        if (newid <= palabraServ.length - 1) {
         setidPista(0)
         setletrasAdivinadas([])
-        let newid = idPalabra + 1
 
         console.log(newid);
         console.log(palabraServ.length - 1);
-        if (newid <= palabraServ.length - 1) {
 
             setidPalabra(newid)
             setpistas(palabraServ[newid].pistas)
@@ -229,6 +230,14 @@ export const Ahorcado = () => {
         await updateDoc(docRef, {
             participacion: arrayTemp
         });
+
+
+        const rankRef = await addDoc(collection(db.db, "rankingActividades"), {
+            codReg: codA,
+            nombreUser: userInfo.Nombres,
+            puntaje:score
+          });
+
         setisLogin(false)
         window.location.reload();
 
@@ -277,6 +286,7 @@ export const Ahorcado = () => {
                     <button
                         className="btn orange mt-3"
                         onClick={verificarLetra}
+                        disabled={!isDisable}
                     >
                         Validar
                     </button>

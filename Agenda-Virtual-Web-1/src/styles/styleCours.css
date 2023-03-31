@@ -8,7 +8,14 @@ height: 30vw;
     margin-right: 20px;
 }
 .eventos{
+    padding-top: 30px;
     margin-top: 30px;
+    padding-bottom: 30px;
+    border-bottom-style: solid;
+    border-width: 1px;
+    border-color: rgb(199, 199, 199);
+    box-Shadow: 0px 0px 5px #ed7c23;
+    border-top-style: solid;
 }
 .actividades{
     margin-top: 30px;
@@ -80,4 +87,8 @@ justify-content: center;
     border-radius: 2%;
     background-color: white;
     box-shadow: 10px 5px 5px #492013;
+}
+.scrollList{
+    overflow: scroll;
+    height: 30vw;
 }

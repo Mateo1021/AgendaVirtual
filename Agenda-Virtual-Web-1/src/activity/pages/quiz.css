@@ -107,7 +107,7 @@
   font-family: 'Anek Malayalam', sans-serif;
   display: flex;
   justify-content: center;
-  padding-top: 50%;
+  padding-top: 5%;
   
 }
 .divContAh{
@@ -125,7 +125,7 @@
   font-family: 'Anek Malayalam', sans-serif;
   display: flex;
   justify-content: center;
-  padding-top: 30%; 
+/*   padding-top: 30%;  */
 }
 .inputStyleAh{
   text-align: center;

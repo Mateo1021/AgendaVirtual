@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useParams } from 'react-router-dom';
 import './quiz.css'
 import db from '../../../firebase/firebaseConfig'
-import { collection, query, where, getDoc, onSnapshot, getDocs, updateDoc, doc } from "firebase/firestore";
+import { collection, query, where, getDoc, onSnapshot, getDocs, updateDoc, doc,addDoc } from "firebase/firestore";
 import { async } from '@firebase/util';
 let quiz = {}
 let question
@@ -143,6 +143,14 @@ const Quiz = () => {
         await updateDoc(docRef, {
             participacion: arrayTemp
         });
+
+
+        const rankRef = await addDoc(collection(db.db, "rankingActividades"), {
+            codReg: codA,
+            nombreUser: user.Nombres,
+            puntaje:result.score
+          });
+
         setstarGame(false)
         window.location.reload();
     }

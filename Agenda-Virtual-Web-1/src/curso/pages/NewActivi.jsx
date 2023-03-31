@@ -303,7 +303,7 @@ export const NewActivi = () => {
           <Form.Label htmlFor="bodyEvent">Descripcion de la actividad</Form.Label>
           <Form.Control as="textarea" id="bodyEvent" rows={3} onChange={e => setbody(e.target.value)} />
         </Form.Group>
-        <Form.Select /* value={tipoSelect}  */ onChange={e => settipoSelect(e.target.value)} aria-label="Default select example">
+        <Form.Select  onChange={e => settipoSelect(e.target.value)} aria-label="Default select example">
           <option value="0">Selecciona un tipo</option>
           <option value="1">Post generico</option>
           <option value="2">Trivia</option>
