@@ -13,6 +13,7 @@ import { Ahorcado } from '../activity/pages/Ahorcado'
 import { InicioAdmin } from '../superAdmin/pages/InicioAdmin'
 import { ListaDocentes } from '../superAdmin/pages/ListaDocentes';
 import { CreateUser } from './../superAdmin/pages/CreateUser';
+import { InfoAdmin } from '../superAdmin/pages/InfoAdmin'
 
 
 function ValidAdmin() {
@@ -61,7 +62,7 @@ export const AppRouter = () => {
         }>
         </Route>
 
-        <Route path="listaDocentes/*" element={
+        <Route path="listaDocentes/" element={
           <PrivateRoute>
             <ListaDocentes/>
           </PrivateRoute>
@@ -71,6 +72,13 @@ export const AppRouter = () => {
         <Route path="createUser/*" element={
           <PrivateRoute>
             <CreateUser/>
+          </PrivateRoute>
+        }>
+        </Route>
+
+        <Route path="info/:tipoU/:idU" element={
+          <PrivateRoute>
+            <InfoAdmin/>
           </PrivateRoute>
         }>
         </Route>

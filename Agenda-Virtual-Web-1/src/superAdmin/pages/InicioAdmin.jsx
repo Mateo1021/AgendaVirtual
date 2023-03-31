@@ -22,7 +22,7 @@ export const InicioAdmin = () => {
   if (sessionStorage.getItem('valid') !== '1') {
     return (
       <div>
-        <h1>No eres admin logueate como uno o ingresa con tu usuario de administrador</h1>
+        <h1>No eres admin logueate como uno</h1>
         <button
           onClick={SendProyect}
         > Go login</button>

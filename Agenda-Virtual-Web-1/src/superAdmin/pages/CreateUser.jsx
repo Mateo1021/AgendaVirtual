@@ -58,47 +58,58 @@ export const CreateUser = () => {
         // ..
       });
 
-      setname('')
-      setlastName('')
-      setmail('')
-      setcargo('')
-      setpass('')
-      goInicioAdmin()
+    setname('')
+    setlastName('')
+    setmail('')
+    setcargo('')
+    setpass('')
+    goInicioAdmin()
 
 
   }
 
 
 
-  return (
-    <div className='p-5'>
-      <h1>CREAR USUARIO</h1>
-      <div className="mb-3">
-        <label className="form-label">Nombre</label>
-        <input type="text" className="form-control" id="nameCours" onChange={(e) => setname(e.target.value)} />
-
-        <label className="form-label">Apellidos</label>
-        <input type="text" className="form-control" id="lastName" onChange={(e) => setlastName(e.target.value)} />
-
-        <label className="form-label">Correo</label>
-        <input type="text" className="form-control" id="mail" onChange={(e) => setmail(e.target.value)} />
-
-        <label className="form-label">Contraseña</label>
-        <input type="text" className="form-control" id="mail" onChange={(e) => setpass(e.target.value)} />
-
-        <label className="form-label">Cargo</label>
-        <select className='form-control' aria-label="Default select example" onChange={(e) => setcargo(e.target.value)}>
-          <option value="0">Selecciona el cargo</option>
-          <option value="admin">Administrado</option>
-          <option value="profesor">Profesor</option>
-        </select>
+  if (sessionStorage.getItem('valid') !== '1') {
+    return (
+      <div>
+        <h1>No eres admin logueate como uno</h1>
+        <button
+          onClick={SendProyect}
+        > Go login</button>
       </div>
+    )
+  } else {
+    return (
+      <div className='p-5'>
+        <h1>CREAR USUARIO</h1>
+        <div className="mb-3">
+          <label className="form-label">Nombre</label>
+          <input type="text" className="form-control" id="nameCours" onChange={(e) => setname(e.target.value)} />
+
+          <label className="form-label">Apellidos</label>
+          <input type="text" className="form-control" id="lastName" onChange={(e) => setlastName(e.target.value)} />
+
+          <label className="form-label">Correo</label>
+          <input type="text" className="form-control" id="mail" onChange={(e) => setmail(e.target.value)} />
+
+          <label className="form-label">Contraseña</label>
+          <input type="text" className="form-control" id="mail" onChange={(e) => setpass(e.target.value)} />
+
+          <label className="form-label">Cargo</label>
+          <select className='form-control' aria-label="Default select example" onChange={(e) => setcargo(e.target.value)}>
+            <option value="0">Selecciona el cargo</option>
+            <option value="admin">Administrado</option>
+            <option value="profesor">Profesor</option>
+          </select>
+        </div>
 
 
-      <button className="btn orange" onClick={createUser}>Crear</button>
+        <button className="btn orange" onClick={createUser}>Crear</button>
 
-      <button className="btn orange" onClick={goInicioAdmin}>Cancelar</button>
+        <button className="btn orange" onClick={goInicioAdmin}>Cancelar</button>
 
-    </div>
-  )
+      </div>
+    )
+  }
 }
