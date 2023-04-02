@@ -235,13 +235,12 @@ export const Ahorcado = () => {
         const rankRef = await addDoc(collection(db.db, "rankingActividades"), {
             codReg: codA,
             nombreUser: userInfo.Nombres,
-            puntaje:score
+            puntaje:score,
+            codUser:userInfo.codUser
           });
 
         setisLogin(false)
-        window.location.reload();
-
-
+        window.location.href = "http://www.agendavirtual.online/actividades/finishPage.html";
 
     }
 

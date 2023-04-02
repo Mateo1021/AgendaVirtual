@@ -14,30 +14,12 @@ import { InicioAdmin } from '../superAdmin/pages/InicioAdmin'
 import { ListaDocentes } from '../superAdmin/pages/ListaDocentes';
 import { CreateUser } from './../superAdmin/pages/CreateUser';
 import { InfoAdmin } from '../superAdmin/pages/InfoAdmin'
+import { InfoEstud } from '../superAdmin/pages/InfoEstud'
+import { InfoCours } from '../superAdmin/pages/InfoCours'
 
-
-function ValidAdmin() {
-
-
-  /*   <Route path="/*" element={
-      <PrivateRoute>
-        <HomeRouter />
-      </PrivateRoute>
-    }>
-    </Route> */
-
-  return (
-    <Route path="/*" element={
-      <PrivateRoute>
-        <HomeRouter />
-      </PrivateRoute>
-    }>
-    </Route>
-
-  )
-}
 
 export const AppRouter = () => {
+
   return (
     <>
       {/* :codC/:codA */}
@@ -76,9 +58,23 @@ export const AppRouter = () => {
         }>
         </Route>
 
-        <Route path="info/:tipoU/:idU" element={
+        <Route path="info/:idU" element={
           <PrivateRoute>
             <InfoAdmin/>
+          </PrivateRoute>
+        }>
+        </Route>
+
+        <Route path="infoEs/:idU" element={
+          <PrivateRoute>
+            <InfoEstud/>
+          </PrivateRoute>
+        }>
+        </Route>
+
+        <Route path="infoCo/:idU" element={
+          <PrivateRoute>
+            <InfoCours/>
           </PrivateRoute>
         }>
         </Route>

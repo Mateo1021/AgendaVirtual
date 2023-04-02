@@ -1,11 +1,14 @@
 import React from 'react'
 import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+import { useLayoutEffect } from 'react';
 
 
 export const InfoAdmin = () => {
-  const { tipoU, idU } = useParams();
+  const { idU } = useParams();
   const navigate = useNavigate();
+
+
   const sendIni = () => {
     navigate('/admin')
   }
@@ -13,10 +16,17 @@ export const InfoAdmin = () => {
     navigate('/listaDocentes')
   }
 
+useLayoutEffect(() => {
+
+
+}, [])
+
+
+
 
   return (
     <div>
-      InfoAdmin {tipoU} {idU}
+      InfoAdmin {idU}
 
 
 

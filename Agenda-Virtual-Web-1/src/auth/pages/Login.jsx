@@ -11,11 +11,39 @@ import { AuthContext } from '../context/AuthContext';
 import '../../styles/StayleClass.css'
 import Logo from '../../images/LogoFundacion.png';
 import Background from '../../images/LoginBackground.jpg';
+import { useEffect } from 'react';
+
 
 
 export const Login = () => {
+
   const { login } = useContext(AuthContext)
   const navigate = useNavigate();
+
+
+  const [isActivi, setisActivi] = useState('')
+  useLayoutEffect(() => {
+    setisActivi(sessionStorage.getItem('isActivity'))
+  }, [])
+
+
+  const sendProyect = () => {
+    let tipo;
+    if (sessionStorage.getItem('tipoActiv') == '1') {
+      tipo = 'quiz'
+    }else if(sessionStorage.getItem('tipoActiv') == '2'){
+      tipo = 'ahorcado'
+    }
+    navigate('/'+tipo+'/' + sessionStorage.getItem('cursoSession') + '/' + sessionStorage.getItem('actividadSession'))
+    setTimeout(() => {
+      sessionStorage.removeItem('actividadSession')
+      sessionStorage.removeItem('cursoSession')
+      sessionStorage.removeItem('isActivity')
+      sessionStorage.removeItem('tipoActiv')
+    }, 4000);
+  }
+
+
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
 
@@ -41,14 +69,14 @@ export const Login = () => {
             /* navigate('/login', { replace: true }) */
           } else {
             login(JSON.parse(sessionStorage.getItem('codUserWb')))
-  
-            if(JSON.parse(sessionStorage.getItem('codUserWb')).cargo == 'admin'){
-              sessionStorage.setItem('valid','1')
-              navigate('/admin', {replace:true})
-            }else{
+
+            if (JSON.parse(sessionStorage.getItem('codUserWb')).cargo == 'admin') {
+              sessionStorage.setItem('valid', '1')
+              navigate('/admin', { replace: true })
+            } else {
               navigate('/home', {})
             }
-        
+
           }
 
         }
@@ -60,34 +88,43 @@ export const Login = () => {
         console.log(errorMessage);
       });
   }
-  return (
 
 
-    <div style={{ display: 'flex', justifyContent: 'center', width: '100%', height: '100vh', backgroundImage: `url(${Background})` }}>
-      <div style={{ display: 'flex', justifyContent: 'center', width: '70%', height: '90vh' }} >
-        <Card className='m-auto' style={{ width: '90%', alignItems: 'center', opacity: '0.95' }}>
-          <Card.Img variant="top" src={Logo} style={{ width: '70%', }} />
-          <Card.Body>
-            <Card.Title>Módulo Web</Card.Title>
-            <Card.Text>
-              Fundación sin ánimo de lucro que hace 50 años brinda educación, primaria, secundaria y mediatéc
-            </Card.Text>
-            <form className="">
-              <div style={{ width: '50%', marginLeft: '25%', marginRight: '25%' , paddingTop: '2%' }}>
-                <label htmlFor="staticEmail" className="" >Email</label>
-                <input type="text" className="input form-control" id="staticEmail" value={user} placeholder={'Correo'} onChange={e => setUser(e.target.value)} />
-              </div>
-              <div style={{ width: '50%', marginLeft: '25%', marginRight: '25%' , paddingTop: '2%' }}>
-                <label htmlFor="inputPassword" className="" >Password</label>
-                <input type="password" className="input form-control" id="inputPassword" value={pass} placeholder={'Contraseña'} onChange={e => setPass(e.target.value)} />
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '2%' }}>
-                <Button type="button" className="btn orange"  onClick={onLogIn}>Iniciar sesión</Button>
-              </div>
-            </form>
-          </Card.Body>
-        </Card>
+  if (isActivi == '1') {
+    return (
+      <div><h1>Es actividad</h1>
+        <button onClick={sendProyect} className='btn orange' >Empezar activdad</button>
       </div>
-    </div>
-  )
+    )
+
+  } else {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', width: '100%', height: '100vh', backgroundImage: `url(${Background})` }}>
+        <div style={{ display: 'flex', justifyContent: 'center', width: '70%', height: '90vh' }} >
+          <Card className='m-auto' style={{ width: '90%', alignItems: 'center', opacity: '0.95' }}>
+            <Card.Img variant="top" src={Logo} style={{ width: '70%', }} />
+            <Card.Body>
+              <Card.Title>Módulo Web</Card.Title>
+              <Card.Text>
+                Fundación sin ánimo de lucro que hace 50 años brinda educación, primaria, secundaria y mediatéc
+              </Card.Text>
+              <form className="">
+                <div style={{ width: '50%', marginLeft: '25%', marginRight: '25%', paddingTop: '2%' }}>
+                  <label htmlFor="staticEmail" className="" >Email</label>
+                  <input type="text" className="input form-control" id="staticEmail" value={user} placeholder={'Correo'} onChange={e => setUser(e.target.value)} />
+                </div>
+                <div style={{ width: '50%', marginLeft: '25%', marginRight: '25%', paddingTop: '2%' }}>
+                  <label htmlFor="inputPassword" className="" >Password</label>
+                  <input type="password" className="input form-control" id="inputPassword" value={pass} placeholder={'Contraseña'} onChange={e => setPass(e.target.value)} />
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '2%' }}>
+                  <Button type="button" className="btn orange" onClick={onLogIn}>Iniciar sesión</Button>
+                </div>
+              </form>
+            </Card.Body>
+          </Card>
+        </div>
+      </div>
+    )
+  }
 }

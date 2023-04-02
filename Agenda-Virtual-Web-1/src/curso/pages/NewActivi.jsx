@@ -52,9 +52,17 @@ export const NewActivi = () => {
   }
   const addReg = async () => {
     let idResponse = await getIdReg()
-
+    let validUrl;
+    if(preguntas.length>0){
+      validUrl= ' http://www.agendavirtual.online/actividades/index.html?tipo=1&curso=' + idC + '&actividad=' + idResponse
+    }else if(palabrasA.length>0){
+      validUrl= ' http://www.agendavirtual.online/actividades/index.html?tipo=2&curso=' + idC + '&actividad=' + idResponse
+    }else{
+      validUrl=''
+    }
+    let bodyConUrl = bodyAc + validUrl
     await setDoc(doc(db.db, "registrosForo", idResponse), {
-      body: bodyAc,
+      body: bodyConUrl,
       idRegistro: idResponse,
       codProyecto: idC,
       titulo: titulo,
@@ -107,6 +115,7 @@ export const NewActivi = () => {
   }
 
   const addPregunta = async () => {
+    setpalabrasA([])
     let arrayOption = []
     arrayOption.push(document.getElementById('op1').value)
     arrayOption.push(document.getElementById('op2').value)
@@ -150,6 +159,7 @@ export const NewActivi = () => {
 
   }
   const addPalabra = async () => {
+    setpreguntas([])
     let arrayOption = []
     arrayOption.push(document.getElementById('pis1').value)
     arrayOption.push(document.getElementById('pis2').value)
@@ -303,7 +313,7 @@ export const NewActivi = () => {
           <Form.Label htmlFor="bodyEvent">Descripcion de la actividad</Form.Label>
           <Form.Control as="textarea" id="bodyEvent" rows={3} onChange={e => setbody(e.target.value)} />
         </Form.Group>
-        <Form.Select  onChange={e => settipoSelect(e.target.value)} aria-label="Default select example">
+        <Form.Select onChange={e => settipoSelect(e.target.value)} aria-label="Default select example">
           <option value="0">Selecciona un tipo</option>
           <option value="1">Post generico</option>
           <option value="2">Trivia</option>

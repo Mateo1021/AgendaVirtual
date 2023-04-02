@@ -5,9 +5,10 @@ import db from '../../../firebase/firebaseConfig'
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form'
 import Table from 'react-bootstrap/Table';
-
+import { GrSearchAdvanced } from "react-icons/gr";
 export const ListaDocentes = () => {
   const navigate = useNavigate();
+  
   const SendProyect = () => {
     localStorage.removeItem('user')
     navigate('/login')
@@ -17,11 +18,21 @@ export const ListaDocentes = () => {
     navigate('/admin')
   }
 
-  const sendInfoItem = (tipo, id) => {
-    navigate('/info/' + tipo + '/' + id)
+  const sendInfoItem = (id) => {
+    navigate('/info/' + id)
   }
+
+  const sendInfoEst = (id) => {
+    navigate('/infoEs/' + id)
+  }
+
+  const sendInfoCour = (id) => {
+    navigate('/infoCo/' + id)
+  }
+
+
   const [listElement, setlistElement] = useState([])
-const [saveInfo, setsaveInfo] = useState([])
+  const [saveInfo, setsaveInfo] = useState([])
   const [item, setitem] = useState('')
   const [cantTxt, setcantTxt] = useState(0)
 
@@ -40,8 +51,10 @@ const [saveInfo, setsaveInfo] = useState([])
     const qProf = query(collection(db.db, element));
     const querySnapshotProf = await getDocs(qProf);
     querySnapshotProf.forEach((doc) => {
+      if (!Object.entries(doc.data()).length == 0) {
+        arrayPrfof.push(doc.data());
+      }
       // doc.data() is never undefined for query doc snapshots
-      arrayPrfof.push(doc.data());
     });
     setlistElement(arrayPrfof)
     setsaveInfo(arrayPrfof)
@@ -50,18 +63,18 @@ const [saveInfo, setsaveInfo] = useState([])
   const SearchinElement = (txt) => {
     let arraySearh = []
     let newArray = []
-    if(cantTxt>txt.length){
+    if (cantTxt > txt.length) {
       arraySearh = saveInfo;
-    }else{
+    } else {
       arraySearh = listElement;
     }
-      for (let y in arraySearh) {
-        if (JSON.stringify(arraySearh[y]).replaceAll('"'," ").toLowerCase().includes(txt.toLowerCase())) {
-          newArray.push(arraySearh[y])
-        }
+    for (let y in arraySearh) {
+      if (JSON.stringify(arraySearh[y]).replaceAll('"', " ").toLowerCase().includes(txt.toLowerCase())) {
+        newArray.push(arraySearh[y])
       }
-      setcantTxt(txt.length)
-      setlistElement(newArray)
+    }
+    setcantTxt(txt.length)
+    setlistElement(newArray)
 
   }
 
@@ -76,15 +89,18 @@ const [saveInfo, setsaveInfo] = useState([])
               <th>Nombre</th>
               <th>Correo</th>
               <th>Cargo</th>
+              <th>Ver</th>
             </tr>
           </thead>
           <tbody>
             {listElement.map((item, index) => (
-              <tr key={index} onClick={() => sendInfoItem('pf', item.id)}>
+              <tr key={index}>
                 <td>{item.id}</td>
                 <td>{item.nombre} {item.apellido}</td>
                 <td>{item.correo}</td>
                 <td>{item.cargo}</td>
+                <td><GrSearchAdvanced onClick={() => sendInfoItem(item.id)}></GrSearchAdvanced></td>
+
               </tr>
             ))}
           </tbody>
@@ -100,17 +116,18 @@ const [saveInfo, setsaveInfo] = useState([])
               <th>Correo</th>
               <th>Puntaje</th>
               <th>Id Curso</th>
+              <th>Ver</th>
             </tr>
           </thead>
           <tbody>
             {listElement.map((item, index) => (
-              <tr key={index} onClick={() => sendInfoItem('es', item.codUser)}>
+              <tr key={index}>
                 <td>{item.codUser}</td>
                 <td>{item.Nombres} {item.Apellidos}</td>
                 <td>{item.Correo}</td>
                 <td>{item.Puntaje}</td>
                 <td>{item.idCurso}</td>
-
+                <td><GrSearchAdvanced onClick={() => sendInfoEst(item.codUser)}></GrSearchAdvanced></td>
               </tr>
             ))}
           </tbody>
@@ -127,17 +144,19 @@ const [saveInfo, setsaveInfo] = useState([])
               <th>Cantidad Estudiantes</th>
               <th>Clave Ingreso</th>
               <th>Clave Salida</th>
+              <th>Ver</th>
             </tr>
           </thead>
           <tbody>
             {listElement.map((item, index) => (
-              <tr key={index} onClick={() => sendInfoItem('co', item.codCurso)}>
+              <tr key={index}>
                 <td>{item.codCurso}</td>
                 <td>{item.nombreCurso}</td>
                 <td>{item.nombreDocente} {item.apellidosDocente}</td>
                 <td>{item.cantEstudiantes}</td>
                 <td>{item.claveDingreso}</td>
                 <td>{item.ClaveDSalida}</td>
+                <td><GrSearchAdvanced onClick={() => sendInfoCour(item.codCurso)}></GrSearchAdvanced></td>
               </tr>
             ))}
           </tbody>

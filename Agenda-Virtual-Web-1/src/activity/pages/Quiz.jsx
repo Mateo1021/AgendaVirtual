@@ -148,11 +148,12 @@ const Quiz = () => {
         const rankRef = await addDoc(collection(db.db, "rankingActividades"), {
             codReg: codA,
             nombreUser: user.Nombres,
-            puntaje:result.score
+            puntaje:result.score,
+            codUser:user.codUser
           });
 
         setstarGame(false)
-        window.location.reload();
+        window.location.href = "http://www.agendavirtual.online/actividades/finishPage.html";
     }
 
 

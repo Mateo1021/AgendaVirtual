@@ -88,6 +88,7 @@ export const ForoScreen = ({ route }) => {
         _id: _id,
         createdAt: createdAt,
         text: text,
+        idUser:authState.uid,
         cours: route.params.idForo,
         user: user
       })
