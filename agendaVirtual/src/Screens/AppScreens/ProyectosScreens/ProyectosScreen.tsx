@@ -60,11 +60,22 @@ export const ProyectosScreen = ({ navigation,route }: Props) => {
   function showModal() {
     setModalVisible(true)
   }
+  
+  
+  
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  let idCours = proyectosArray.codCurso;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  let nombreCours = proyectosArray.nombreCurso;
+  let proyectosArrayL = proyectosArray;
+  
   function RemoverCurso() {
     //@ts-ignore
     if (passRemove == proyectosArray.ClaveDSalida) {
-
-      removePro();
+//@ts-ignore
+      removePro(proyectosArray.codCurso,proyectosArray.cantEstudiantes);
       navigation.navigate('HomeScreen')
     } else {
       Alert.alert(
@@ -74,17 +85,6 @@ export const ProyectosScreen = ({ navigation,route }: Props) => {
 
     setModalVisible(!modalVisible)
   }
-
-
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  let idCours = proyectosArray.codCurso;
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  let nombreCours = proyectosArray.nombreCurso;
-  let proyectosArrayL = proyectosArray;
-
 
 
 

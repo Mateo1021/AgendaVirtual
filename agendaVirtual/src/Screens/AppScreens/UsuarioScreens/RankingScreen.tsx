@@ -47,7 +47,7 @@ export const RankingScreen = () => {
             data={insignias}
             renderItem={({ item }: any) => <InsigniasComp idImg={item}></InsigniasComp>}
             sliderWidth={400}
-            itemWidth={100}
+            itemWidth={230}
           />
         </View>
       </View>

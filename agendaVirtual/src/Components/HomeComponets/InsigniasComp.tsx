@@ -13,113 +13,175 @@ export const InsigniasComp = ({ idImg }) => {
     function ImgInsig() {
         switch (idImg) {
             case 1:
-                setmsjInsig('Insignia por buen cumplimento en actividades')
+                setmsjInsig('Insignia nivel 1 por participacion en foros')
                 return (
                     <View>
                         <Image
+                            style={styles.tinyLogo}
                             source={require('./insignias/1i.png')}
                         />
                     </View>
                 )
-                break;
             case 2:
-                setmsjInsig('Insignia por participacion en los foros')
+                setmsjInsig('Insignia nivel 1 por baja participacion')
                 return (
                     <View>
                         <Image
+                            style={styles.tinyLogo}
                             source={require('./insignias/2i.png')}
                         />
                     </View>
                 )
-                break;
             case 3:
-                setmsjInsig('Insignia por poca participacion')
+                setmsjInsig('Insignia nivel 1 por participacion en catividades')
                 return (
                     <View>
                         <Image
+                            style={styles.tinyLogo}
                             source={require('./insignias/3i.png')}
                         />
                     </View>
                 )
-                break;
             case 4:
-                setmsjInsig('Insignia por responder cuestionarios')
+                setmsjInsig('Insignia nivel 1 por buenas busquedas en internet')
                 return (
                     <View>
                         <Image
+                            style={styles.tinyLogo}
                             source={require('./insignias/4i.png')}
                         />
                     </View>
                 )
-                break;
             case 5:
+                setmsjInsig('Insignia nivel 1 por asistencia a eventos')
                 return (
                     <View>
                         <Image
+                            style={styles.tinyLogo}
                             source={require('./insignias/5i.png')}
                         />
                     </View>
                 )
-                break;
             case 6:
-                setmsjInsig('Insignia por buena navegacion web')
+                setmsjInsig('Insignia nivel 1 por ser de los mejores en la clase')
                 return (
                     <View>
                         <Image
+                            style={styles.tinyLogo}
                             source={require('./insignias/6i.png')}
                         />
                     </View>
                 )
-                break;
             case 7:
-                setmsjInsig('Insignia por buena redaccion de documentos')
+                setmsjInsig('Insignia nivel 1 por tener los mejores puntajes')
                 return (
                     <View>
                         <Image
+                            style={styles.tinyLogo}
                             source={require('./insignias/7i.png')}
                         />
                     </View>
                 )
-                break;
             case 8:
+                setmsjInsig('Insignia nivel 1 por hacer los mejores escritos')
                 return (
                     <View>
                         <Image
+                            style={styles.tinyLogo}
                             source={require('./insignias/8i.png')}
                         />
                     </View>
                 )
-                break;
             case 9:
-                setmsjInsig('Insignia alta participacion en la app')
+                setmsjInsig('Insignia nivel 2 por participacion en foros')
                 return (
                     <View>
                         <Image
+                            style={styles.tinyLogo}
                             source={require('./insignias/9i.png')}
                         />
                     </View>
                 )
-                break;
             case 10:
-                setmsjInsig('El mejor estudiante de la clase')
+                setmsjInsig('Insignia nivel 2 por baja participacion')
                 return (
                     <View>
                         <Image
+                            style={styles.tinyLogo}
                             source={require('./insignias/10i.png')}
                         />
                     </View>
                 )
-                break;
+            case 11:
+                setmsjInsig('Insignia nivel 2 por participacion en catividades')
+                return (
+                    <View>
+                        <Image
+                            style={styles.tinyLogo}
+                            source={require('./insignias/11i.png')}
+                        />
+                    </View>
+                )
+            case 12:
+                setmsjInsig('Insignia nivel 2 por buenas busquedas en internet')
+                return (
+                    <View>
+                        <Image
+                            style={styles.tinyLogo}
+                            source={require('./insignias/12i.png')}
+                        />
+                    </View>
+                )
+            case 13:
+                setmsjInsig('Insignia nivel 2 por asistencia a eventos')
+                return (
+                    <View>
+                        <Image
+                            style={styles.tinyLogo}
+                            source={require('./insignias/13i.png')}
+                        />
+                    </View>
+                )
+            case 14:
+                setmsjInsig('Insignia nivel 2 por ser de los mejores en la clase')
+                return (
+                    <View>
+                        <Image
+                            style={styles.tinyLogo}
+                            source={require('./insignias/14i.png')}
+                        />
+                    </View>
+                )
+            case 15:
+                setmsjInsig('Insignia nivel 2 por tener los mejores puntajes')
+                return (
+                    <View>
+                        <Image
+                            style={styles.tinyLogo}
+                            source={require('./insignias/15i.png')}
+                        />
+                    </View>
+                )
+            case 16:
+                setmsjInsig('Insignia nivel 2 por hacer los mejores escritos')
+                return (
+                    <View>
+                        <Image
+                            style={styles.tinyLogo}
+                            source={require('./insignias/16i.png')}
+                        />
+                    </View>
+                )
             default:
                 setmsjInsig('Participa y usa la app para que tus docentes te den insignias')
                 return (
                     <View>
                         <Image
-                            source={require('./insignias/11i.png')}
+                            style={styles.tinyLogo}
+                            source={require('./insignias/17i.png')}
                         />
                     </View>
                 )
-                break;
         }
     }
 
@@ -198,5 +260,11 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         textAlign: 'center',
     },
-    
+    tinyLogo: {
+        flex: 1,
+        width: 250,
+        height: 250,
+        resizeMode: 'contain'
+    },
+
 });

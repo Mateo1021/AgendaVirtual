@@ -16,6 +16,7 @@ import { ProyectosScreen } from './ProyectosScreen';
 interface Props extends StackScreenProps<any, any> { };
 export const lookProyectoScreen = ({ navigation, route }: Props) => {
   const [cursos, setcursos] = useState([])
+
   useLayoutEffect(() => {
     var unsubscribe2 = firestore().collection("Cursos")
       .onSnapshot((querySnapshot) => {
@@ -32,7 +33,7 @@ export const lookProyectoScreen = ({ navigation, route }: Props) => {
 
   const { authState } = useContext(AuthContext);
 
-  const createTwoButtonAlert = (tittle: any, id: any) =>
+  const createTwoButtonAlert = (tittle: any, id: any, cant:any) =>
     Alert.alert(
       "Desea Agregar Este Proyecto. " + tittle,
       "Unicamente te podras reguistrar a 1 curso por periodo academico.",
@@ -44,16 +45,29 @@ export const lookProyectoScreen = ({ navigation, route }: Props) => {
           ,
           style: "cancel"
         },
-        { text: "OK", onPress: () => addCoursEstudent(id) }
+        { text: "OK", onPress: () => addCoursEstudent(id,cant) }
       ]
     );
 
-  function addCoursEstudent(id: any) {
+  function addCoursEstudent(id: any,cant:any) {
     firestore()
       .collection('Usuarios').doc(authState.uid)
       .update({
         idCurso: id
       })
+
+
+
+      let newCant = Number(cant)
+      console.log(newCant++);
+      
+      firestore()
+      .collection('Cursos').doc(id)
+      .update({
+        cantEstudiantes: newCant++
+      })
+
+
     // @ts-ignore
     navigation.pop()
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -88,7 +102,7 @@ export const lookProyectoScreen = ({ navigation, route }: Props) => {
 
               <TouchableOpacity
                 // @ts-ignore
-                onPress={() => createTwoButtonAlert(data.item._data.nombreCurso, data.item._data.codCurso)}
+                onPress={() => createTwoButtonAlert(data.item._data.nombreCurso, data.item._data.codCurso,data.item._data.cantEstudiantes)}
               >
                 <Icon name={'duplicate-outline'} size={30} color='#fff' />
               </TouchableOpacity>

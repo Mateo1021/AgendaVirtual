@@ -88,7 +88,7 @@ export const PuntajeComp = ({ puntaje }: any) => {
                     )
                 }
             case puntInt:
-                if (puntInt <= 80) {
+                if (puntInt <= 99) {
                     return (
                         <Image
                             style={styles.tinyLogo}
@@ -98,7 +98,7 @@ export const PuntajeComp = ({ puntaje }: any) => {
                     )
                 }
             case puntInt:
-                if (puntInt <= 100) {
+                if (puntInt > 100) {
                     return (
                         <Image
                             style={styles.tinyLogo}
