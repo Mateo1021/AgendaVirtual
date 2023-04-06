@@ -2,12 +2,7 @@ import React, { useLayoutEffect, useState } from 'react'
 import { Image, Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity } from 'react-native';
 //@ts-ignore
 export const InsigniasComp = ({ idImg }) => {
-    /*     const [id, setid] = useState(0)
-        useLayoutEffect(() => {
-            setid(idImg)
-            console.log(idImg);
-        }, [])
-         */
+
     const [modalVisible, setModalVisible] = useState(false);
     const [msjInsig, setmsjInsig] = useState('')
     function ImgInsig() {

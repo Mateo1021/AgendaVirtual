@@ -329,7 +329,8 @@ const styles = StyleSheet.create({
     width: 200,
     borderRadius: 20,
     marginBottom: 30,
-    height: 40
+    height: 40,
+    color:'black'
   },
   btnModal: {
     flexDirection: 'row'

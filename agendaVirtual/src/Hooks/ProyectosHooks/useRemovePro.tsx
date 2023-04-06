@@ -8,8 +8,6 @@ export const useRemovePro = () => {
 
     const removePro = async (idCours:any,cant:any) =>{   
       let newCant = Number(cant)
-      console.log(newCant--);
-      
       const cantCour = await firestore()
       .collection('Cursos').doc(idCours)
       .update({

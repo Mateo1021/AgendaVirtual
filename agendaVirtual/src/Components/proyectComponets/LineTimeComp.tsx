@@ -4,8 +4,7 @@ import { colors } from '../../Themes/AppThemes'
 import firestore from '@react-native-firebase/firestore';
 
 export const LineTimeComp = (id:any) => {
-    console.log(id);
-    
+
     const [dataTimeLine, setdataTimeLine] = useState([])
 
     const formatDate = (date: Date) => {

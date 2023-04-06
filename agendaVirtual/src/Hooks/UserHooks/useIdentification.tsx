@@ -10,9 +10,7 @@ export const useIdentification = () => {
     const { authState } = useContext(AuthContext);
     
     const getInfoUser = async () =>{ 
-      console.log(authState,'+++');
-      
-    
+
         const notarArray = await firestore()
         .collection('Usuarios')
         .where('codUser', '==', authState.uid)

@@ -114,7 +114,7 @@ export const HorarioComp = (idHorario: any) => {
         <View style={styles.columB}>
           {
             lunes.map((item, index) => (
-              <View style={styles.columC}>
+              <View style={styles.columC} key={index+'lun'}>
                 <View>
                   <Icon name={'timer-outline'} size={25} color={colors.primary} />
                 </View>
@@ -140,7 +140,7 @@ export const HorarioComp = (idHorario: any) => {
         <View style={styles.columB}>
           {
             martes.map((item, index) => (
-              <View style={styles.columC}>
+              <View style={styles.columC}  key={index+'mart'}>
                 <View>
                   <Icon name={'timer-outline'} size={25} color={colors.primary} />
                 </View>
@@ -166,7 +166,7 @@ export const HorarioComp = (idHorario: any) => {
         <View style={styles.columB}>
           {
             miercoles.map((item, index) => (
-              <View style={styles.columC}>
+              <View style={styles.columC}  key={index+'mier'}>
                 <View>
                   <Icon name={'timer-outline'} size={25} color={colors.primary} />
                 </View>
@@ -192,7 +192,7 @@ export const HorarioComp = (idHorario: any) => {
         <View style={styles.columB}>
           {
             jueves.map((item, index) => (
-              <View style={styles.columC}>
+              <View style={styles.columC}  key={index+'juev'}>
                 <View>
                   <Icon name={'timer-outline'} size={25} color={colors.primary} />
                 </View>
@@ -218,7 +218,7 @@ export const HorarioComp = (idHorario: any) => {
         <View style={styles.columB}>
           {
             viernes.map((item, index) => (
-              <View style={styles.columC}>
+              <View style={styles.columC}  key={index+'vie'}>
                 <View>
                   <Icon name={'timer-outline'} size={25} color={colors.primary} />
                 </View>
@@ -244,7 +244,7 @@ export const HorarioComp = (idHorario: any) => {
         <View style={styles.columB}>
           {
             sabado.map((item, index) => (
-              <View style={styles.columC}>
+              <View style={styles.columC}  key={index+'sab'}>
                 <View>
                   <Icon name={'timer-outline'} size={25} color={colors.primary} />
                 </View>
@@ -270,7 +270,7 @@ export const HorarioComp = (idHorario: any) => {
         <View style={styles.columB}>
           {
             domingo.map((item, index) => (
-              <View style={styles.columC}>
+              <View style={styles.columC}  key={index+'dom'}>
                 <View>
                   <Icon name={'timer-outline'} size={25} color={colors.primary} />
                 </View>

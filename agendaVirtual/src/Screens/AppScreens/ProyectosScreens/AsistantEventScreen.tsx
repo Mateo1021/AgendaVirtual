@@ -46,11 +46,7 @@ export const AsistantEventScreen = ({ route }) => {
 
 
     const marcAsistan = (idEvent: any) => {
-        console.log(idEvent);
-        /* @ts-ignore */
         let arrayStud = (idEvent.asistencia);
-        console.log(arrayStud);
-
         if (arrayStud.indexOf(authState.uid) < 0) {
 
             arrayStud.push(authState.uid)
@@ -69,7 +65,6 @@ export const AsistantEventScreen = ({ route }) => {
     }
 
     function validDel() {
-        console.log(codEve, newArray);
         if (passRemove == passEvent) {
 
             firestore().collection("evento").doc(codEve).update({

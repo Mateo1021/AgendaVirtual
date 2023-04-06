@@ -80,7 +80,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#EAEAEA',
     marginHorizontal: 20,
-    textAlign: 'center'
+    textAlign: 'center',
+    color:'black'
   },
 
 });

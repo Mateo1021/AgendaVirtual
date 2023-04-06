@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
-import { Alert, SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import { RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
+
+
+import { ActivityIndicator, Alert, Button, Image, Modal, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput } from 'react-native';
+
 import { StackScreenProps } from '@react-navigation/stack';
 
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -15,8 +17,12 @@ import { ProyectosScreen } from './ProyectosScreen';
 
 interface Props extends StackScreenProps<any, any> { };
 export const lookProyectoScreen = ({ navigation, route }: Props) => {
-  const [cursos, setcursos] = useState([])
 
+  const [modalVisible, setModalVisible] = useState(false);
+  const [cursos, setcursos] = useState([])
+  const [passCours, setpassCours] = useState('')
+
+  const [infoC, setinfoC] = useState({})
   useLayoutEffect(() => {
     var unsubscribe2 = firestore().collection("Cursos")
       .onSnapshot((querySnapshot) => {
@@ -33,46 +39,46 @@ export const lookProyectoScreen = ({ navigation, route }: Props) => {
 
   const { authState } = useContext(AuthContext);
 
-  const createTwoButtonAlert = (tittle: any, id: any, cant:any) =>
-    Alert.alert(
-      "Desea Agregar Este Proyecto. " + tittle,
-      "Unicamente te podras reguistrar a 1 curso por periodo academico.",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log('cancel')
+  const createTwoButtonAlert = (tittle: any, id: any, cant: any, clve: any) => {
+    setinfoC({
+      tittle: tittle,
+      id: id,
+      cant: cant,
+      clve: clve
+    })
+    setModalVisible(true)
 
-          ,
-          style: "cancel"
-        },
-        { text: "OK", onPress: () => addCoursEstudent(id,cant) }
-      ]
-    );
-
-  function addCoursEstudent(id: any,cant:any) {
-    firestore()
-      .collection('Usuarios').doc(authState.uid)
-      .update({
-        idCurso: id
-      })
-
-
-
-      let newCant = Number(cant)
-      console.log(newCant++);
-      
+  }
+const cancelInscrib =()=>{
+  setinfoC({})
+  setModalVisible(!modalVisible)
+}
+  function addCoursEstudent() {
+    //@ts-ignore
+    if (passCours == infoC.clve) {
       firestore()
-      .collection('Cursos').doc(id)
-      .update({
-        cantEstudiantes: newCant++
-      })
+        .collection('Usuarios').doc(authState.uid)
+        .update({
+          //@ts-ignore
+          idCurso: infoC.id
+        })
+        //@ts-ignore
+      let newCant = Number(infoC.cant)
+      firestore()
+      //@ts-ignore
+        .collection('Cursos').doc(infoC.id)
+        .update({
+          cantEstudiantes: newCant++
+        })
+      // @ts-ignore
+      navigation.pop()
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      navigation.navigate('ProyectosScreen')
+    }else{
+     Alert.alert('Contraseña incorrecta')
 
-
-    // @ts-ignore
-    navigation.pop()
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    navigation.navigate('ProyectosScreen')
+    }
 
   }
 
@@ -102,7 +108,7 @@ export const lookProyectoScreen = ({ navigation, route }: Props) => {
 
               <TouchableOpacity
                 // @ts-ignore
-                onPress={() => createTwoButtonAlert(data.item._data.nombreCurso, data.item._data.codCurso,data.item._data.cantEstudiantes)}
+                onPress={() => createTwoButtonAlert(data.item._data.nombreCurso, data.item._data.codCurso, data.item._data.cantEstudiantes, data.item._data.claveDingreso)}
               >
                 <Icon name={'duplicate-outline'} size={30} color='#fff' />
               </TouchableOpacity>
@@ -111,6 +117,45 @@ export const lookProyectoScreen = ({ navigation, route }: Props) => {
           leftOpenValue={75}
           rightOpenValue={-75}
         />
+
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            setModalVisible(!modalVisible);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Para retirar este curso pidele la contraseña a tu docente</Text>
+              <TextInput style={styles.styleinput} onChangeText={setpassCours}/>
+
+              <View style={styles.btnModal}>
+                <View style={styles.btnModal2} >
+                  <Button
+                    color={colors.primary}
+                    title='Cancelar'
+                    onPress={() => cancelInscrib()}
+                  ></Button>
+                </View>
+
+                <View style={styles.btnModal2}>
+                  <Button
+                    color={colors.primary}
+                    title='Enviar'
+                    onPress={() => addCoursEstudent()}
+                  ></Button>
+                </View>
+
+              </View>
+
+            </View>
+          </View>
+        </Modal>
+
+
 
       </ScrollView>
     </SafeAreaView>
@@ -143,5 +188,80 @@ const styles = StyleSheet.create({
   },
   styleComp: {
     flex: 1
+  }, lineTimeContend: {
+    marginLeft: 30
+  },
+  btnContainer: {
+    flexDirection: 'row'
+  },
+  generalBtn: {
+    alignItems: 'center'
+  },
+  btn: {
+    backgroundColor: colors.primary,
+    marginHorizontal: 15,
+    marginVertical: 10,
+    padding: 15
+  },
+  containerTitel: {
+    alignItems: 'center'
+  },
+
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    paddingVertical: 10,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 20
+  },
+  styleinput: {
+    borderWidth: 1,
+    width: 200,
+    borderRadius: 20,
+    marginBottom: 30,
+    height: 40,
+    color:'black'
+  },
+  btnModal: {
+    flexDirection: 'row'
+  },
+  btnModal2: {
+    marginHorizontal: 10
   }
 });

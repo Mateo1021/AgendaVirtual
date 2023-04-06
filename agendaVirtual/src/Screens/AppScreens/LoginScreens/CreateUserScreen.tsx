@@ -53,7 +53,7 @@ const [textConfirm, settextConfirm] = useState('')
             .collection('Usuarios').doc('us_' + (idArrayUserNumber))
             .set({
               Apellidos:apellidos,
-              Correo: email,
+              Correo: email.toLocaleLowerCase(),
               Edad: edad,
               Nombres: nameU,
               Puntaje: '0',
@@ -195,7 +195,8 @@ const styles = StyleSheet.create({
   },
   inptTextFull: {
     borderBottomWidth: 1,
-    marginBottom: 10
+    marginBottom: 10,
+    color:'black'
   },
   descCont: {
     width: 300,
