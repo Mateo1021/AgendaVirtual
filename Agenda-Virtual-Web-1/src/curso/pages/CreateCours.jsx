@@ -22,7 +22,7 @@ let user = "";
 
 
 export const CreateCours = () => {
-  document.body.style.backgroundColor = "#f5f5f5";
+  document.body.style.backgroundColor = "rgb(245 245 245 / 50%)";
   let base = db
 
 

@@ -11,6 +11,7 @@ import '../../styles/StayleClass.css'
 
 export const HomeMenu = () => {
 
+  document.body.style.background = "linear-gradient(45deg, rgba(255, 162, 0, 0.9052871148459384) 2%, rgba(248, 219, 178, 1) 67%, rgba(248, 219, 178, 1) 100%)";
 
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -72,6 +73,27 @@ export const HomeMenu = () => {
         const q = query(respRef, where("codRegistro", "==", arrayReg[i].codReg));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
+
+          const fecha = new Date(doc.data().createdAt.seconds * 1000); // Crear una instancia de Date
+
+          // Opciones de formato para imprimir la hora en español (España)
+          const opciones = {
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+            hour12: false,
+            timeZone: 'America/Bogota',
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            timeZoneName: 'short',
+            locale: 'es-CO' // Configuración regional y el idioma en español (España)
+          };
+  
+          const horaEnEspanol = fecha.toLocaleTimeString('es-CO', opciones);
+  
+
           respuestas.push({
             tituloRes: arrayReg[i].titelReg,
             userPlublic: doc.data().nameUser,
@@ -79,6 +101,7 @@ export const HomeMenu = () => {
             cours: arrayReg[i].nameCours,
             codReg: arrayReg[i].codReg,
             idCours: arrayReg[i].idCours,
+            createdAt:horaEnEspanol
           });
         });
         arrayCompuesto.push(respuestas);
@@ -107,32 +130,48 @@ export const HomeMenu = () => {
 
 
   return (
-    <div className='fondo'>
-      <h1 className='titulo'> Bienvenido {user?.name.nombre} {user?.name.apellidos}</h1>
-      <div className='containerCard' >
-        <div className='titelCard'>
-          <h4 className='titulomenor'>Actividad reciente en sus cursos</h4>
-        </div>
-        <div className='contenedor'>
-          {notifi.map((id, index) => (
-            <button
-              className='btnComentario' onClick={() => { sendActiv(id.codReg, id.idCours) }}
-              key={index}
-            >
-              <div className="cardResponse" >
-                <div >
-                  <div className='tituloAct'>
-                    <h5>{id.cours}</h5>
-                  </div>
-                  <h6>{id.tituloRes}</h6>
-                  <h6>{id.msj}</h6>
-                  <h6>{id.userPlublic}</h6>
-                </div>
-              </div>
-            </button>
-          ))}
-        </div>
+    <div>
+
+      <h1 className='px-4 pt-3 titulo'> Bienvenido {user?.name.nombre} {user?.name.apellidos}</h1>
+
+
+      <div className='titelCard'>
+        <h2 className='titulomenor'>Actividad reciente en sus cursos</h2>
       </div>
+
+      <div className='d-flex flex-column px-0 contInicio'>
+        {notifi.map((id, index) => (
+
+          <div
+            className='divInicio'
+            onClick={() => { sendActiv(id.codReg, id.idCours) }}
+            key={index}
+          >
+
+
+            <div>
+              <h4>{id.cours}</h4>
+            </div>
+
+            <div className='infoComent'>
+              <div>
+                <h4>{id.userPlublic}</h4>
+              </div>
+              <div>
+                <h6>Actividad: {id.tituloRes}</h6>
+                <p>{id.msj}</p>
+              </div>
+              <div className='d-flex justify-content-end'>
+              <p>{id.createdAt}</p>
+              </div>
+            </div>
+
+
+          </div>
+        ))}
+      </div>
+
+
     </div>
 
 

@@ -45,6 +45,7 @@ export const CreatActiv = () => {
 
   }, [])
 
+
   useLayoutEffect(() => {
     const evetRef = collection(db.db, "respuestas");
     const q = query(evetRef, where("codRegistro", "==", idA), orderBy("createdAt", "asc"));
@@ -52,7 +53,30 @@ export const CreatActiv = () => {
       const resoponseEs = [];
       const codsRespuestas = []
       querySnapshot.forEach((doc) => {
-        resoponseEs.push(doc.data());
+        const fecha = new Date(doc.data().createdAt.seconds * 1000); // Crear una instancia de Date
+
+        // Opciones de formato para imprimir la hora en español (España)
+        const opciones = {
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric',
+          hour12: false,
+          timeZone: 'America/Bogota',
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          timeZoneName: 'short',
+          locale: 'es-CO' // Configuración regional y el idioma en español (España)
+        };
+
+        const horaEnEspanol = fecha.toLocaleTimeString('es-CO', opciones);
+
+        resoponseEs.push({
+          nameUser: doc.data().nameUser,
+          bodyMsj: doc.data().bodyMsj,
+          createdAt: horaEnEspanol
+        })
         codsRespuestas.push(doc.data().idUser)
       });
       setparticForo(codsRespuestas)
@@ -101,7 +125,6 @@ export const CreatActiv = () => {
         diff.push(elem);
       }
     });
-
     setinasist(diff)
 
   }
@@ -131,68 +154,89 @@ export const CreatActiv = () => {
   const RenderAction = () => {
     if (tipoSelect == '1') {
       return (
-        <div className='containerCard'>
-          <div className='titelCard'>
-            <h4>Comentarios</h4>
+        <div>
+          <div className='infoStuf'>
+            <div className='titelCard'>
+              <h4>Comentarios</h4>
+            </div>
+
+            <div className='scrollList'>
+              {responsEstud.map((id, index) => (
+                <div key={index} className="cardResponse d-flex flex-row justify-content-between">
+                  <div >
+                    <h5>{id.nameUser}</h5>
+
+                    <h6>{id.bodyMsj}</h6>
+                  </div>
+                  <div >
+                    <h5>fecha</h5>
+                    <h6> {id.createdAt}</h6>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className='scrollList'>
-            {responsEstud.map((id, index) => (
-              <div key={index} className="cardResponse">
-                <h5>{id.nameUser}</h5>
+          <div className='infoStuf'>
+            <div className='d-flex justify-content-end'>
+              <button className='btn orange mt-5'
+                onClick={validarForo}
+              >
+                validar participacion
+              </button>
+            </div>
 
-                <h6>{id.bodyMsj}</h6>
-              </div>
-            ))}
+            <div className='mt-4 mb-5'>
+              <h4>Estudiantes que no participaron</h4>
+              {diferenciaPart.map((id, index) => (
+                <div key={index} className="cardResponse">
+                  <li>{id.Nombres} {id.Apellidos}</li>
+                </div>
+              ))}
+            </div>
+
+
           </div>
-          <button className='btn orange mt-5'
-            onClick={validarForo}
-          >
-            validar participacion
-          </button>
-          <div className='mt-4 mb-5'>
-            <h4>Estudiantes que no participaron</h4>
-            {diferenciaPart.map((id, index) => (
-              <div key={index} className="cardResponse">
-                <li>{id.Nombres} {id.Apellidos}</li>
-              </div>
-            ))}
-          </div>
-
-
         </div>
       )
     } else if (tipoSelect == '2') {
 
       return (
-        <div className='containerCard'>
-          <div className='titelCard'>
-            <h4>Puntajes</h4>
-          </div>
-          <div className='scrollList'>
-            {rankArray.map((id, index) => (
-              <div key={index} className="cardResponse">
-                <h5>{id.nombreUser}</h5>
+        <div>
+          <div className='infoStuf'>
 
-                <h6>{id.puntaje}</h6>
-              </div>
-            ))}
+            <div className='titelCard'>
+              <h4>Puntajes</h4>
+            </div>
+            <div className='scrollList'>
+              {rankArray.map((id, index) => (
+                <div key={index} className="cardResponse">
+                  <h5>{id.nombreUser}</h5>
+
+                  <h6>{id.puntaje}</h6>
+                </div>
+              ))}
+            </div>
           </div>
 
-
-          <button className='btn orange mt-5'
-            onClick={validarPuntos}
-          >
-            validar participacion
-          </button>
-          <div className='mt-4 mb-5'>
-            <h4>Estudiantes que no participaron</h4>
-            {inasist.map((id, index) => (
-              <div key={index} className="cardResponse">
-                <li key={index}>{id.Nombres} {id.Apellidos}</li>
-              </div>
-            ))}
+          <div className='infoStuf'>
+            <div className='d-flex justify-content-end'>
+              <button className='btn orange mt-5'
+                onClick={validarPuntos}
+              >
+                validar participacion
+              </button>
+            </div>
+            <div className='mt-4 mb-5'>
+              <h4>Estudiantes que no participaron</h4>
+              {inasist.map((id, index) => (
+                <div key={index} className="cardResponse">
+                  <li key={index}>{id.Nombres} {id.Apellidos}</li>
+                </div>
+              ))}
+            </div>
           </div>
+
         </div>
       )
     }
@@ -201,8 +245,8 @@ export const CreatActiv = () => {
 
 
   return (
-    <div className='contCreatElement mt-5'>
-      <div className='cardForos'>
+    <div className=' mt-5'>
+      <div className='infoStuf'>
         <Form.Group className="mb-3" >
           <Form.Label htmlFor="titel" className='titulo'>Evento</Form.Label>
           <Form.Control
@@ -242,15 +286,14 @@ export const CreatActiv = () => {
             Cancelar
           </button>
         </div>
+
+        <Form.Select className='mt-5' onChange={e => settipoSelect(e.target.value)} aria-label="Default select example">
+          <option value="0">Selecciona lo que quieres ver</option>
+          <option value="1">Comentarios por usuario</option>
+          <option value="2">Participacion en juego</option>
+        </Form.Select>
       </div>
 
-
-
-      <Form.Select className='mt-5' onChange={e => settipoSelect(e.target.value)} aria-label="Default select example">
-        <option value="0">Selecciona lo que quieres ver</option>
-        <option value="1">Comentarios por usuario</option>
-        <option value="2">Participacion en juego</option>
-      </Form.Select>
 
 
 

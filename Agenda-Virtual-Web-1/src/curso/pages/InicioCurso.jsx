@@ -17,6 +17,7 @@ import '../../styles/StayleClass.css'
 
 
 export const InicioCurso = () => {
+
   const navigate = useNavigate();
 
   const sendCours = (id) => {
@@ -135,7 +136,7 @@ export const InicioCurso = () => {
 
 
 const styles = {
-  main: {
+  body: {
     backgroundColor: "#f1f1f1",
     width: "100%",
   },

@@ -20,7 +20,7 @@ import Linkify from 'react-linkify';
 
 
 export const EditCurso = () => {
-  document.body.style.backgroundColor = "#f5f5f5";
+  document.body.style.backgroundColor = "rgb(245 245 245 / 50%)";
 
   const { id } = useParams();
   const [infoCours, setinfoCours] = useState({})
@@ -87,7 +87,7 @@ export const EditCurso = () => {
   function CardRend(info) {
     const visibility = React.useContext(VisibilityContext);
     return (
-      <button style={{ backgroundColor: '#f5f5f5', borderWidth: '0' }}
+      <button style={{ backgroundColor: 'white', borderWidth: '0' }}
         onClick={() => { sedCreateEven(info.info.codEvento) }}
       >
         <Card style={{ width: '18rem', margin: '20px', height: '200px', borderColor: '#492013', boxShadow: '10px 5px 5px #492013' }}
@@ -110,7 +110,7 @@ export const EditCurso = () => {
 
     return (
       <button disabled={isFirstItemVisible} onClick={() => scrollPrev()}
-        style={{ backgroundColor: "#f5f5f5", borderWidth: "0" }}>
+        style={{ backgroundColor: "white", borderWidth: "0" }}>
         <IoChevronBackSharp >
 
         </IoChevronBackSharp>
@@ -125,7 +125,7 @@ export const EditCurso = () => {
 
     return (
       <button disabled={isLastItemVisible} onClick={() => scrollNext()}
-        style={{ backgroundColor: "#f5f5f5", borderWidth: "0" }}
+        style={{ backgroundColor: "white", borderWidth: "0" }}
       >
         <IoChevronForwardSharp></IoChevronForwardSharp>
       </button>
@@ -136,7 +136,7 @@ export const EditCurso = () => {
   function CardRendF(info) {
     const visibility = React.useContext(VisibilityContext);
     return (
-      <button style={{ backgroundColor: '#f5f5f5', borderWidth: '0' }}
+      <button style={{ backgroundColor: 'white', borderWidth: '0' }}
         onClick={() => { sedCreateActv(info.info.idRegistro) }}
       >
         <Card style={{ width: '25rem', margin: '20px', height: '200px', borderColor: '#492013', boxShadow: '10px 5px 5px #492013' }}
@@ -144,11 +144,15 @@ export const EditCurso = () => {
         >
           <Card.Body style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'column' }}>
             <Card.Title>{info.info.titulo}</Card.Title>
-            <Card.Text>
+
               <Linkify>
-                {info.info.body}
+                <div className='hideenEvent'>
+                  <p>
+                    {info.info.body}
+                  </p>
+                </div>
               </Linkify>
-            </Card.Text>
+
           </Card.Body>
         </Card>
       </button>
@@ -161,7 +165,7 @@ export const EditCurso = () => {
 
     return (
       <button disabled={isFirstItemVisible} onClick={() => scrollPrev()}
-        style={{ backgroundColor: "#f5f5f5", borderWidth: "0" }}>
+        style={{ backgroundColor: "white", borderWidth: "0" }}>
         <IoChevronBackSharp >
 
         </IoChevronBackSharp>
@@ -176,7 +180,7 @@ export const EditCurso = () => {
 
     return (
       <button disabled={isLastItemVisible} onClick={() => scrollNext()}
-        style={{ backgroundColor: "#f5f5f5", borderWidth: "0" }}
+        style={{ backgroundColor: "white", borderWidth: "0" }}
       >
         <IoChevronForwardSharp></IoChevronForwardSharp>
       </button>
@@ -189,26 +193,28 @@ export const EditCurso = () => {
       <div>
         {<img src={infoCours.banerCurso} className="banner" />}
         <div>
-          <div className='d-flex justify-content-center'>
-            <h1 className='titelPage text-uppercase'>{infoCours.nombreCurso} </h1>
+          <div className='infoStuf pt-5'>
+            <div className='d-flex justify-content-center'>
+              <h1 className='titelPage text-uppercase'>{infoCours.nombreCurso} </h1>
+            </div>
+            <div className='d-flex justify-content-between px-3 pt-5'>
+              <button className="d-flex btn orange text-white"
+                onClick={() => { sendEditCurso() }}
+              >
+                Modificar curso
+              </button>
+
+              <button className="d-flex btn orange text-white"
+                onClick={() => { sendStud() }}
+              >
+                Lista Estudiantes
+              </button>
+            </div>
           </div>
-          <div className='d-flex justify-content-between px-3'>
-            <button className="d-flex btn orange text-white"
-              onClick={() => { sendEditCurso() }}
-            >
-              Modificar curso
-            </button>
-
-            <button className="d-flex btn orange text-white"
-              onClick={() => { sendStud() }}
-            >
-              Lista Estudiantes
-            </button>
-          </div>
 
 
 
-          <div className='eventos'>
+          <div className='infoStuf'>
             <div className='subTitels'>
               <h4>Eventos</h4>
             </div>
@@ -230,7 +236,7 @@ export const EditCurso = () => {
           </div>
 
 
-          <div className='actividades'>
+          <div className='infoStuf'>
             <div>
               <h4 className='subTitels'>
                 Actividades

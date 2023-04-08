@@ -101,19 +101,29 @@
     border-color: #cfcfcf;
     background-color: white;
 }
+
 .margenForce {
     margin-left: 30px;
 }
-.styleIniCurso{
+
+.styleIniCurso {
     height: 200px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
 }
-.tamImgIni{
-    width:100%;
-    height:inherit;
+
+.tamImgIni {
+    width: 100%;
+    height: inherit;
 }
+
 .aligTextForce {
     text-align: justify;
+}
+
+.hideenEvent {
+    overflow: hidden;
+    /* word-wrap: break-word; */
+    height: 151px;
 }
