@@ -8,6 +8,8 @@ import Table from 'react-bootstrap/Table';
 
 
 export const InfoEstud = () => {
+    document.body.style.background = "linear-gradient(90.04deg, rgb(225 225 225 / 76%) 0.03%, rgb(230, 228, 227) 99.96%)";
+
     const { idU } = useParams();
     const navigate = useNavigate();
 
@@ -19,6 +21,10 @@ export const InfoEstud = () => {
     const [partis, setpartis] = useState([])
     const [msjes, setmsjes] = useState([])
     const [puntos, setpuntos] = useState([])
+
+    const [searchReg, setsearchReg] = useState([])
+    const [cantTxt, setcantTxt] = useState(0)
+    const [saveInfo, setsaveInfo] = useState([])
 
 
     const getDataUser = async () => {
@@ -63,6 +69,7 @@ export const InfoEstud = () => {
         });
         setpartis(arrayinfo)
         setoptionSelect('1')
+        setsaveInfo(arrayinfo)
     }
 
     const searchMsj = async () => {
@@ -80,6 +87,7 @@ export const InfoEstud = () => {
         });
         setmsjes(arrayinfo)
         setoptionSelect('2')
+        setsaveInfo(arrayinfo)
     }
 
     const searchPunt = async () => {
@@ -96,13 +104,42 @@ export const InfoEstud = () => {
         });
         setoptionSelect('3')
         setpuntos(arrayinfo)
+        setsaveInfo(arrayinfo)
     }
 
+    const searchTable = (txt) => {
 
+        let arraySearh = []
+        let newArray = []
 
+        if (cantTxt > txt.length) {
+            arraySearh = saveInfo;
+        } else {
+            if (optionSelect == '1') {
+                arraySearh = partis;
+            } else if (optionSelect == '2') {
+                arraySearh = msjes;
+            } else if (optionSelect == '3') {
+                arraySearh = puntos;
+            }
+        }
 
+        for (let y in arraySearh) {
+            if (JSON.stringify(arraySearh[y]).replaceAll('"', " ").toLowerCase().includes(txt.toLowerCase())) {
+                newArray.push(arraySearh[y])
+            }
+        }
 
+        setcantTxt(txt.length)
 
+        if (optionSelect == '1') {
+            setpartis(newArray)
+        } else if (optionSelect == '2') {
+            setmsjes(newArray)
+        } else if (optionSelect == '3') {
+            setpuntos(newArray)
+        }
+    }
 
     const RenderItem = () => {
         if (optionSelect == '1') {
@@ -180,35 +217,18 @@ export const InfoEstud = () => {
 
 
     return (
-        <div>
+        <div className='mt-5'>
 
 
-            <div className="d-flex flex-column">
-                <label className="form-label">Nombre {infoEstuid.Nombres + ' ' + infoEstuid.Apellidos}</label>
-                <label className="form-label">Correo: {infoEstuid.Correo}</label>
-                <label className="form-label">Puntaje: {infoEstuid.Puntaje}</label>
-                <label className="form-label">Codigo de registro: {infoEstuid.codUser}</label>
-            </div>
-
-            <button className='btn orange' onClick={searchParti}>Ver todas las participaciones</button>
-            <button className='btn orange' onClick={searchMsj}>Ver todas los mensajes enviados</button>
-            <button className='btn orange' onClick={searchPunt}>Puntajes obtenidos en actividades</button>
-
-
-
-
-            <div>
-                <RenderItem></RenderItem>
-            </div>
-
-
-
-
-
-
-
-            <div>
+            <div className="d-flex flex-row justify-content-between infoStuf">
                 <div>
+                    <p>Nombre: {infoEstuid.Nombres + ' ' + infoEstuid.Apellidos}</p>
+                    <p>Correo: {infoEstuid.Correo}</p>
+                    <p>Puntaje: {infoEstuid.Puntaje}</p>
+                    <p>Codigo de registro: {infoEstuid.codUser}</p>
+                </div>
+
+                <div className='d-flex flex-column mt-2 mb-2 justify-content-between'>
                     <button
                         className='btn orange'
                         onClick={sendIni}
@@ -222,7 +242,26 @@ export const InfoEstud = () => {
                         Volver tablas
                     </button>
                 </div>
+
             </div>
+
+            <div className='infoStuf d-flex justify-content-evenly'>
+                <button className='btn orange' onClick={searchParti}>Ver todas las participaciones</button>
+                <button className='btn orange' onClick={searchMsj}>Ver todas los mensajes enviados</button>
+                <button className='btn orange' onClick={searchPunt}>Puntajes obtenidos en actividades</button>
+            </div>
+
+
+
+            <div className='infoStuf'>
+                <div className='d-flex justify-content-end mt-3'>
+                    <input className='form-control w-25' onChange={(e) => searchTable(e.target.value)} ></input>
+                </div>
+                <RenderItem></RenderItem>
+            </div>
+
+
+
         </div>
     )
 }

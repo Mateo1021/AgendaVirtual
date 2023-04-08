@@ -8,6 +8,7 @@ import { ListaEstud } from '../pages/ListaEstud';
 import { NewActivi } from '../pages/NewActivi';
 import { NewEvent } from '../pages/NewEvent';
 import { Cours } from './../components/Cours';
+import { ChangeCours } from '../pages/changeCours';
 
 export const CursoRoter = () => {
   return (
@@ -21,7 +22,8 @@ export const CursoRoter = () => {
           <Route path="/curso/newActiv/:idC" element={<NewActivi></NewActivi>} />
           <Route path="/curso/newEvent/:idC" element={<NewEvent></NewEvent>} />
           <Route path="/curso/createEvent/:idE/:idC" element={<CreateEvent></CreateEvent>} />
-
+          <Route path="/curso/configCurso/:id" element={<ChangeCours></ChangeCours>} />
+          
         </Routes>
       
 

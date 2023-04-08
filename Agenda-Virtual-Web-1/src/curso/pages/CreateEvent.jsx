@@ -21,7 +21,7 @@ export const CreateEvent = () => {
   const sendProyect = () => {
     navigate('/curso/editCurso/' + idC)
   }
-
+const [passAsis, setpassAsis] = useState('')
   const [titelShow, settitelShow] = useState('')
   const [bodyShow, setbodyShow] = useState('')
   const [startDate, setStartDate] = useState(new Date());
@@ -47,6 +47,7 @@ export const CreateEvent = () => {
   useLayoutEffect(() => {
 
     const unsub = onSnapshot(doc(db.db, "evento", idE), (doc) => {
+      setpassAsis(doc.data().passAsis)
       settitelShow(doc.data().titulo);
       setbodyShow(doc.data().body)
       setStartDate(doc.data().createdAt.toDate())
@@ -63,7 +64,8 @@ export const CreateEvent = () => {
     await updateDoc(washingtonRef, {
       titulo: titelShow,
       body: bodyShow,
-      createdAt: startDate
+      createdAt: startDate,
+      passAsis:passAsis
     });
 
     sendProyect()
@@ -101,6 +103,9 @@ export const CreateEvent = () => {
     <div className='contCreatElement mt-5'>
 
       <div className='cardForos'>
+        <div className='d-flex justify-content-center'>
+          <h3 className='text-uppercase'>Informacion del evento</h3>
+        </div>
         <div className='mt-4'>
           <Form.Group className="mb-3" >
             <Form.Label htmlFor="titel">Titulo</Form.Label>
@@ -115,8 +120,15 @@ export const CreateEvent = () => {
           </Form.Group>
           <Form.Group className="mb-3" >
             <Form.Label htmlFor="bodyEvent">Descripcion</Form.Label>
-            <Form.Control as="textarea" id="bodyEvent" rows={3} onChange={e => setbodyShow(e.target.value)}
+            <Form.Control  as="textarea" id="bodyEvent" rows={3} onChange={e => setbodyShow(e.target.value)}
               value={bodyShow}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" >
+            <Form.Label htmlFor="bodyEvent">Contraseña de asistencia</Form.Label>
+            <Form.Control type="text" id="passA"  onChange={e => setpassAsis(e.target.value)}
+              value={passAsis}
             />
           </Form.Group>
           <Form.Label >Fecha</Form.Label>
@@ -126,7 +138,7 @@ export const CreateEvent = () => {
             <button className='btn orange'
               onClick={() => { uptadeEvent() }}
             >
-              Crear Evento
+              Actualizar Evento
             </button>
             <button className='btn orange'
               onClick={ValidAsistencia}

@@ -8,6 +8,8 @@ import db from '../../../firebase/firebaseConfig'
 import Table from 'react-bootstrap/Table';
 import { FiUserCheck } from "react-icons/fi";
 export const InfoCours = () => {
+    document.body.style.background = "linear-gradient(90.04deg, rgb(225 225 225 / 76%) 0.03%, rgb(230, 228, 227) 99.96%)";
+
     const { idU } = useParams();
     const navigate = useNavigate();
 
@@ -21,7 +23,12 @@ export const InfoCours = () => {
     const [estudCurso, setestudCurso] = useState([])
     const [inasist, setinasist] = useState([])
     const [showAsist, setshowAsist] = useState(false)
+
     const [inasistActi, setinasistActi] = useState([])
+
+
+    const [saveInfo, setsaveInfo] = useState([])
+    const [cantTxt, setcantTxt] = useState(0)
 
     const sendIni = () => {
         navigate('/admin')
@@ -61,12 +68,12 @@ export const InfoCours = () => {
                     createdAt: segundosAFecha(doc.data().createdAt.seconds),
                     idRegistro: doc.data().idRegistro,
                     titulo: doc.data().titulo,
-                    participacion:doc.data().participacion
+                    participacion: doc.data().participacion
                 });
             }
         });
         setactividades(arrayinfo)
-
+        setsaveInfo(arrayinfo)
         setoptionSelect('1')
     }
 
@@ -88,7 +95,7 @@ export const InfoCours = () => {
             }
         });
         seteventos(arrayinfo)
-
+        setsaveInfo(arrayinfo)
         setoptionSelect('2')
     }
 
@@ -108,8 +115,7 @@ export const InfoCours = () => {
             }
         });
         setmsjs(arrayinfo)
-
-
+        setsaveInfo(arrayinfo)
         setoptionSelect('3')
     }
 
@@ -137,6 +143,8 @@ export const InfoCours = () => {
         setinasist(diff)
 
     }
+
+
     const RenderAsist = () => {
         if (showAsist) {
             return (
@@ -162,6 +170,40 @@ export const InfoCours = () => {
     }
 
 
+
+    const searchTable = (txt) => {
+
+        let arraySearh = []
+        let newArray = []
+
+        if (cantTxt > txt.length) {
+            arraySearh = saveInfo;
+        } else {
+            if (optionSelect == '1') {
+                arraySearh = actividades;
+            } else if (optionSelect == '2') {
+                arraySearh = eventos;
+            } else if (optionSelect == '3') {
+                arraySearh = msjs;
+            }
+        }
+
+        for (let y in arraySearh) {
+            if (JSON.stringify(arraySearh[y]).replaceAll('"', " ").toLowerCase().includes(txt.toLowerCase())) {
+                newArray.push(arraySearh[y])
+            }
+        }
+
+        setcantTxt(txt.length)
+
+        if (optionSelect == '1') {
+            setactividades(newArray)
+        } else if (optionSelect == '2') {
+            seteventos(newArray)
+        } else if (optionSelect == '3') {
+            setmsjs(newArray)
+        }
+    }
 
 
     const RenderItem = () => {
@@ -253,35 +295,30 @@ export const InfoCours = () => {
         }
     }
     return (
-        <div>
+        <div className='mt-5'>
+
+
+            <div className="d-flex flex-row justify-content-between infoStuf">
+                <div className='d-flex flex-column' >
+                    <p className="form-label">Nombre del curso: {datosCurso.nombreCurso}</p>
+                    <p className="form-label">Nombre del profesor: {datosCurso.nombreDocente}</p>
+                    <p className="form-label">Codigo del curso: {datosCurso.codCurso}</p>
+                    <p className="form-label">Clave de ingreso: {datosCurso.claveDingreso}</p>
+                    <p className="form-label">Clave de Salida: {datosCurso.ClaveDSalida}</p>
+                    <p className="form-label">Cantidad de estudiantes: {datosCurso.ClaveDSalida}</p>
+                </div>
 
 
 
-            <div className="d-flex flex-column">
-                <label className="form-label">Nombre del curso: {datosCurso.nombreCurso}</label>
-                <label className="form-label">Nombre del profesor: {datosCurso.nombreDocente}</label>
-                <label className="form-label">Codigo del curso: {datosCurso.codCurso}</label>
-                <label className="form-label">Clave de ingreso: {datosCurso.claveDingreso}</label>
-                <label className="form-label">Clave de Salida: {datosCurso.ClaveDSalida}</label>
-                <label className="form-label">Cantidad de estudiantes: {datosCurso.ClaveDSalida}</label>
-            </div>
-
-            <button className='btn orange' onClick={getActivs}>Ver todas las actividades creadas</button>
-            <button className='btn orange' onClick={getEvents}>Ver todos los eventos creados</button>
-            <button className='btn orange' onClick={getMsj}>Ver todos los msj</button>
-
-
-            <RenderItem></RenderItem>
-
-            <RenderAsist></RenderAsist>
-            <div>
-                <div>
+                <div className='d-flex flex-column mt-2 mb-2 justify-content-between'>
                     <button
+                        className='btn orange'
                         onClick={sendIni}
                     >
                         Volver al inicio
                     </button>
                     <button
+                        className='btn orange'
                         onClick={sendTablas}
                     >
                         Volver tablas
@@ -289,6 +326,20 @@ export const InfoCours = () => {
                 </div>
             </div>
 
+            <div className='infoStuf d-flex justify-content-evenly'>
+                <button className='btn orange' onClick={getActivs}>Ver todas las actividades creadas</button>
+                <button className='btn orange' onClick={getEvents}>Ver todos los eventos creados</button>
+                <button className='btn orange' onClick={getMsj}>Ver todos los msj</button>
+            </div>
+
+            <div className='infoStuf'>
+                <div className='d-flex justify-content-end mt-3'>
+                    <input className='form-control w-25' onChange={(e) => searchTable(e.target.value)} ></input>
+                </div>
+                <RenderItem></RenderItem>
+
+                <RenderAsist></RenderAsist>
+            </div>
 
         </div >
     )

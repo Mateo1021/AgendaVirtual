@@ -1,0 +1,119 @@
+.btnDSAdmin {
+    width: 250px;
+    margin: 0 20px 0 20px;
+    height: 145px;
+    border-radius: 20px;
+    white-space: break-spaces;
+    border-color: white;
+    -webkit-box-shadow: 10px 10px 6px -1px rgba(217, 217, 217, 1);
+    -moz-box-shadow: 10px 10px 6px -1px rgba(217, 217, 217, 1);
+    box-shadow: 10px 10px 6px -1px rgba(217, 217, 217, 1);
+}
+
+.divBtnsGraf {
+    margin: 0px 4px 20px 4px;
+    padding: 14px;
+    width: 100vw;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    display: flex;
+    justify-content: center;
+}
+
+.graficImg {
+    width: 65%;
+}
+
+.graficImg2 {
+    width: 40%;
+}
+
+.txtImgsGraphic {
+    color: white;
+}
+
+.clor1 {
+    background: linear-gradient(red, 10%, #da435d);
+}
+
+.clor2 {
+    background: linear-gradient(#fe7101, 10%, #e38033);
+}
+
+.clor3 {
+    background: linear-gradient(#0d6efd, 10%, #3272d1);
+}
+
+.clor4 {
+    background: linear-gradient(#09d577, 10%, #1fa868);
+}
+
+.clor5 {
+    background: linear-gradient(#c367ff, 10%, #6d3fbb);
+}
+
+.stileGraphic {
+    background-color: white;
+    margin: 12px 60px 10px 60px;
+    padding: 20px 30px 40px 30px;
+    border-color: #d2d2d2;
+    border-style: solid;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 40px;
+}
+
+.stylePaiChart {
+    height: 50vw;
+    display: flex;
+    justify-content: center;
+}
+
+.clor6 {
+    background: linear-gradient(#000000, 10%, #6c6578);
+}
+
+.listasAdmin {
+    border-style: solid;
+    display: flex;
+    flex-direction: column;
+    padding: 5px 30px 30px 7px;
+    margin: 20px 30px 0px 30px;
+    border-color: #d5d5d5;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: white;
+}
+
+.inpushSearch {
+    width: 20%;
+}
+
+.formList {
+    padding: 0px 40px;
+}
+
+.infoStuf {
+    border-style: solid;
+    margin: 15px 30px;
+    padding: 15px 40px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-color: #cfcfcf;
+    background-color: white;
+}
+.margenForce {
+    margin-left: 30px;
+}
+.styleIniCurso{
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.tamImgIni{
+    width:100%;
+    height:inherit;
+}
+.aligTextForce {
+    text-align: justify;
+}

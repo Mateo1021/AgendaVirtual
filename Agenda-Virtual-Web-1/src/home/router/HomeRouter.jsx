@@ -14,6 +14,7 @@ import { CreatActiv } from '../../curso/pages/CreatActiv'
 import { NewActivi } from '../../curso/pages/NewActivi'
 import { NewEvent } from '../../curso/pages/NewEvent'
 import { CreateEvent } from '../../curso/pages/createEvent'
+import { ChangeCours } from '../../curso/pages/changeCours'
 
 export const HomeRouter = () => {
 
@@ -34,6 +35,7 @@ export const HomeRouter = () => {
         <Route path="/curso/newActiv/:idC" element={<NewActivi></NewActivi>} />
         <Route path="/curso/newEvent/:idC" element={<NewEvent></NewEvent>} />
         <Route path="/curso/createEvent/:idE/:idC" element={<CreateEvent></CreateEvent>} />
+        <Route path="/curso/configCurso/:id" element={<ChangeCours></ChangeCours>} />
       </Routes>
     </>
 

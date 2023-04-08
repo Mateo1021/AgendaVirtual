@@ -47,6 +47,10 @@ export const EditCurso = () => {
     navigate('/curso/listEstud/' + id)
   }
 
+  const sendEditCurso = () => {
+    navigate('/curso/configCurso/' + id)
+  }
+
   useLayoutEffect(() => {
     const unsub = onSnapshot(doc(db.db, "Cursos", id), (doc) => {
       setinfoCours(doc.data());
@@ -86,7 +90,7 @@ export const EditCurso = () => {
       <button style={{ backgroundColor: '#f5f5f5', borderWidth: '0' }}
         onClick={() => { sedCreateEven(info.info.codEvento) }}
       >
-        <Card style={{ width: '18rem', margin: '20px', height: '200px',borderColor: '#492013', boxShadow: '10px 5px 5px #492013' }}
+        <Card style={{ width: '18rem', margin: '20px', height: '200px', borderColor: '#492013', boxShadow: '10px 5px 5px #492013' }}
           key={info.info.codEvento}
         >
           <Card.Body style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'column' }}>
@@ -135,7 +139,7 @@ export const EditCurso = () => {
       <button style={{ backgroundColor: '#f5f5f5', borderWidth: '0' }}
         onClick={() => { sedCreateActv(info.info.idRegistro) }}
       >
-        <Card style={{ width: '18rem', margin: '20px', height: '200px', borderColor: '#492013', boxShadow: '10px 5px 5px #492013' }}
+        <Card style={{ width: '25rem', margin: '20px', height: '200px', borderColor: '#492013', boxShadow: '10px 5px 5px #492013' }}
           key={info.info.idRegistro}
         >
           <Card.Body style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'column' }}>
@@ -186,9 +190,15 @@ export const EditCurso = () => {
         {<img src={infoCours.banerCurso} className="banner" />}
         <div>
           <div className='d-flex justify-content-center'>
-            <h1 className='titelPage'>{infoCours.nombreCurso} </h1>
+            <h1 className='titelPage text-uppercase'>{infoCours.nombreCurso} </h1>
           </div>
-          <div className='d-flex justify-content-end px-3'>
+          <div className='d-flex justify-content-between px-3'>
+            <button className="d-flex btn orange text-white"
+              onClick={() => { sendEditCurso() }}
+            >
+              Modificar curso
+            </button>
+
             <button className="d-flex btn orange text-white"
               onClick={() => { sendStud() }}
             >

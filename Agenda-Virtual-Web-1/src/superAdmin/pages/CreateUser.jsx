@@ -50,11 +50,12 @@ export const CreateUser = () => {
 
     createUserWithEmailAndPassword(at.at, mail, pass)
       .then((userCredential) => {
-
+        alert('Usuario creado con exito')
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        alert('hubo un error inesperado por favor intentelo nuevamente')
         // ..
       });
 
@@ -81,7 +82,7 @@ export const CreateUser = () => {
     )
   } else {
     return (
-      <div className='p-5'>
+      <div className='infoStuf mt-5'>
         <h1>CREAR USUARIO</h1>
         <div className="mb-3">
           <label className="form-label">Nombre</label>
@@ -104,10 +105,10 @@ export const CreateUser = () => {
           </select>
         </div>
 
-
-        <button className="btn orange" onClick={createUser}>Crear</button>
-
-        <button className="btn orange" onClick={goInicioAdmin}>Cancelar</button>
+        <div className='d-flex'>
+          <button className="btn orange" onClick={createUser}>Crear</button>
+          <button className="margenForce btn orange" onClick={goInicioAdmin}>Cancelar</button>
+        </div>
 
       </div>
     )

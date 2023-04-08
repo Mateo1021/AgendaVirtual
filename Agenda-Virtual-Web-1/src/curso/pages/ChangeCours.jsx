@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 
 import db from '../../../firebase/firebaseConfig'
 import { doc, setDoc } from "firebase/firestore";
 
 
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDoc, updateDoc } from "firebase/firestore";
 
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 import { useNavigate } from 'react-router-dom';
-
+import { useParams } from "react-router-dom";
 
 const storage = getStorage();
 
@@ -20,12 +20,13 @@ let nameProfesor;
 let user = "";
 
 
+export const ChangeCours = () => {
 
-export const CreateCours = () => {
+
   document.body.style.backgroundColor = "#f5f5f5";
   let base = db
 
-
+  const { id } = useParams();
   const navigate = useNavigate();
 
 
@@ -49,24 +50,22 @@ export const CreateCours = () => {
 
 
 
-
+useLayoutEffect(() => {
+  getId()
+}, [])
 
   async function getId() {
-    const q = query(collection(base.db, "Cursos"));
-    const querySnapshot = await getDocs(q);
+    const q = doc(base.db, "Cursos", id);
+    const querySnapshot = await getDoc(q);
     let idCours = []
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      idCours.push(doc.id.split('_')[1]);
-    });
-    idCours.sort((a, b) => {
-      return a - b;
-    });
-
-    let idCoursDb = idCours[idCours.length - 1];
-    let idCoursComplet = 'pg_' + (++idCoursDb);
-
-    return (idCoursComplet);
+    console.log(querySnapshot.data());
+    setcourseName(querySnapshot.data().nombreCurso)
+    setdescL(querySnapshot.data().largeDescription)
+    settemaCou(querySnapshot.data().temas)
+    setdescShort(querySnapshot.data().shortDescrip)
+    setpassAdd(querySnapshot.data().claveDingreso)
+    setpassRemove(querySnapshot.data().ClaveDSalida)
+    setbanner(querySnapshot.data().banerCurso)
   }
   function handleChange(event) {
     setFile(event.target.files[0]);
@@ -74,7 +73,7 @@ export const CreateCours = () => {
   const handleUpload = () => {
     console.log(2);
     if (!file) {
-      alert("Please upload an image first!");
+      alert("Por favor carga una imagen primero!");
     }
 
     const storageRef = ref(storage, `/files/${file.name}`);
@@ -105,26 +104,18 @@ export const CreateCours = () => {
   };
 
   const createCurs = async () => {
-    let isResponse = await getId()
-    let infoDocente = JSON.parse(sessionStorage.getItem('codUserWb'))
 
-
-    await setDoc(doc(base.db, "Cursos", isResponse), {
+    await updateDoc(doc(base.db, "Cursos", id), {
       ClaveDSalida: passRemove,
-      apellidosDocente: infoDocente.apellido,
       banerCurso: banner,
-      cantEstudiantes: 0,
       claveDingreso: passAdd,
-      codCurso: isResponse,
-      codDocente: infoDocente.id,
       largeDescription: descL,
       nombreCurso: courseName,
-      nombreDocente: infoDocente.nombre,
       shortDescrip: descShort,
       temas: temaCou,
     });
 
-    alert('Curso creado con exito')
+    alert('Curso editado con exito')
     sendProyect()
 
   }
@@ -135,7 +126,7 @@ export const CreateCours = () => {
       <h1>CREAR CURSO</h1>
       <div className="mb-3">
         <label className="form-label">Nombre Curso</label>
-        <input type="text" className="form-control" id="nameCours" placeholder="Fotografia"
+        <input type="text" className="form-control" id="nameCours" placeholder="Fotografia" value={courseName}
           onChange={e => setcourseName(e.target.value)}
         />
       </div>
@@ -144,6 +135,7 @@ export const CreateCours = () => {
         <label className="form-label">Descripcion del curso</label>
         <textarea className="form-control" id="largeDesc" rows="3" placeholder='Curso de fotografia para principiantes enfocado en...'
           onChange={e => setdescL(e.target.value)}
+          value={descL}
         ></textarea>
       </div>
 
@@ -151,6 +143,7 @@ export const CreateCours = () => {
         <label className="form-label">Temas del curso</label>
         <textarea className="form-control" id="temas" rows="3" placeholder='Fotografia y video, Planos, Edicion'
           onChange={e => settemaCou(e.target.value)}
+          value={temaCou}
         ></textarea>
       </div>
 
@@ -158,19 +151,22 @@ export const CreateCours = () => {
         <label className="form-label">Descripcion corta </label>
         <input type="text" className="form-control" id="shortDesc" placeholder="Curso de fotografia y edicion"
           onChange={e => setdescShort(e.target.value)}
+          value={descShort}
         />
       </div>
       <div className="mb-3">
         <label className="form-label">Clave para ingreso</label>
         <input type="text" className="form-control" id="shortDesc" placeholder="Selecciona una clave"
           onChange={e => setpassAdd(e.target.value)}
+          value={passAdd}
         />
       </div>
-      
+
       <div className="mb-3">
         <label className="form-label">Clave para retiro</label>
         <input type="text" className="form-control" id="shortDesc" placeholder="Selecciona una clave"
           onChange={e => setpassRemove(e.target.value)}
+          value={passRemove}
         />
       </div>
 
@@ -186,8 +182,9 @@ export const CreateCours = () => {
         </div>
 
       </div>
-      <button type="button" className="btn orange" onClick={createCurs}>Crear</button>
+      <button type="button" className="btn orange" onClick={createCurs}>Editar curso</button>
 
     </div>
   )
 }
+

@@ -6,9 +6,13 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form'
 import Table from 'react-bootstrap/Table';
 import { GrSearchAdvanced } from "react-icons/gr";
+import { GrLinkPrevious } from "react-icons/gr";
+
 export const ListaDocentes = () => {
+  document.body.style.background = "linear-gradient(90.04deg, rgb(225 225 225 / 76%) 0.03%, rgb(230, 228, 227) 99.96%)";
+
   const navigate = useNavigate();
-  
+
   const SendProyect = () => {
     localStorage.removeItem('user')
     navigate('/login')
@@ -75,7 +79,6 @@ export const ListaDocentes = () => {
     }
     setcantTxt(txt.length)
     setlistElement(newArray)
-
   }
 
 
@@ -89,7 +92,6 @@ export const ListaDocentes = () => {
               <th>Nombre</th>
               <th>Correo</th>
               <th>Cargo</th>
-              <th>Ver</th>
             </tr>
           </thead>
           <tbody>
@@ -99,8 +101,6 @@ export const ListaDocentes = () => {
                 <td>{item.nombre} {item.apellido}</td>
                 <td>{item.correo}</td>
                 <td>{item.cargo}</td>
-                <td><GrSearchAdvanced onClick={() => sendInfoItem(item.id)}></GrSearchAdvanced></td>
-
               </tr>
             ))}
           </tbody>
@@ -183,34 +183,30 @@ export const ListaDocentes = () => {
 
 
 
-      <div>test admin
+      <div className='listasAdmin'>
+        <GrLinkPrevious className='ml-4 mt-2 mb-3' size={28} onClick={sendIniAdmin}></GrLinkPrevious>
 
-
-        <label className="form-label">Lista de tablas disponibles</label>
-        <select className='form-control' aria-label="Default select example" onChange={(e) => setitem(e.target.value)}>
-          <option value="0">Selecciona el item</option>
-          <option value="1">Profesores</option>
-          <option value="2">estudiantes</option>
-          <option value="3">Cursos</option>
-        </select>
-        <button
-          className='btn orange'
-          onClick={validSearchTable}
-        >
-          Generar tabla
-        </button>
-
-
-        <input type={'text'} className='form-control' onChange={(e) => SearchinElement(e.target.value)}  ></input>
-        <RenderTable></RenderTable>
-
-        <div>
+        <div className='formList'>
+          <label className="form-label mb-2">Lista de tablas disponibles</label>
+          <select className='form-control mb-4' aria-label="Default select example" onChange={(e) => setitem(e.target.value)}>
+            <option value="0">Selecciona el item</option>
+            <option value="1">Profesores</option>
+            <option value="2">estudiantes</option>
+            <option value="3">Cursos</option>
+          </select>
           <button
-            onClick={sendIniAdmin}
+            className='btn orange mb-3'
+            onClick={validSearchTable}
           >
-            Volver al inicio
+            Generar tabla
           </button>
+
+          <div className='d-flex justify-content-end'>
+            <input type={'text'} className='form-control inpushSearch' onChange={(e) => SearchinElement(e.target.value)}  ></input>
+          </div>
+          <RenderTable></RenderTable>
         </div>
+
       </div>
     )
 

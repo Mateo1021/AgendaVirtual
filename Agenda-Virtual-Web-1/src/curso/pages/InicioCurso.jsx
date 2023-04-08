@@ -18,7 +18,7 @@ import '../../styles/StayleClass.css'
 
 export const InicioCurso = () => {
   const navigate = useNavigate();
-  
+
   const sendCours = (id) => {
     navigate('/curso/editCurso/' + id, { replace: true })
   }
@@ -50,19 +50,31 @@ export const InicioCurso = () => {
   function CardRend(info) {
     const visibility = React.useContext(VisibilityContext);
     return (
-      <Card className='tarjeta' style={{ display: 'flex', justifyContent: 'space-evenly', width: '18rem', margin: '20px', height: '600px' }}>
-        
-        <Card.Img className='tarjeta-img' variant="top" src={info.info.banerCurso} />
-        <Card.Body>
-          <Card.Title>{info.info.nombreCurso}</Card.Title>
-          <Card.Text>
-        
-            {info.info.largeDescription}
-            
-          </Card.Text>
-          <Button className= 'tarjeta-btn orange' variant="primary" onClick={() => { sendCours(info.info.codCurso) }}>Ver curso</Button>
-        </Card.Body>
-      </Card>
+      <div className='tarjeta' style={{
+        display: 'flex',
+        width: '25rem',
+        margin: '20px',
+        height: '600px',
+        flexDirection: 'column'
+      }}>
+        <div className='tamImgIni'>
+          <img className='tarjeta-img' variant="top" src={info.info.banerCurso} />
+        </div>
+        <div className='d-flex justify-content-center pt-5'>
+          <h5>{info.info.nombreCurso}</h5>
+        </div>
+        <div className='h-100 d-flex flex-column justify-content-between '>
+          <div className='px-3'>
+            <p className='aligTextForce'>
+              {info.info.largeDescription}
+            </p>
+
+          </div>
+          <div>
+            <button className='btn orange w-100' variant="primary" onClick={() => { sendCours(info.info.codCurso) }}>Ver curso</button>
+          </div>
+        </div>
+      </div>
     );
   }
 
