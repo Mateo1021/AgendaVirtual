@@ -28,7 +28,12 @@ export const lookProyectoScreen = ({ navigation, route }: Props) => {
       .onSnapshot((querySnapshot) => {
         var res: any = [];
         querySnapshot.forEach((doc) => {
-          res.push(doc);
+          if (Object.keys(doc.data()).length === 0) {
+            console.log(1);
+          }else{
+            res.push(doc);
+          }
+
         });
         setcursos(res)
       });
@@ -49,10 +54,10 @@ export const lookProyectoScreen = ({ navigation, route }: Props) => {
     setModalVisible(true)
 
   }
-const cancelInscrib =()=>{
-  setinfoC({})
-  setModalVisible(!modalVisible)
-}
+  const cancelInscrib = () => {
+    setinfoC({})
+    setModalVisible(!modalVisible)
+  }
   function addCoursEstudent() {
     //@ts-ignore
     if (passCours == infoC.clve) {
@@ -62,21 +67,23 @@ const cancelInscrib =()=>{
           //@ts-ignore
           idCurso: infoC.id
         })
-        //@ts-ignore
-      let newCant = Number(infoC.cant)
-      firestore()
       //@ts-ignore
+      let newCant = infoC.cant + 1
+
+      console.log(newCant);
+      firestore()
+        //@ts-ignore
         .collection('Cursos').doc(infoC.id)
         .update({
-          cantEstudiantes: newCant++
+          cantEstudiantes: newCant
         })
       // @ts-ignore
       navigation.pop()
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       navigation.navigate('ProyectosScreen')
-    }else{
-     Alert.alert('Contraseña incorrecta')
+    } else {
+      Alert.alert('Contraseña incorrecta')
 
     }
 
@@ -129,8 +136,8 @@ const cancelInscrib =()=>{
           }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>Para retirar este curso pidele la contraseña a tu docente</Text>
-              <TextInput style={styles.styleinput} onChangeText={setpassCours}/>
+              <Text style={styles.modalText}>Para ingresar a este curso pidele la contraseña a tu docente</Text>
+              <TextInput style={styles.styleinput} onChangeText={setpassCours} />
 
               <View style={styles.btnModal}>
                 <View style={styles.btnModal2} >
@@ -187,7 +194,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   styleComp: {
-    flex: 1
+    flex: 1,
+    marginTop:20
   }, lineTimeContend: {
     marginLeft: 30
   },
@@ -256,7 +264,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginBottom: 30,
     height: 40,
-    color:'black'
+    color: 'black'
   },
   btnModal: {
     flexDirection: 'row'

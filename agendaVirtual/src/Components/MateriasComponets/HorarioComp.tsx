@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
     borderColor: '#DEDEDE',
     paddingVertical: 20,
-    width: 90,
+    width: 120,
     justifyContent: 'center',
     alignItems: 'center'
   },

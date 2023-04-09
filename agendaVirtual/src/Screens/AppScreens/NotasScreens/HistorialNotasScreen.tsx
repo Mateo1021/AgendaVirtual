@@ -40,7 +40,12 @@ export const HistorialNotasScreen = () => {
 
   const getDatosbyMat = async (mat: string, tp: number) => {
     const data = await searchCalificacione(mat, tp)
+    if (data.length == 0) {
+      Alert.alert('Notas', 'No se han encontrado notas con esas caracteristicas')
+    }
     setdataTable(data);
+
+
     return data
   }
 
@@ -175,7 +180,7 @@ const styles = StyleSheet.create({
   tableHeader: {
     backgroundColor: '#DCDCDC',
   },
-  alingItem:{
-    alignItems:'center'
+  alingItem: {
+    alignItems: 'center'
   }
 });

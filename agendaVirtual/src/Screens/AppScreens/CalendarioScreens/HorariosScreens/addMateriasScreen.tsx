@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
-import { View, Text, TextInput, SafeAreaView, ScrollView, RefreshControl, TouchableOpacity, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, SafeAreaView, ScrollView, RefreshControl, TouchableOpacity, Button, StyleSheet, Alert } from 'react-native';
 import { stylesApp, colors } from '../../../../Themes/AppThemes';
 import firestore from '@react-native-firebase/firestore';
 import { AuthContext } from '../../../../Context/ContextUser/AuthContext';
@@ -26,7 +26,14 @@ export const addMateriasScreen = () => {
   const { createMateria } = useCreateMateria();
 
 
-
+const addMateria =()=>{
+  if(materiData.nombre == '' ||materiData.nombre.length<=3){
+    Alert.alert('Error','Por favor ingresa un nombre')
+  }else{
+    navigation.goBack()
+    createMateria(materiData.nombre)
+  }
+}
 
 
   return (
@@ -58,8 +65,7 @@ export const addMateriasScreen = () => {
             onPress={() => {
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
-              navigation.goBack()
-              createMateria(materiData.nombre)
+              addMateria()
             }}
           ></Button>
 

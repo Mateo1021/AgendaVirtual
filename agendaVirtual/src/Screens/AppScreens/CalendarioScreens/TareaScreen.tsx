@@ -1,6 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react'
-import { Button, FlatList, Platform, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Alert, Button, FlatList, Platform, StyleSheet, Text, TextInput, View } from 'react-native'
 import { colors, stylesApp } from '../../../Themes/AppThemes';
 import { useTareas } from '../../../Hooks/useTareas';
 import { ActivityIndicator } from 'react-native-paper';
@@ -98,23 +98,28 @@ export const TareaScreen = ({ route, navigation }: Props) => {
     showMode('date');
   };
   const agrupInfoTareo = () => {
-    const info = {
-      'body': descrip,
-      'fechaAlerta': date,
-      'fechaEntrega': date,
-      'materia': select,
-      'prioridad': priori,
-      'titulo': titulo,
+    if (descrip == '' || dateShow == 'dd/mm/yy' || select == '' || priori == '' || titulo == '') {
+      Alert.alert('Faltan datos', 'Porfavor ingresa todos los datos')
+    } else {
+      const info = {
+        'body': descrip,
+        'fechaAlerta': date,
+        'fechaEntrega': date,
+        'materia': select,
+        'prioridad': priori,
+        'titulo': titulo,
+      }
+      setdataTare(dataTare => ({
+        ...dataTare,
+        ...info
+      }));
+      addTarea(info)
+      onChangedescrip('')
+      setDate(new Date)
+      setselect('')
+      onChangetitulo('')
+      navigation.navigate('CalendarioScreen')
     }
-    setdataTare(dataTare => ({
-      ...dataTare,
-      ...info
-    }));
-    addTarea(info)
-    onChangedescrip('')
-    setDate(new Date)
-    setselect('')
-    onChangetitulo('')
   }
 
 
@@ -185,7 +190,6 @@ export const TareaScreen = ({ route, navigation }: Props) => {
                 title='Agregar Tarea'
                 onPress={() => {
                   agrupInfoTareo();
-                  navigation.navigate('CalendarioScreen')
                 }}
               ></Button>
             </View>
@@ -228,9 +232,9 @@ const styles = StyleSheet.create({
   btnDel: {
     paddingHorizontal: 8
   },
-  alingItems:{
-    alignItems:'center',
-    marginTop:20
+  alingItems: {
+    alignItems: 'center',
+    marginTop: 20
   }
 });
 const pickerSelectStyles = StyleSheet.create({

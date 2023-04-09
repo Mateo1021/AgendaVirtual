@@ -18,28 +18,36 @@ export const NavBar = () => {
 
   const onLogut = () => {
     logout();
-    navigate('/login', { replace: true })
+    navigate('/login')
   }
 
+
+  const goCurso = () => {
+    navigate('/curso/iniCurso')
+  }
+  const goHome = () => {
+
+    navigate('/home')
+  }
   return (
     <>
       {[false].map((expand) => (
-        <Navbar style={{backgroundColor:'#492013'}} className='navbar' variant={'dark'} key={expand}  expand={expand} >
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100% ',marginLeft:10, marginRight:10 }}>
+        <Navbar style={{ backgroundColor: '#492013' }} className='navbar' variant={'dark'} key={expand} expand={expand} >
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100% ', marginLeft: 10, marginRight: 10 }}>
             <div style={{ display: 'flex', alignItems: 'flex-end' }} >
               <div>
                 <a href="#">
                   <img src={Logo} width="80" height="60" alt="" />
                 </a>
               </div>
-              <div style={{ marginLeft:20, marginBottom:10 }}>
-                <Navbar.Brand href="/home" style={{ color:'white' }}>Inicio</Navbar.Brand>
-                <Navbar.Brand href="/curso/iniCurso" style={{ color:'white' }}>Cursos</Navbar.Brand>
+              <div style={{ marginLeft: 20, marginBottom: 10 }}>
+                <Navbar.Brand onClick={goHome} style={{ color: 'white' }}>Inicio</Navbar.Brand>
+                <Navbar.Brand onClick={goCurso} style={{ color: 'white' }}>Cursos</Navbar.Brand>
               </div>
             </div>
             <div>
 
-              <Navbar.Toggle style={{content:'white'}} aria-controls={`offcanvasNavbar-expand-${expand}`} />
+              <Navbar.Toggle style={{ content: 'white' }} aria-controls={`offcanvasNavbar-expand-${expand}`} />
               <Navbar.Offcanvas
                 id={`offcanvasNavbar-expand-${expand}`}
                 aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}

@@ -99,8 +99,11 @@ export const LoginScreen = ({ navigation }: Props) => {
             console.log('That email address is invalid!');
             Alert.alert('Usuario o contraseña incorrectos')
           }
-
-          console.error(error);
+          if (error.code === 'auth/user-not-found') {
+            console.log('That email address is invalid!');
+            Alert.alert('Usuario o contraseña incorrectos')
+          }
+          
         });
 
 

@@ -19,9 +19,14 @@ import { useNavigate } from 'react-router-dom';
 import Linkify from 'react-linkify';
 
 
-export const EditCurso = () => {
-  document.body.style.backgroundColor = "rgb(245 245 245 / 50%)";
 
+export const EditCurso = () => {
+  useLayoutEffect(() => {
+
+    document.body.style.backgroundColor = "rgb(245 245 245 / 50%)";
+  }, [])
+
+  document.body.style.backgroundColor = "rgb(245 245 245 / 50%)";
   const { id } = useParams();
   const [infoCours, setinfoCours] = useState({})
   const [eventos, seteventos] = useState([])
@@ -145,13 +150,13 @@ export const EditCurso = () => {
           <Card.Body style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'column' }}>
             <Card.Title>{info.info.titulo}</Card.Title>
 
-              <Linkify>
-                <div className='hideenEvent'>
-                  <p>
-                    {info.info.body}
-                  </p>
-                </div>
-              </Linkify>
+            <Linkify>
+              <div className='hideenEvent'>
+                <p>
+                  {info.info.body}
+                </p>
+              </div>
+            </Linkify>
 
           </Card.Body>
         </Card>
@@ -218,14 +223,16 @@ export const EditCurso = () => {
             <div className='subTitels'>
               <h4>Eventos</h4>
             </div>
-            <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow} >
-              {eventos.map((id) => (
-                <CardRend
-                  info={id}
-                  key={id.codEvento}
-                />
-              ))}
-            </ScrollMenu>
+            <div>
+              <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow} >
+                {eventos.map((id) => (
+                  <CardRend
+                    info={id}
+                    key={id.codEvento}
+                  />
+                ))}
+              </ScrollMenu>
+            </div>
             <div className='btnAdd'>
               <button className="btn orange text-white "
                 onClick={() => { sedNewEve() }}
@@ -278,7 +285,7 @@ export const EditCurso = () => {
 
 const styles = {
   main: {
-    backgroundColor: "#f1f1f1",
+    backgroundColor: "red",
     width: "100%",
   },
   inputText: {

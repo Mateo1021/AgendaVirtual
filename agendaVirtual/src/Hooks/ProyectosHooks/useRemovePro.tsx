@@ -7,11 +7,11 @@ export const useRemovePro = () => {
     const { authState } = useContext(AuthContext);
 
     const removePro = async (idCours:any,cant:any) =>{   
-      let newCant = Number(cant)
+      let newCant = cant-1
       const cantCour = await firestore()
       .collection('Cursos').doc(idCours)
       .update({
-        cantEstudiantes: newCant--
+        cantEstudiantes: newCant
       })
       
         const codCal = await firestore()

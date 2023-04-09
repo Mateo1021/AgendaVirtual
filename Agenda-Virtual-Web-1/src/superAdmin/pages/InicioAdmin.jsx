@@ -2,6 +2,12 @@ import { useNavigate } from 'react-router-dom';
 import { collection, query, where, getDocs } from "firebase/firestore";
 import db from '../../../firebase/firebaseConfig'
 import React, { useLayoutEffect, useState } from 'react';
+import img1 from '../../images/image.png';
+import img3 from '../../images/image2.png';
+import img4 from '../../images/image3.png';
+import img5 from '../../images/image4.png';
+import img6 from '../../images/image5.png';
+import img7 from '../../images/image6.png';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -688,35 +694,35 @@ export const InicioAdmin = () => {
               <p className='txtImgsGraphic'>Eventos por mes</p>
               <img
                 className='graficImg'
-                src={'/src/superAdmin/pages/imgs/image.png'}
+                src={img1}
               />
             </button>
             <button className='btnDSAdmin clor2' onClick={() => selectGrafic('2')}>
               <p className='txtImgsGraphic'>Actividades por mes</p>
               <img
                 className='graficImg2'
-                src={'/src/superAdmin/pages/imgs/image2.png'}
+                src={img3}
               />
             </button>
             <button className='btnDSAdmin clor3' onClick={() => selectGrafic('3')}>
               <p className='txtImgsGraphic'>Estudiantes por curso</p>
               <img
                 className='graficImg'
-                src={'/src/superAdmin/pages/imgs/image.png'}
+                src={img1}
               />
             </button>
             <button className='btnDSAdmin clor4' onClick={() => selectGrafic('4')}>
               <p className='txtImgsGraphic'>Asistencia a eventos</p>
               <img
                 className='graficImg2'
-                src={'/src/superAdmin/pages/imgs/image2.png'}
+                src={img3}
               />
             </button>
             <button className='btnDSAdmin clor5' onClick={() => selectGrafic('5')}>
               <p className='txtImgsGraphic'>Participacion en actividades</p>
               <img
                 className='graficImg'
-                src={'/src/superAdmin/pages/imgs/image.png'}
+                src={img1}
               />
             </button>
           </div>
@@ -726,13 +732,12 @@ export const InicioAdmin = () => {
           <GraficRender></GraficRender>
         </div>
 
-
         <div className='d-flex justify-content-center mt-2 mb-5'>
           <button className='btnDSAdmin clor6' onClick={() => SendLista()}>
             <p className='txtImgsGraphic'>Ver listas de actividades</p>
             <img
               className='graficImg2'
-              src={'/src/superAdmin/pages/imgs/image6.png'}
+              src={img7}
             />
           </button>
 
@@ -740,7 +745,7 @@ export const InicioAdmin = () => {
             <p className='txtImgsGraphic'>Crear nuevos usuarios</p>
             <img
               className='graficImg2'
-              src={'/src/superAdmin/pages/imgs/image4.png'}
+              src={img5}
             />
           </button>
 
@@ -748,7 +753,7 @@ export const InicioAdmin = () => {
             <p className='txtImgsGraphic'>Salir</p>
             <img
               className='graficImg2'
-              src={'/src/superAdmin/pages/imgs/image5.png'}
+              src={img6}
             />
           </button>
         </div>

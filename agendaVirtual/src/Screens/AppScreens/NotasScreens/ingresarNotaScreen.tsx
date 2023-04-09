@@ -29,9 +29,6 @@ export const ingresarNotaScreen = () => {
     // @ts-ignore
     materiasListArray.push({ label: materias[i]._data.nombre, value: materias[i]._data.codMateria })
   }
-
-
-
   const slectMateria = (matSelect: any) => {
     setselectMate(matSelect)
   }
@@ -50,32 +47,60 @@ export const ingresarNotaScreen = () => {
     setShow(true);
     setMode(currentMode);
   };
-
   const showDatepicker = () => {
     showMode('date');
   };
-
   const createNewCalif = () => {
-    let dataSend = {
-      codMateria: selectMate,
-      fechaNota: date,
-      nombre: nombreCalif,
-      porcentaje: porcentajeCalif,
-      tipoCalificacion: tipoSelect,
-      valor: valorCalif
+    if(selectMate==''||dateShow=='dd/mm/yy'||nombreCalif==''||porcentajeCalif==''||tipoSelect==''||valorCalif==''){
+      Alert.alert('Calificaciones', 'Ingresa todos los campos');
+    }else{
+      let dataSend = {
+        codMateria: selectMate,
+        fechaNota: date,
+        nombre: nombreCalif,
+        porcentaje: porcentajeCalif,
+        tipoCalificacion: tipoSelect,
+        valor: valorCalif
+      }
+      AddCalif(dataSend)
+      setdateShow('dd/mm/yy')
+      setselectMate('')
+      settipoSelect('')
+      setnombreCalif('')
+      setvalorCalif('')
+      setporcentajeCalif('')
+  
+      Alert.alert('Notas', 'Su calificacion fue agregada con exito', [
+  
+        {text: 'OK'}
+      ]);
     }
-    AddCalif(dataSend)
-    setdateShow('dd/mm/yy')
-    setselectMate('')
-    settipoSelect('')
-    setnombreCalif('')
-    setvalorCalif('')
-    setporcentajeCalif('')
+  }
 
-    Alert.alert('Notas', 'Su calificacion fue agregada con exito', [
 
-      {text: 'OK'}
-    ]);
+  const validNumber1 = (val: any) => {
+    const regexMayus = /[a-zA-Z]/g;
+    if (val.search(regexMayus) !== -1) {
+      setvalorCalif('')
+    } else {
+      if (Number(val) > 5) {
+        setvalorCalif('')
+      } else {
+        setvalorCalif(val)
+      }
+    }
+  }
+  const validNumber2 = (val: any) => {
+    const regexMayus = /[a-zA-Z]/g;
+    if (val.search(regexMayus) !== -1) {
+      setporcentajeCalif('')
+    } else {
+      if (Number(val) > 100) {
+        setporcentajeCalif('')
+      } else {
+        setporcentajeCalif(val)
+      }
+    }
   }
 
   return (
@@ -99,8 +124,8 @@ export const ingresarNotaScreen = () => {
 
             <TextInput placeholderTextColor = "#949494" style={styles.txtInput} placeholder='Nombre nota' value={nombreCalif} onChangeText={setnombreCalif} />
             <View style={styles.containerNota}>
-              <TextInput placeholderTextColor = "#949494" style={styles.notaInput} keyboardType='numeric' placeholder='Nota' value={valorCalif} onChangeText={setvalorCalif} />
-              <TextInput placeholderTextColor = "#949494" style={styles.porcenInput} keyboardType='numeric' placeholder='Porcentaje (%)' value={porcentajeCalif} onChangeText={setporcentajeCalif} />
+              <TextInput placeholderTextColor = "#949494" style={styles.notaInput} keyboardType='numeric' placeholder='Nota' value={valorCalif} onChangeText={(e)=>validNumber1(e)} />
+              <TextInput placeholderTextColor = "#949494" style={styles.porcenInput} keyboardType='numeric' placeholder='Porcentaje (%)' value={porcentajeCalif} onChangeText={(e)=>validNumber2(e)} />
             </View>
 
             <View>

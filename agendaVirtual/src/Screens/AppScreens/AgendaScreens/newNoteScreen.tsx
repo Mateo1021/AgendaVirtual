@@ -1,6 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useContext, useEffect, useState } from 'react'
-import { Button, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Alert, Button, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import { colors, stylesApp } from '../../../Themes/AppThemes'
 import firestore from '@react-native-firebase/firestore';
 import { AuthContext } from '../../../Context/ContextUser/AuthContext';
@@ -30,6 +30,15 @@ export const newNoteScreen = ({ navigation, route }: Props) => {
     titulo: '',
     body: ''
   })
+  const addNoteFun = (titel: string, body: string) => {
+    if (titel == '' || body == '') {
+      Alert.alert('Notas', 'Completa todos los campos')
+    } else {
+      AddNote(titel, body)
+      navigation.navigate('AgendaScreen')
+    }
+  }
+
 
   return (
     <SafeAreaView>
@@ -71,8 +80,8 @@ export const newNoteScreen = ({ navigation, route }: Props) => {
             color={colors.primary}
             title='Agregar nota'
             onPress={() => {
-              AddNote(stateNote.titulo, stateNote.body)
-              navigation.navigate('AgendaScreen')
+              addNoteFun(stateNote.titulo, stateNote.body)
+
             }}
           ></Button>
 
@@ -95,14 +104,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#DEDEDE',
     fontSize: 20,
-    color:'black'
+    color: 'black'
   },
   bodyInput: {
     borderWidth: 1,
     borderColor: '#DEDEDE',
     marginVertical: 20,
     fontSize: 18,
-    color:'black'
+    color: 'black'
   },
   block: {
     paddingHorizontal: 25,

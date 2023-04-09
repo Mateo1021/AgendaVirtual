@@ -20,8 +20,12 @@ export const calculoRapidoScreen = () => {
     if (val.search(regexMayus) !== -1) {
       setnota1Show('')
     } else {
-      setnota1(val)
-      setnota1Show(val)
+      if (Number(val) > 5) {
+        setnota1Show('')
+      } else {
+        setnota1(val)
+        setnota1Show(val)
+      }
     }
   }
   const validNumber2 = (val: string) => {
@@ -29,8 +33,12 @@ export const calculoRapidoScreen = () => {
     if (val.search(regexMayus) !== -1) {
       setnota2Show('')
     } else {
-      setnota2(val)
-      setnota2Show(val)
+      if (Number(val) > 5) {
+        setnota2Show('')
+      } else {
+        setnota2(val)
+        setnota2Show(val)
+      }
     }
   }
   const validNumber3 = (val: string) => {
@@ -38,8 +46,12 @@ export const calculoRapidoScreen = () => {
     if (val.search(regexMayus) !== -1) {
       setnota3Show('')
     } else {
-      setnota3(val)
-      setnota3Show(val)
+      if (Number(val) > 5) {
+        setnota3Show('')
+      } else {
+        setnota3(val)
+        setnota3Show(val)
+      }
     }
   }
   const validNumber4 = (val: string) => {
@@ -47,8 +59,12 @@ export const calculoRapidoScreen = () => {
     if (val.search(regexMayus) !== -1) {
       setnota4Show('')
     } else {
-      setnota4(val)
-      setnota4Show(val)
+      if (Number(val) > 5) {
+        setnota4Show('')
+      } else {
+        setnota4(val)
+        setnota4Show(val)
+      }
     }
   }
 
@@ -74,21 +90,21 @@ export const calculoRapidoScreen = () => {
 
       let notaMin = notasMinimas[1] - sumaNotas;
       if (notaMin > 5) {
-        setnotaMini('Es algo imposible :c ')
+        setnotaMini('Es algo imposible')
       } else {
         setnotaMini(notaMin.toFixed(2).toString());
       }
 
       let notaEx = notasMinimas[2] - sumaNotas;
       if (notaEx > 5) {
-        setnotaExe('Es algo imposible :c ')
+        setnotaExe('Es algo imposible')
       } else {
         setnotaExe(notaEx.toFixed(2).toString());
       }
 
       let notaPerf = notasMinimas[3] - sumaNotas;
       if (notaPerf > 5) {
-        setnotaPerf('Es algo imposible :c ')
+        setnotaPerf('Es algo imposible')
       } else {
         setnotaPerf(notaPerf.toFixed(2).toString());
       }
@@ -140,7 +156,7 @@ export const calculoRapidoScreen = () => {
               <TextInput keyboardType='numeric' style={styles.styleinput} value={nota3Show} onChangeText={(value) => validNumber3(value)} />
             </View>
             <View style={styles.containerMsj}>
-              <Text style={{color:'black'}}>Nota: Ingresa las notas que tengas a la fecha, si dejas un espacio en blanco ese sera ignorado.</Text>
+              <Text style={{ color: 'black' }}>Nota: Ingresa las notas que tengas a la fecha, si dejas un espacio en blanco ese sera ignorado.</Text>
             </View>
             <TouchableOpacity
               onPress={() => calNotas()}
@@ -166,7 +182,7 @@ export const calculoRapidoScreen = () => {
                 </Text>
               </View>
               <View style={styles.blockResult}>
-                <Text  style={styles.titelNota}>
+                <Text style={styles.titelNota}>
                   La nota para un 4.0
                 </Text>
                 <Text style={styles.notaResult}>
@@ -178,7 +194,7 @@ export const calculoRapidoScreen = () => {
                   La nota para un 4.5
                 </Text>
                 <Text style={styles.notaResult}>
-                {notaPerf}
+                  {notaPerf}
                 </Text>
               </View>
             </View>
@@ -189,16 +205,16 @@ export const calculoRapidoScreen = () => {
               <TextInput keyboardType='numeric' style={styles.styleinput} value={nota4Show} onChangeText={(value) => validNumber4(value)} />
             </View>
             <View style={styles.containerMsj}>
-              <Text style={{color:'black'}}>Nota: Ingresa las nota que desas sacar.</Text>
+              <Text style={{ color: 'black' }}>Nota: Ingresa las nota que desas sacar.</Text>
             </View>
             <TouchableOpacity
               onPress={() => calValorEspecifico()}
               style={styles.buttton}>
               <Text style={styles.text}>Calcular</Text>
             </TouchableOpacity>
-            <View  style={styles.blockResult}>
+            <View style={styles.blockResult}>
               <Text style={styles.titelNota2}>
-              La nota que necesitas para sacar tu nota deseada
+                La nota que necesitas para sacar tu nota deseada
               </Text>
               <Text style={styles.notaResult2}>
                 {notaEspef}
@@ -285,10 +301,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     borderColor: '#E6E6E6',
-    width:1000,
-    paddingVertical:20,
-    borderBottomEndRadius:20,
-    paddingHorizontal:15
+    width: 1000,
+    paddingVertical: 20,
+    borderBottomEndRadius: 20,
+    paddingHorizontal: 15
   },
   notaResult: {
     color: 'black',
@@ -297,18 +313,18 @@ const styles = StyleSheet.create({
   notaResult2: {
     color: 'black',
     fontSize: 18,
-    paddingHorizontal:300
+    paddingHorizontal: 300
   },
   titelNota2: {
     fontWeight: 'bold',
     color: 'black',
     fontSize: 18,
-    paddingHorizontal:300,
-    textAlign:'center',
-    alignItems:'center'
+    paddingHorizontal: 300,
+    textAlign: 'center',
+    alignItems: 'center'
   },
-  titlesNotas:{
-    fontWeight:'bold',
-    fontSize:25
+  titlesNotas: {
+    fontWeight: 'bold',
+    fontSize: 25
   }
 })

@@ -7,11 +7,12 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import '../../styles/StayleClass.css'
+import { NavBar } from '../../navigators/components/NavBar';
 
 
 export const HomeMenu = () => {
 
-  document.body.style.background = "linear-gradient(45deg, rgba(255, 162, 0, 0.9052871148459384) 2%, rgba(248, 219, 178, 1) 67%, rgba(248, 219, 178, 1) 100%)";
+  document.body.style.backgroundColor = "rgb(245 245 245 / 50%)";
 
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -90,9 +91,9 @@ export const HomeMenu = () => {
             timeZoneName: 'short',
             locale: 'es-CO' // Configuración regional y el idioma en español (España)
           };
-  
+
           const horaEnEspanol = fecha.toLocaleTimeString('es-CO', opciones);
-  
+
 
           respuestas.push({
             tituloRes: arrayReg[i].titelReg,
@@ -101,7 +102,7 @@ export const HomeMenu = () => {
             cours: arrayReg[i].nameCours,
             codReg: arrayReg[i].codReg,
             idCours: arrayReg[i].idCours,
-            createdAt:horaEnEspanol
+            createdAt: horaEnEspanol
           });
         });
         arrayCompuesto.push(respuestas);
@@ -126,49 +127,50 @@ export const HomeMenu = () => {
   }, [])
 
 
-  console.log(notifi);
-
 
   return (
-    <div>
+    <div className='fondo'>
 
-      <h1 className='px-4 pt-3 titulo'> Bienvenido {user?.name.nombre} {user?.name.apellidos}</h1>
+      <div className='paddinForceInicio'>
 
-
-      <div className='titelCard'>
-        <h2 className='titulomenor'>Actividad reciente en sus cursos</h2>
-      </div>
-
-      <div className='d-flex flex-column px-0 contInicio'>
-        {notifi.map((id, index) => (
-
-          <div
-            className='divInicio'
-            onClick={() => { sendActiv(id.codReg, id.idCours) }}
-            key={index}
-          >
+        <h1 className='px-4 pt-3 titulo'> Bienvenido {user?.name.nombre} {user?.name.apellidos}</h1>
 
 
-            <div>
-              <h4>{id.cours}</h4>
-            </div>
+        <div className='titelCard'>
+          <h2 className='titulomenor'>Actividad reciente en sus cursoss</h2>
+        </div>
 
-            <div className='infoComent'>
+        <div className='d-flex flex-column px-0 contInicio pb-5'>
+          {notifi.map((id, index) => (
+
+            <div
+              className='divInicio'
+              onClick={() => { sendActiv(id.codReg, id.idCours) }}
+              key={index}
+            >
+
+
               <div>
-                <h4>{id.userPlublic}</h4>
+                <h4>{id.cours}</h4>
               </div>
-              <div>
-                <h6>Actividad: {id.tituloRes}</h6>
-                <p>{id.msj}</p>
+
+              <div className='infoComent'>
+                <div>
+                  <h4>{id.userPlublic}</h4>
+                </div>
+                <div>
+                  <h6>Actividad: {id.tituloRes}</h6>
+                  <p>{id.msj}</p>
+                </div>
+                <div className='d-flex justify-content-end'>
+                  <p>{id.createdAt}</p>
+                </div>
               </div>
-              <div className='d-flex justify-content-end'>
-              <p>{id.createdAt}</p>
-              </div>
+
+
             </div>
-
-
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
 
