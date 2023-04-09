@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 10,
     alignItems: 'center',
-    marginTop: 20
+    marginTop: 0
   },
   txtBody: {
     paddingTop: 20,

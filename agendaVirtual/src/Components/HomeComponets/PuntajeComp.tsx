@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain'
     },
     contImg:{
-        height: 400,
+        height: 350,
     }
 
 });

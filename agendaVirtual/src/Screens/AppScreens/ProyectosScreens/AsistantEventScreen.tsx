@@ -71,7 +71,7 @@ export const AsistantEventScreen = ({ route }) => {
                 asistencia: newArray
             })
             Alert.alert(
-                'Asistencia','Su asistencia se a guardado con exito'
+                'Asistencia', 'Su asistencia se a guardado con exito'
             )
             setModalVisible(!modalVisible)
 
@@ -86,36 +86,38 @@ export const AsistantEventScreen = ({ route }) => {
 
     return (
         <View>
-            <View style={{alignItems:'center'}}>
+            <View style={{ alignItems: 'center' }}>
                 <Text style={stylesApp.titles}>MARCAR ASISTENCIA EVENTOS</Text>
             </View>
-            <SwipeListView
-                data={dataEvents}
-                renderItem={(data, rowMap) => (
-                    <View style={styles.containerGen2}>
-                        <Text style={styles.txtMateria2}>
-                            {/* @ts-ignore */}
-                            {data.item.title}
-                        </Text>
-                    </View>
-                )}
-                renderHiddenItem={(data, rowMap) => (
-                    <View style={styles.backOptions} >
-                        <TouchableOpacity
-                        >
+            <ScrollView style={{ marginBottom:70,marginTop:10 }}>
+                <SwipeListView
+                    data={dataEvents}
+                    renderItem={(data, rowMap) => (
+                        <View style={styles.containerGen2}>
+                            <Text style={styles.txtMateria2}>
+                                {/* @ts-ignore */}
+                                {data.item.title}
+                            </Text>
+                        </View>
+                    )}
+                    renderHiddenItem={(data, rowMap) => (
+                        <View style={styles.backOptions} >
+                            <TouchableOpacity
+                            >
 
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            // @ts-ignore
-                            onPress={() => marcAsistan(data.item)}
-                        >
-                            <Icon name={'checkbox-outline'} size={30} color='#fff' />
-                        </TouchableOpacity>
-                    </View>
-                )}
-                leftOpenValue={75}
-                rightOpenValue={-75}
-            />
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                // @ts-ignore
+                                onPress={() => marcAsistan(data.item)}
+                            >
+                                <Icon name={'checkbox-outline'} size={30} color='#fff' />
+                            </TouchableOpacity>
+                        </View>
+                    )}
+                    leftOpenValue={75}
+                    rightOpenValue={-75}
+                />
+            </ScrollView>
 
             <Modal
                 animationType="slide"
@@ -266,7 +268,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginBottom: 30,
         height: 40,
-        color:'black'
+        color: 'black'
     },
     btnModal: {
         flexDirection: 'row'

@@ -31,7 +31,7 @@ export const PerfilScreen = () => {
     tel:''
   })
   const [response, setResponse] = React.useState<any>(null);
-
+  const [urlFoto, seturlFoto] = useState('')
 
 
   useLayoutEffect(() => {
@@ -39,7 +39,8 @@ export const PerfilScreen = () => {
       .onSnapshot((querySnapshot) => {
         // @ts-ignore
         setdataUser(querySnapshot._data);
-        
+        // @ts-ignore
+        seturlFoto(querySnapshot.data().foto == ''?'https://firebasestorage.googleapis.com/v0/b/agenda-virtual-fearc.appspot.com/o/files%2Fimagen_2023-04-09_142413.png?alt=media&token=0c7cda07-06f1-412d-bbd3-9fa0756db0b0':querySnapshot.data().foto)
       });
 
     return unsubscribe2;
@@ -52,7 +53,6 @@ export const PerfilScreen = () => {
   const [descpripUser, setdescpripUser] = useState('')
   const [edad, setedad] = useState('')
   const [tel, settel] = useState('')
-
   const editUser = () => {
 
     let dataToEdit = {
@@ -100,7 +100,7 @@ export const PerfilScreen = () => {
               }}
           >
             <Image
-              source={{ uri: `${dataUser.foto}` }}
+              source={{ uri: `${urlFoto}` }}
               style={stylesApp.avatar}
             ></Image>
           </TouchableOpacity>

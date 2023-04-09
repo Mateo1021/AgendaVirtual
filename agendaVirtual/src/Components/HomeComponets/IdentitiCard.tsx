@@ -54,9 +54,6 @@ export const IdentitiCard = (infoUser: any) => {
               color: 'black',
             }}>{dataUser.tel}</Text>
           </View>
-          <View>
-            <Icon name={'star'} size={25} color='#ed7c23' />
-          </View>
         </View>
       </View>
     </TouchableOpacity>

@@ -152,8 +152,8 @@ export const LoginScreen = ({ navigation }: Props) => {
         marginVertical: 50
       }}>
         <Image
-          style={{ width: 150, height: 150 }}
-          source={{ uri: "https://firebasestorage.googleapis.com/v0/b/agenda-virtual-fearc.appspot.com/o/testImgs%2FlogoSimp.png?alt=media&token=aae216df-f380-48a8-b3d3-4907c2f8f4c0" }}
+          style={{ width: 250, height: 250 }}
+          source={{ uri: "https://firebasestorage.googleapis.com/v0/b/agenda-virtual-fearc.appspot.com/o/testImgs%2Ficono2.png?alt=media&token=fd036ff8-5ac1-44df-8402-3fa2cdc19cad" }}
         />
       </View>
       <View style={{

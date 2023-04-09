@@ -26,6 +26,10 @@ export const stylesApp = StyleSheet.create({
         height: 150,
         borderRadius: 100,
     },
+    avatar2: {
+        width: 150,
+        height: 150,
+    },
     continerAvatar: {
         alignItems: 'center',
         paddingTop: 30

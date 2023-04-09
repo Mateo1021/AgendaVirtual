@@ -27,8 +27,8 @@ const MenuInterno = ({navigation}:DrawerContentComponentProps) =>{
     <DrawerContentScrollView>
       <View style={stylesApp.continerAvatar}>
         <Image
-        source={{uri:'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'}}
-        style={stylesApp.avatar}
+        source={{ uri: "https://firebasestorage.googleapis.com/v0/b/agenda-virtual-fearc.appspot.com/o/testImgs%2Ficono2.png?alt=media&token=fd036ff8-5ac1-44df-8402-3fa2cdc19cad" }}
+        style={stylesApp.avatar2}
         ></Image>
       </View>
       

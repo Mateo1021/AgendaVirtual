@@ -24,10 +24,10 @@ const wait = (timeout: any) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
 
-export const ProyectosScreen = ({ navigation,route }: Props) => {
-  
+export const ProyectosScreen = ({ navigation, route }: Props) => {
 
-  const {idCoursGeneral,addCours} =generalArray()
+
+  const { idCoursGeneral, addCours } = generalArray()
 
   const { getEvents } = useGetEventos()
   getEvents()
@@ -60,9 +60,9 @@ export const ProyectosScreen = ({ navigation,route }: Props) => {
   function showModal() {
     setModalVisible(true)
   }
-  
-  
-  
+
+
+
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   let idCours = proyectosArray.codCurso;
@@ -70,12 +70,12 @@ export const ProyectosScreen = ({ navigation,route }: Props) => {
   // @ts-ignore
   let nombreCours = proyectosArray.nombreCurso;
   let proyectosArrayL = proyectosArray;
-  
+
   function RemoverCurso() {
     //@ts-ignore
     if (passRemove == proyectosArray.ClaveDSalida) {
-//@ts-ignore
-      removePro(proyectosArray.codCurso,proyectosArray.cantEstudiantes);
+      //@ts-ignore
+      removePro(proyectosArray.codCurso, proyectosArray.cantEstudiantes);
       navigation.navigate('HomeScreen')
     } else {
       Alert.alert(
@@ -149,22 +149,24 @@ export const ProyectosScreen = ({ navigation,route }: Props) => {
 
 
                 <LineTimeComp
-                id={
-                  idCours
-                }></LineTimeComp>
+                  id={
+                    idCours
+                  }></LineTimeComp>
               </View>
 
-              <View style={styles.generalBtn}>
-                <View style={styles.btnContainer}>
+
+              <View style={styles.btnContainer}>
+
+                <View style={styles.rowBtn}>
                   <TouchableOpacity
                     onPress={() => navigation.navigate('ForoScreen', {
                       idForo: idCours,
                     })}
                     style={styles.btn}
                   >
-                    <Icon name={'chatbubbles-outline'} size={25} color='#fff' />
+                    <Icon name={'chatbubbles-outline'} size={35} color='#fff' />
+                    <Text style={styles.texticons}>Chat</Text>
                   </TouchableOpacity>
-
 
                   <TouchableOpacity
                     onPress={() => navigation.navigate('ForoDocenteScreen', {
@@ -172,12 +174,20 @@ export const ProyectosScreen = ({ navigation,route }: Props) => {
                     })}
                     style={styles.btn}
                   >
-                    <Icon name={'easel-outline'} size={25} color='#fff' />
+                    <Icon name={'easel-outline'} size={35} color='#fff' />
+                    <Text style={styles.texticons}>Foro</Text>
                   </TouchableOpacity>
+                  
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('AsistantEventScreen', { idCurso: idCours })}
+                    style={styles.btn}
+                  >
+                    <Icon name={'ios-person-add-outline'} size={35} color='#fff' />
+                    <Text style={styles.texticons}>Asist</Text>
+                  </TouchableOpacity>
+                </View>
 
-                  {/*                 </View>
-
-                <View style={styles.btnContainer}> */}
+                <View style={styles.rowBtn}>
                   <TouchableOpacity
                     onPress={() => navigation.navigate('infoCursoScreen', {
                       // @ts-ignore
@@ -185,16 +195,8 @@ export const ProyectosScreen = ({ navigation,route }: Props) => {
                     })}
                     style={styles.btn}
                   >
-                    <Icon name={'information-circle-outline'} size={25} color='#fff' />
-                  </TouchableOpacity>
-
-
-
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate('AsistantEventScreen',{idCurso:idCours})}
-                    style={styles.btn}
-                  >
-                    <Icon name={'ios-person-add-outline'} size={25} color='#fff' />
+                    <Icon name={'information-circle-outline'} size={35} color='#fff' />
+                    <Text style={styles.texticons}>Info</Text>
                   </TouchableOpacity>
 
 
@@ -202,10 +204,17 @@ export const ProyectosScreen = ({ navigation,route }: Props) => {
                     onPress={() => showModal()}
                     style={styles.btn}
                   >
-                    <Icon name={'exit-outline'} size={25} color='#fff' />
+                    <Icon name={'exit-outline'} size={35} color='#fff' />
+                    <Text style={styles.texticons}>Salir</Text>
                   </TouchableOpacity>
                 </View>
+
+
+
               </View>
+
+
+
 
 
             </View>
@@ -266,7 +275,8 @@ const styles = StyleSheet.create({
     marginLeft: 30
   },
   btnContainer: {
-    flexDirection: 'row'
+    flexDirection: 'column',
+    alignItems: 'center'
   },
   generalBtn: {
     alignItems: 'center'
@@ -275,7 +285,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     marginHorizontal: 15,
     marginVertical: 10,
-    padding: 15
+    alignItems: 'center',
+    textAlign: 'center',
+    alignContent: 'center',
+    borderRadius: 10,
+    paddingHorizontal: 30,
+    paddingVertical: 18
   },
   containerTitel: {
     alignItems: 'center'
@@ -330,12 +345,19 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginBottom: 30,
     height: 40,
-    color:'black'
+    color: 'black'
   },
   btnModal: {
     flexDirection: 'row'
   },
   btnModal2: {
     marginHorizontal: 10
+  },
+  texticons: {
+    color: 'white',
+    textAlign: 'center'
+  },
+  rowBtn: {
+    flexDirection: 'row'
   }
 });

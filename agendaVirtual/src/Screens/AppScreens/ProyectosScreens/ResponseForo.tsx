@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useState } from 'react'
 import firestore from '@react-native-firebase/firestore';
-import { Button, Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Button, Dimensions, ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Alert, Modal, Pressable } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { colors } from '../../../Themes/AppThemes';
@@ -22,10 +22,14 @@ export const ResponseForo = ({ route }) => {
     const [msjPlace, setmsjPlace] = useState('')
     const [isActive, setisActive] = useState(false)
 
+
+    const [showTheThing, setshowTheThing] = useState(true)
+
+
     useLayoutEffect(() => {
 
-        setisActive(route.params.isActive==1?true:false)
-        setmsjPlace(route.params.isActive==1?'Mensaje...':'Foro desactivado...')
+        setisActive(route.params.isActive == 1 ? true : false)
+        setmsjPlace(route.params.isActive == 1 ? 'Mensaje...' : 'Foro desactivado...')
 
         var unsubscribe2 = firestore().collection("respuestas").orderBy('createdAt', 'asc')
             .onSnapshot((querySnapshot) => {
@@ -84,37 +88,80 @@ export const ResponseForo = ({ route }) => {
 
         )
     }
-    function sendResponse() {
-        let date = new Date();
-        let data = {
-            bodyMsj: response,
-            codRegistro: route.params.idForo,
-            idUser: authState.uid,
-            date: date,
-            nameUser: authState.displayName
+
+
+    const funtionAddpuntaje = async (msj: string) => {
+
+        let puntosAddUser = 0;
+        if (msj.length > 300) {
+            puntosAddUser = 10
+        } else if (msj.length > 250) {
+            puntosAddUser = 7
+        } else if (msj.length > 200) {
+            puntosAddUser = 5
+        } else if (msj.length > 100) {
+            puntosAddUser = 3
+        } else if (msj.length > 20) {
+            puntosAddUser = 1
         }
-        let newRegistro = respuestas;
+        const puntajeUser = await firestore().collection('Usuarios').doc(authState.uid).get();
         //@ts-ignore
-        newRegistro.push(data)
-        setrespuestas(newRegistro)
-        setresponse('')
-        AddResponse(data)
+        let newPuntaje = Number(puntajeUser.data().Puntaje) + puntosAddUser
+
+        firestore()
+            .collection('Usuarios').doc(authState.uid)
+            .update({
+                Puntaje: newPuntaje
+            })
+    }
+
+    function sendResponse() {
+        if (response.length > 0) {
+            let date = new Date();
+            let data = {
+                bodyMsj: response,
+                codRegistro: route.params.idForo,
+                idUser: authState.uid,
+                date: date,
+                nameUser: authState.displayName
+            }
+            let newRegistro = respuestas;
+            //@ts-ignore
+            newRegistro.push(data)
+            setrespuestas(newRegistro)
+            setresponse('')
+            AddResponse(data)
+            console.log(data);
+            funtionAddpuntaje(data.bodyMsj)
+        }
     }
     return (
         <View style={styles.block}>
             <View style={styles.titelForo}>
-                <Text style={styles.textTitelForo}>{titelForo}</Text>
+                {showTheThing &&
+                    <ScrollView >
+                        <Text onPress={() => setshowTheThing(!showTheThing)} style={styles.textTitelForo}>{titelForo}</Text>
+                    </ScrollView>
+                }
+                {!showTheThing &&
+                    <Text onPress={() => setshowTheThing(!showTheThing)}>Mostrar titulo</Text>
+                }
             </View>
             <ScrollView>
                 <RenderInfoRegistro></RenderInfoRegistro>
             </ScrollView>
-            <TextInput 
-            placeholderTextColor = "#949494"
-            style={styles.textInput} 
-            placeholder={msjPlace} 
-            onChangeText={setresponse} 
-            value={response} 
-            editable={isActive} ></TextInput>
+
+            <TextInput
+                placeholderTextColor="#949494"
+                style={styles.textInput}
+                placeholder={msjPlace}
+                onChangeText={setresponse}
+                value={response}
+                editable={isActive}
+
+            ></TextInput>
+
+
             <Button
                 color={colors.primary}
                 title='Enviar'
@@ -132,7 +179,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#E6E6E6',
         borderRadius: 20,
-        color:'black'
+        color: 'black'
     },
     responseOters: {
         borderWidth: 1,
@@ -154,25 +201,25 @@ const styles = StyleSheet.create({
     },
     textResponse: {
         color: 'black',
-        fontSize:18
+        fontSize: 18
     },
     block: {
         flex: 1
     },
-    titelForo:{
-        alignItems:'center',
-        borderBottomWidth:1,
+    titelForo: {
+        alignItems: 'center',
+        borderBottomWidth: 1,
         borderColor: '#E6E6E6',
-        padding:20
+        padding: 20
 
     },
-    textTitelForo:{
-        color:'black',
-        fontSize:20,
-        
+    textTitelForo: {
+        color: 'black',
+        fontSize: 20,
+
     },
-    textResponseUser:{
-        color:'black',
+    textResponseUser: {
+        color: 'black',
         fontWeight: 'bold',
     }
 })

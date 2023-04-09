@@ -51,14 +51,17 @@ export const LineTimeComp = (id:any) => {
   return (
     <Timeline
     data={dataTimeLine}
-    circleSize={20}
+    circleSize={25}
     circleColor={colors.primary}
     lineColor={colors.secundary}
-    timeContainerStyle={{ minWidth: 52, marginTop: 5 }}
+    lineWidth={5}
+    eventContainerStyle={{marginTop:20}}
+    timeContainerStyle={{ width: 65, marginTop: 5 }}
     timeStyle={{ textAlign: 'center', backgroundColor: colors.secundary, color: 'white', padding: 5, borderRadius: 13 }}
     descriptionStyle={{ color: 'black' }}
     isUsingFlatlist={true}
     titleStyle={{ color: 'black' }}
+    
   />
   )
 }
