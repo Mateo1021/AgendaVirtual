@@ -7,15 +7,19 @@ import { useState } from 'react';
 import { collection, query, where, onSnapshot, doc, updateDoc } from "firebase/firestore";
 import db from '../../../firebase/firebaseConfig'
 import { GrShieldSecurity, GrClose, GrFormClose } from "react-icons/gr";
-
+import { useNavigate } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { async } from '@firebase/util';
+import { GrLinkPrevious } from "react-icons/gr";
 
 export const ListaEstud = () => {
   const { idC } = useParams();
-
+  const navigate = useNavigate();
+  const sendProyect = () => {
+    navigate('/curso/editCurso/' + idC)
+  }
 
   const [listaEstudiantes, setlistaEstudiantes] = useState([])
   const [show, setShow] = useState(false);
@@ -171,6 +175,8 @@ export const ListaEstud = () => {
 
   return (
     <>
+            <GrLinkPrevious className='ml-4 mt-2 mb-3' size={28} onClick={sendProyect}></GrLinkPrevious>
+
       <div className='d-flex justify-content-center mb-2 mt-3'>
         <h1>LISTA DE ESTUDIANTES</h1>
       </div>

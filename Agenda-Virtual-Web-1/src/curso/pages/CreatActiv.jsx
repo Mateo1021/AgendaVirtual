@@ -106,6 +106,7 @@ export const CreatActiv = () => {
       body: bodyShow,
       active: activeAct == true ? '1' : 0
     });
+    sendProyect()
   }
 
   const validarPuntos = async () => {
@@ -247,9 +248,13 @@ export const CreatActiv = () => {
   return (
     <div className=' mt-5'>
       <div className='infoStuf'>
+      <div className='d-flex justify-content-center'>
+          <h3 className='text-uppercase'>Informacion de la actividad</h3>
+        </div>
         <Form.Group className="mb-3" >
-          <Form.Label htmlFor="titel" className='titulo'>Evento</Form.Label>
+          <Form.Label htmlFor="titel" className='titulo'>Actividad</Form.Label>
           <Form.Control
+            className='mb-3'
             type="text"
             id="titel"
             aria-describedby="passwordHelpBlock"

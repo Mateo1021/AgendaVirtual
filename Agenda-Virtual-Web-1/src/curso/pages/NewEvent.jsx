@@ -45,23 +45,27 @@ export const NewEvent = () => {
     return (idCoursComplet);
   }
   const addEvent = async () => {
-    let idResponse = await getIdEvent()
-    console.log(titel, bodyEve, startDate, '..');
+    if (titel == '' || bodyEve == '' || claveAsis == '') {
+      alert('Por favor llena todos los campos')
+    } else {
+      let idResponse = await getIdEvent()
+      console.log(titel, bodyEve, startDate, '..');
 
-    await setDoc(doc(db.db, "evento", idResponse), {
-      body: bodyEve,
-      codEvento: idResponse,
-      idCurso: idC,
-      titulo: titel,
-      createdAt: startDate,
-      passAsis: claveAsis,
-      asistencia: []
-    });
-    setStartDate(new Date())
-    settitel('')
-    setbodyEve('')
-    setclaveAsis('')
-    navigate('/curso/editCurso/' + idC)
+      await setDoc(doc(db.db, "evento", idResponse), {
+        body: bodyEve,
+        codEvento: idResponse,
+        idCurso: idC,
+        titulo: titel,
+        createdAt: startDate,
+        passAsis: claveAsis,
+        asistencia: []
+      });
+      setStartDate(new Date())
+      settitel('')
+      setbodyEve('')
+      setclaveAsis('')
+      navigate('/curso/editCurso/' + idC)
+    }
 
   }
 
@@ -81,7 +85,7 @@ export const NewEvent = () => {
 
         </Form.Group>
         <Form.Group className="mb-3" >
-          <Form.Label htmlFor="bodyEvent">Example textarea</Form.Label>
+          <Form.Label htmlFor="bodyEvent">Descripcion del evento</Form.Label>
           <Form.Control as="textarea" id="bodyEvent" rows={3} onChange={e => setbodyEve(e.target.value)} />
         </Form.Group>
 

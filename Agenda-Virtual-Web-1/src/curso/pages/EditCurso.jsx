@@ -95,14 +95,16 @@ export const EditCurso = () => {
       <button style={{ backgroundColor: 'white', borderWidth: '0' }}
         onClick={() => { sedCreateEven(info.info.codEvento) }}
       >
-        <Card style={{ width: '18rem', margin: '20px', height: '200px', borderColor: '#492013', boxShadow: '10px 5px 5px #492013' }}
+        <Card style={{ width: '25rem', margin: '20px', height: '200px', borderColor: '#492013', boxShadow: '10px 5px 5px #492013' }}
           key={info.info.codEvento}
         >
           <Card.Body style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'column' }}>
             <Card.Title>{info.info.titulo}</Card.Title>
-            <Card.Text>
-              {info.info.body}
-            </Card.Text>
+            <div className='hideenEvent'>
+                <p>
+                  {info.info.body}
+                </p>
+              </div>
           </Card.Body>
         </Card>
       </button>

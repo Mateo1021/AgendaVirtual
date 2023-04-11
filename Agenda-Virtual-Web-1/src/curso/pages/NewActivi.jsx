@@ -50,15 +50,22 @@ export const NewActivi = () => {
 
     return (idCoursComplet);
   }
+  const validData = () => {
+    if (bodyAc == '' || titulo == '' || tipoSelect == '0') {
+      alert('Por favor llena todos los campos')
+    } else {
+      addReg()
+    }
+  }
   const addReg = async () => {
     let idResponse = await getIdReg()
     let validUrl;
-    if(preguntas.length>0){
-      validUrl= ' http://www.agendavirtual.online/actividades/index.html?tipo=1&curso=' + idC + '&actividad=' + idResponse
-    }else if(palabrasA.length>0){
-      validUrl= ' http://www.agendavirtual.online/actividades/index.html?tipo=2&curso=' + idC + '&actividad=' + idResponse
-    }else{
-      validUrl=''
+    if (preguntas.length > 0) {
+      validUrl = ' http://www.agendavirtual.online/actividades/index.html?tipo=1&curso=' + idC + '&actividad=' + idResponse
+    } else if (palabrasA.length > 0) {
+      validUrl = ' http://www.agendavirtual.online/actividades/index.html?tipo=2&curso=' + idC + '&actividad=' + idResponse
+    } else {
+      validUrl = ''
     }
     let bodyConUrl = bodyAc + validUrl
     await setDoc(doc(db.db, "registrosForo", idResponse), {
@@ -323,7 +330,7 @@ export const NewActivi = () => {
 
         <div className='d-flex justify-content-between'>
           <button
-            onClick={addReg}
+            onClick={validData}
             className='btn orange mt-5'
           >
             Crear actividad

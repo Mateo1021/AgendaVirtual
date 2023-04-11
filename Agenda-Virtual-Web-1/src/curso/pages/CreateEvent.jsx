@@ -60,6 +60,7 @@ const [passAsis, setpassAsis] = useState('')
   }, [])
 
   const uptadeEvent = async () => {
+    sendProyect()
     const washingtonRef = doc(db.db, "evento", idE);
     await updateDoc(washingtonRef, {
       titulo: titelShow,
@@ -68,7 +69,6 @@ const [passAsis, setpassAsis] = useState('')
       passAsis:passAsis
     });
 
-    sendProyect()
   }
 
 

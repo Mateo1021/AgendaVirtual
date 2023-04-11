@@ -31,10 +31,10 @@ export const Login = () => {
     let tipo;
     if (sessionStorage.getItem('tipoActiv') == '1') {
       tipo = 'quiz'
-    }else if(sessionStorage.getItem('tipoActiv') == '2'){
+    } else if (sessionStorage.getItem('tipoActiv') == '2') {
       tipo = 'ahorcado'
     }
-    navigate('/'+tipo+'/' + sessionStorage.getItem('cursoSession') + '/' + sessionStorage.getItem('actividadSession'))
+    navigate('/' + tipo + '/' + sessionStorage.getItem('cursoSession') + '/' + sessionStorage.getItem('actividadSession'))
     setTimeout(() => {
       sessionStorage.removeItem('actividadSession')
       sessionStorage.removeItem('cursoSession')
@@ -92,8 +92,11 @@ export const Login = () => {
 
   if (isActivi == '1') {
     return (
-      <div><h1>Es actividad</h1>
-        <button onClick={sendProyect} className='btn orange' >Empezar activdad</button>
+      <div className='loginEstudActivyCont'>
+        <div  className='loginEstud'>
+          <h4>Bienvenido, este link te enviara a una actividad creada por el docentes</h4>
+          <button onClick={sendProyect} className='btn orange w-50' >Empezar activdad</button>
+        </div>
       </div>
     )
 

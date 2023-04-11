@@ -11,6 +11,8 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/
 import { useNavigate } from 'react-router-dom';
 
 
+
+
 const storage = getStorage();
 
 let idCurso = "";
@@ -105,27 +107,33 @@ export const CreateCours = () => {
   };
 
   const createCurs = async () => {
-    let isResponse = await getId()
-    let infoDocente = JSON.parse(sessionStorage.getItem('codUserWb'))
+
+    if (passRemove == '' || banner == '' || passAdd == '' || descL == '' || courseName == '' || descShort == '' || temaCou == '') {
+      alert('Datos incompletos por favor verifica que todos los campos este llenos y que la imagen este  subida al 100%')
+    } else {
+
+      let isResponse = await getId()
+      let infoDocente = JSON.parse(sessionStorage.getItem('codUserWb'))
 
 
-    await setDoc(doc(base.db, "Cursos", isResponse), {
-      ClaveDSalida: passRemove,
-      apellidosDocente: infoDocente.apellido,
-      banerCurso: banner,
-      cantEstudiantes: 0,
-      claveDingreso: passAdd,
-      codCurso: isResponse,
-      codDocente: infoDocente.id,
-      largeDescription: descL,
-      nombreCurso: courseName,
-      nombreDocente: infoDocente.nombre,
-      shortDescrip: descShort,
-      temas: temaCou,
-    });
+      await setDoc(doc(base.db, "Cursos", isResponse), {
+        ClaveDSalida: passRemove,
+        apellidosDocente: infoDocente.apellido,
+        banerCurso: banner,
+        cantEstudiantes: 0,
+        claveDingreso: passAdd,
+        codCurso: isResponse,
+        codDocente: infoDocente.id,
+        largeDescription: descL,
+        nombreCurso: courseName,
+        nombreDocente: infoDocente.nombre,
+        shortDescrip: descShort,
+        temas: temaCou,
+      });
 
-    alert('Curso creado con exito')
-    sendProyect()
+      alert('Curso creado con exito')
+      sendProyect()
+    }
 
   }
 
@@ -166,7 +174,7 @@ export const CreateCours = () => {
           onChange={e => setpassAdd(e.target.value)}
         />
       </div>
-      
+
       <div className="mb-3">
         <label className="form-label">Clave para retiro</label>
         <input type="text" className="form-control" id="shortDesc" placeholder="Selecciona una clave"
@@ -186,7 +194,7 @@ export const CreateCours = () => {
         </div>
 
       </div>
-      <button type="button" className="btn orange" onClick={createCurs}>Crear</button>
+      <button type="button" className="btn orange w-100" onClick={createCurs}>Crear</button>
 
     </div>
   )

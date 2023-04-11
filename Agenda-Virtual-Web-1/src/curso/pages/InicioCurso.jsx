@@ -38,7 +38,7 @@ export const InicioCurso = () => {
         cursos.push(doc.data());
       });
       if (cursos.length < 1) {
-        setMensaje("No tiene ningun curso registrado")
+        setMensaje("No tiene ningun curso registrado...")
         document.getElementById("containerScroll").style.display = "none"
 
       } else {
@@ -54,10 +54,10 @@ export const InicioCurso = () => {
     return (
       <div className='tarjeta' style={{
         display: 'flex',
-        width: '25rem',
+        width: '35rem',
         margin: '20px',
         height: '600px',
-        flexDirection: 'column'
+        flexDirection: 'column',
       }}>
         <div className='tamImgIni'>
           <img className='tarjeta-img' variant="top" src={info.info.banerCurso} />
@@ -125,8 +125,8 @@ export const InicioCurso = () => {
         </div>
 
         <div style={styles.contStyle}>
+          <h1 className='px-3 pt-4 pb-4'>{Mensaje}</h1>
           <BtnCreateCours></BtnCreateCours>
-          <h1>{Mensaje}</h1>
         </div>
 
       </div>

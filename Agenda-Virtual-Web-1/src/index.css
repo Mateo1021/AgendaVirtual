@@ -127,3 +127,27 @@
     /* word-wrap: break-word; */
     height: 151px;
 }
+.loginEstudActivyCont{
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(#9d2020, 10%, #4d3d69);
+}
+.loginEstud{
+    display: flex;
+    border-style: solid;
+    margin: 15px 30px;
+    padding: 15px 40px;
+    box-shadow: #f38c21 0px 0px 46px;
+    border-color: #ffffff;
+    background-color: #e2e2e2;
+    height: 40%;
+    width: 40%;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    border-radius: 20px;
+    align-items: center;
+}

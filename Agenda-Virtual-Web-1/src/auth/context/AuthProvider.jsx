@@ -28,13 +28,13 @@ export const AuthProvider = ({ children }) => {
             type: types.login,
             payload: user
         }
-        localStorage.setItem('user', JSON.stringify( user) ); 
+        sessionStorage.setItem('user', JSON.stringify( user) ); 
        
         dispatch(action);
     }
 
     const logout = () => {
-        localStorage.removeItem('user');
+        sessionStorage.removeItem('user');
         const action = { type: types.logout };
         dispatch(action);
     }
