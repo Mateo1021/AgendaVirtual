@@ -12,7 +12,7 @@ let correctAnswer
 let questions
 
 const Quiz = () => {
-    document.body.style.background = "linear-gradient(90.04deg, #e7aa7b 0.03%, #ffe3cd 99.96%)";
+    document.body.style.background = "linear-gradient(90.04deg, rgb(255 173 109) 0.03%, rgb(255 209 174) 99.96%)";
     const { codC, codA } = useParams();
 
 
@@ -165,7 +165,7 @@ const Quiz = () => {
             <div className="bodyQuiz">
                 <div className="quiz-container bodyQuiz">
                     {!showResult ? (
-                        <div>
+                        <div className='w-100'>
                             <div>
                                 <span className="active-question-no">
                                     {addLeadingZero(activeQuestion + 1)}
@@ -234,8 +234,7 @@ const Quiz = () => {
                     <button className='mb-3'
                         onClick={() => loginStud()}
                     > Login </button>
-                    <p>Este es tu usuario... {user.Nombres}  ?</p>
-                    <p>Tu puntaje actual es de... {user.Puntaje} </p>
+                    <p>{user.Nombres}</p>
                     <button
                         onClick={() => getCuestions()}
                     > Empeza juego </button>

@@ -138,13 +138,13 @@
 .loginEstud{
     display: flex;
     border-style: solid;
-    margin: 15px 30px;
-    padding: 15px 40px;
+    padding-left: 5%;
+    padding-right: 5%;
     box-shadow: #f38c21 0px 0px 46px;
     border-color: #ffffff;
     background-color: #e2e2e2;
     height: 40%;
-    width: 40%;
+    width: 70%;
     flex-direction: column;
     text-align: center;
     justify-content: center;

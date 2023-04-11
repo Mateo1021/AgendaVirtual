@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { async } from '@firebase/util';
 import db from '../../../firebase/firebaseConfig'
-import { collection, query, where, getDoc, onSnapshot, getDocs, updateDoc, doc ,addDoc} from "firebase/firestore";
+import { collection, query, where, getDoc, onSnapshot, getDocs, updateDoc, doc, addDoc } from "firebase/firestore";
 import { useParams } from 'react-router-dom';
-import { GrFormRefresh } from "react-icons/gr";
+import { GrFormRefresh, GrLaunch } from "react-icons/gr";
+import { FcSearch } from "react-icons/fc";
 
 export const Ahorcado = () => {
     document.body.style.background = "linear-gradient(90.04deg, #e7aa7b 0.03%, #ffe3cd 99.96%)";
@@ -100,11 +101,11 @@ export const Ahorcado = () => {
 
         let newid = idPalabra + 1
         if (newid <= palabraServ.length - 1) {
-        setidPista(0)
-        setletrasAdivinadas([])
+            setidPista(0)
+            setletrasAdivinadas([])
 
-        console.log(newid);
-        console.log(palabraServ.length - 1);
+            console.log(newid);
+            console.log(palabraServ.length - 1);
 
             setidPalabra(newid)
             setpistas(palabraServ[newid].pistas)
@@ -205,7 +206,7 @@ export const Ahorcado = () => {
     function ShowPista() {
 
         return (
-            <div style={{display:'flex', alignItems:'center'}}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
                 <h1>Pista: {pistas[idPista]}</h1>
                 <GrFormRefresh onClick={generateNumber} size={40}></GrFormRefresh>
             </div>
@@ -235,9 +236,9 @@ export const Ahorcado = () => {
         const rankRef = await addDoc(collection(db.db, "rankingActividades"), {
             codReg: codA,
             nombreUser: userInfo.Nombres,
-            puntaje:score,
-            codUser:userInfo.codUser
-          });
+            puntaje: score,
+            codUser: userInfo.codUser
+        });
 
         setisLogin(false)
         window.location.href = "http://www.agendavirtual.online/actividades/finishPage.html";
@@ -249,19 +250,20 @@ export const Ahorcado = () => {
             <>
                 <div className='contLogAh'>
                     <div className='divContAh'>
-                        <p>Correo</p>
+                        <h5>Ingresa tu correo</h5>
                         <input className="form-control" type={'email'} onChange={(e) => setuser(e.target.value)} id='logIngin'></input>
 
-                        <button className="btn orange mt-3" onClick={loginUser}>
-                            Login
+                        <button className="btn orange mt-3 w-100" onClick={loginUser}>
+                            Ingresar
                         </button>
-                        <p className="mt-3">
-                            usuario: {userInfo.Nombres}
+
+                        <p className="mt-3 text-center">
+                            Bienvenido {userInfo.Nombres} los puntos ganados seran registrados a este correo
                         </p>
                         <button
-                            className="btn orange"
+                            className="btn orange w-100"
                             onClick={starGame}
-                        >play game</button>
+                        >Empezar Avtividad</button>
                     </div>
                 </div>
             </>
@@ -270,25 +272,27 @@ export const Ahorcado = () => {
     } else {
         return (
             <div className='contActAh'>
-                <div className='divContAh'>
+                <div className='divContAhActy'>
                     <ShowPista></ShowPista>
                     <MostrarPalabra></MostrarPalabra>
-                    <input
-                        type={'text'}
-                        onChange={(e) => setintento(e.target.value)}
-                        id='intento'
-                        disabled={!isDisable}
-                        maxLength='1'
-                        className="form-control inputStyleAh"
-                    >
-                    </input>
-                    <button
-                        className="btn orange mt-3"
-                        onClick={verificarLetra}
-                        disabled={!isDisable}
-                    >
-                        Validar
-                    </button>
+                    <div className='d-flex justify-content-evenly'>
+                        <input
+                            type={'text'}
+                            onChange={(e) => setintento(e.target.value)}
+                            id='intento'
+                            disabled={!isDisable}
+                            maxLength='1'
+                            className="form-control inputStyleAh w-25">
+                        </input>
+                 
+                        <button
+                            className="iconPlay"
+                            onClick={verificarLetra}
+                            disabled={!isDisable}
+                        >
+                             <FcSearch size={50} className='styleicon'></FcSearch>
+                            </button>
+                    </div>
                     <MostrarIntentos></MostrarIntentos>
 
                     <button
@@ -306,7 +310,8 @@ export const Ahorcado = () => {
                     >
                         finalizar
                     </button>
-                    <p>Si finalizas la actividad antes de terminar no podras volverlo a intentar</p>
+
+                    <p className='text-center'>Si finalizas la actividad antes de terminar no podras volverlo a intentar</p>
                 </div>
             </div>
         )

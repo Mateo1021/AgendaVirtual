@@ -94,8 +94,8 @@ export const Login = () => {
     return (
       <div className='loginEstudActivyCont'>
         <div  className='loginEstud'>
-          <h4>Bienvenido, este link te enviara a una actividad creada por el docentes</h4>
-          <button onClick={sendProyect} className='btn orange w-50' >Empezar activdad</button>
+          <h4>Bienvenido a la actividad</h4>
+          <button onClick={sendProyect} className='btn orange mt-5' >Empezar activdad</button>
         </div>
       </div>
     )
