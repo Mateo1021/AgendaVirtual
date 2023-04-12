@@ -12,7 +12,7 @@ let correctAnswer
 let questions
 
 const Quiz = () => {
-    document.body.style.background = "linear-gradient(90.04deg, rgb(255 173 109) 0.03%, rgb(255 209 174) 99.96%)";
+    document.body.style.background = "linear-gradient(90.04deg, rgb(255 109 109) 0.03%, rgb(255 171 107) 99.96%)";
     const { codC, codA } = useParams();
 
 
@@ -129,7 +129,9 @@ const Quiz = () => {
 
 
     const addPointUser = async () => {
-
+        
+        let btnFinal = document.getElementById('btnFinal')
+        btnFinal.disabled = true;
         const userRef = doc(db.db, "Usuarios", user.codUser);
         let newValor = Number(user.Puntaje) + Number(result.score)
         await updateDoc(userRef, {
@@ -211,6 +213,7 @@ const Quiz = () => {
                                 Preguntas incorrectas:<span> {result.wrongAnswers}</span>
                             </p>
                             <button
+                            id='btnFinal'
                                 onClick={addPointUser}>
                                 Finalizar y enviar respuestas
                             </button>

@@ -7,7 +7,7 @@ import { GrFormRefresh, GrLaunch } from "react-icons/gr";
 import { FcSearch } from "react-icons/fc";
 
 export const Ahorcado = () => {
-    document.body.style.background = "linear-gradient(90.04deg, #e7aa7b 0.03%, #ffe3cd 99.96%)";
+    document.body.style.background = "linear-gradient(90.04deg, rgb(255 109 109) 0.03%, rgb(255 171 107) 99.96%)";
 
     const { codC, codA } = useParams();
 

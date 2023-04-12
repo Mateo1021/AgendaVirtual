@@ -36,6 +36,8 @@ export const HomeRouter = () => {
         <Route path="/curso/newEvent/:idC" element={<NewEvent></NewEvent>} />
         <Route path="/curso/createEvent/:idE/:idC" element={<CreateEvent></CreateEvent>} />
         <Route path="/curso/configCurso/:id" element={<ChangeCours></ChangeCours>} />
+
+        
       </Routes>
     </>
 

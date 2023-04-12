@@ -29,6 +29,7 @@ export const AppRouter = () => {
         <Route path="quiz/:codC/:codA" element={<Quiz />} />
         <Route path="soup/:codC/:codA" element={<AlphabetSoup />} />
         <Route path="ahorcado/:codC/:codA" element={<Ahorcado />} />
+        
 
         <Route path="/*" element={
           <PrivateRoute>

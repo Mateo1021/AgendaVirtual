@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@100;200;300;400;500;600;700;800&display=swap');
 
-.bodyQuiz{
+.bodyQuiz {
   font-family: 'Anek Malayalam', sans-serif;
   color: #11052c;
   display: flex;
@@ -100,16 +100,18 @@
   color: #ed7c23;
   font-size: 22px;
 }
+
 /* ---------------------------------------------------------------------------------------------------------------------- */
-.contLogAh{
+.contLogAh {
   font-family: 'Anek Malayalam', sans-serif;
   display: flex;
   justify-content: center;
   height: 100vh;
   align-items: center;
-  
+
 }
-.divContAh{
+
+.divContAh {
   margin: 0px 15px;
   display: flex;
   flex-direction: column;
@@ -118,12 +120,12 @@
   padding: 4% 10%;
   border-radius: 10%;
   background-color: #ffffff;
-  height: 40%;
+  height: 50%;
   box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
 
 
-.divContAhActy{
+.divContAhActy {
   margin: 0px 15px;
   display: flex;
   flex-direction: column;
@@ -138,7 +140,7 @@
   overflow: scroll;
 }
 
-.contActAh{
+.contActAh {
   font-family: 'Anek Malayalam', sans-serif;
   display: flex;
   justify-content: center;
@@ -146,11 +148,32 @@
   height: 100vh;
   align-items: center;
 }
-.inputStyleAh{
+
+.inputStyleAh {
   text-align: center;
   font-size: 28px;
 }
-.iconPlay{
+
+.iconPlay {
   background-color: #ffffff00;
   border-style: none;
+}
+
+
+.btnSoup {
+  width: 25px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  background-color: white;
+  border-width: 0px;
+
+}
+.btnSoupClik{
+  background-color: #ff7b25;
+}
+.btsnFindtxt{
+  background-color: #1860fc;
+}
+
+.hidenDiv{
+  display: none;
 }
