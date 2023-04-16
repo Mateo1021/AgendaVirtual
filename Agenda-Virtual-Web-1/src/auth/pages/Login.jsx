@@ -33,6 +33,8 @@ export const Login = () => {
       tipo = 'quiz'
     } else if (sessionStorage.getItem('tipoActiv') == '2') {
       tipo = 'ahorcado'
+    }else if (sessionStorage.getItem('tipoActiv') == '3') {
+      tipo = 'soup'
     }
     navigate('/' + tipo + '/' + sessionStorage.getItem('cursoSession') + '/' + sessionStorage.getItem('actividadSession'))
     setTimeout(() => {

@@ -23,6 +23,8 @@ export const NewActivi = () => {
   const [preguntas, setpreguntas] = useState([])
   const [palabrasA, setpalabrasA] = useState([])
 
+  const [palabrasSoup, setpalabrasSoup] = useState([])
+
   const [preg, setpreg] = useState(false)
 
 
@@ -64,7 +66,10 @@ export const NewActivi = () => {
       validUrl = ' http://www.agendavirtual.online/actividades/index.html?tipo=1&curso=' + idC + '&actividad=' + idResponse
     } else if (palabrasA.length > 0) {
       validUrl = ' http://www.agendavirtual.online/actividades/index.html?tipo=2&curso=' + idC + '&actividad=' + idResponse
-    } else {
+    }else if (palabrasSoup.length > 0) {
+      validUrl = ' http://www.agendavirtual.online/actividades/index.html?tipo=3&curso=' + idC + '&actividad=' + idResponse
+    }
+     else {
       validUrl = ''
     }
     let bodyConUrl = bodyAc + validUrl
@@ -96,9 +101,18 @@ export const NewActivi = () => {
       });
     }
 
+    for (let x in palabrasSoup) {
+      await addDoc(collection(db.db, "palabrasSopa"), {
+        codReg: idResponse,
+        palabra: palabrasSoup[x],
+        tiempo: document.getElementById('timeSoup').value,
+      });
+    }
+
     setbody('')
     settitulo('')
     setpreguntas([]);
+    setpalabrasSoup([]);
     sendProyect()
   }
 
@@ -208,6 +222,18 @@ export const NewActivi = () => {
 
 
   }
+
+
+  const addPalabraSopa = () => {
+    let palabraSopa = document.getElementById('palabraSopa').value
+    if (palabraSopa !== '') {
+      palabrasSoup.push(palabraSopa)
+      setpalabrasSoup(palabrasSoup)
+      setpreg(!preg)
+    }
+  }
+
+
   const RenderTipoAct = () => {
     if (tipoSelect == '1') {
       return (<div>Este sera un post para que los estudiantes participen en el mediante la app</div>)
@@ -297,6 +323,36 @@ export const NewActivi = () => {
           </div>
         </div>
       )
+    } else if (tipoSelect == '4') {
+      return (
+        <div>
+          <h4 className='mt-3'>Agregar palabras</h4>
+          <h6>maximo 10 pl la sopa de letras que se va generar es de 13x13</h6>
+          <Form.Control
+            type="text"
+            id="palabraSopa"
+          />
+          <button className='btn orange mt-3'
+            onClick={addPalabraSopa}
+          >Agregar Palabra</button>
+
+          <div>
+            <h4 className='mt-3'>Palabras agregadas</h4>
+            {
+              palabrasSoup.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))
+            }
+          </div>
+          <div>
+            <Form.Label htmlFor="titel">Tiempo de la sopa</Form.Label>
+            <Form.Control
+              type="text"
+              id="timeSoup"
+            />
+          </div>
+        </div>
+      )
     }
   }
 
@@ -325,6 +381,7 @@ export const NewActivi = () => {
           <option value="1">Post generico</option>
           <option value="2">Trivia</option>
           <option value="3">Ahorcado</option>
+          <option value="4">Sopa de letras</option>
         </Form.Select>
         <RenderTipoAct></RenderTipoAct>
 

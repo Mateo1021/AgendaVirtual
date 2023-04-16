@@ -18,7 +18,7 @@ export const PuntajeComp = ({ puntaje }: any) => {
     function LogoImg() {
         switch (puntInt) {
             case puntInt:
-                if (puntInt <= 10) {
+                if (puntInt <= 30) {
                     return (
                         <Image
                             style={styles.tinyLogo}
@@ -28,7 +28,7 @@ export const PuntajeComp = ({ puntaje }: any) => {
                     )
                 }
             case puntInt:
-                if (puntInt <= 20) {
+                if (puntInt <= 60) {
                     return (
                         <Image
                             style={styles.tinyLogo}
@@ -38,7 +38,7 @@ export const PuntajeComp = ({ puntaje }: any) => {
                     )
                 }
             case puntInt:
-                if (puntInt <= 30) {
+                if (puntInt <= 90) {
                     return (
                         <Image
                             style={styles.tinyLogo}
@@ -48,7 +48,7 @@ export const PuntajeComp = ({ puntaje }: any) => {
                     )
                 }
             case puntInt:
-                if (puntInt <= 40) {
+                if (puntInt <= 120) {
                     return (
                         <Image
                             style={styles.tinyLogo}
@@ -58,7 +58,7 @@ export const PuntajeComp = ({ puntaje }: any) => {
                     )
                 }
             case puntInt:
-                if (puntInt <= 50) {
+                if (puntInt <= 150) {
                     return (
                         <Image
                             style={styles.tinyLogo}
@@ -68,7 +68,7 @@ export const PuntajeComp = ({ puntaje }: any) => {
                     )
                 }
             case puntInt:
-                if (puntInt <= 60) {
+                if (puntInt <= 180) {
                     return (
                         <Image
                             style={styles.tinyLogo}
@@ -78,7 +78,7 @@ export const PuntajeComp = ({ puntaje }: any) => {
                     )
                 }
             case puntInt:
-                if (puntInt <= 70) {
+                if (puntInt <= 210) {
                     return (
                         <Image
                             style={styles.tinyLogo}
@@ -88,7 +88,7 @@ export const PuntajeComp = ({ puntaje }: any) => {
                     )
                 }
             case puntInt:
-                if (puntInt <= 99) {
+                if (puntInt <= 299) {
                     return (
                         <Image
                             style={styles.tinyLogo}
@@ -98,7 +98,7 @@ export const PuntajeComp = ({ puntaje }: any) => {
                     )
                 }
             case puntInt:
-                if (puntInt > 100) {
+                if (puntInt > 300) {
                     return (
                         <Image
                             style={styles.tinyLogo}

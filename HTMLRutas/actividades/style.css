@@ -1,0 +1,13 @@
+body{
+    background: linear-gradient(90.04deg, rgb(53 36 81) 0.03%, rgb(35 79 77) 99.96%);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+.alin{
+    text-align: center;
+}
+h1{
+    font-family:Optima,arial,helvética;
+    color: aliceblue; 
+}

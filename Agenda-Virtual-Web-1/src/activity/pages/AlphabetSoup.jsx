@@ -9,7 +9,7 @@ import { async } from '@firebase/util';
 export const AlphabetSoup = () => {
     const { codC, codA } = useParams();
 
-    document.body.style.background = "linear-gradient(90.04deg, rgb(255 109 109) 0.03%, rgb(255 171 107) 99.96%)";
+    document.body.style.background = "linear-gradient(90.04deg, rgb(109 114 255) 0.03%, rgb(107 255 228) 99.96%)";
     const [palabras, setpalabras] = useState([])
     const [tiempoSopa, settiempoSopa] = useState(0)
     let arrayWorld = []
@@ -111,7 +111,7 @@ export const AlphabetSoup = () => {
 
             // Set the text content of the new list item element
             li.textContent = txtValid;
-
+            li.classList.add('ml-2')
             palabrasEncontradas.appendChild(li)
             arrayWorld = []
             puntos = (puntos + 2)
@@ -152,13 +152,16 @@ export const AlphabetSoup = () => {
     }
 
     function Temporizador() {
+        const divInmfoSoup = document.getElementById('divInmfoSoup')
+        divInmfoSoup.classList.remove('divContAh')
         const btnStart = document.getElementById("btnStart");
         btnStart.classList.add('hidenDiv')
         const termianr = document.getElementById("termianr");
         termianr.classList.remove('hidenDiv')
         termianr.classList.add('btn')
-        termianr.classList.add('orange')
+        termianr.classList.add('btnSoupActive')
         termianr.classList.add('mt-3')
+        termianr.classList.add('w-100')
 
         tiempoRestante = tiempoSopa
         let divSoup = document.getElementById('divSoup')
@@ -184,8 +187,11 @@ export const AlphabetSoup = () => {
     }
 
     const finalizar = () => {
+
+        const divInmfoSoup = document.getElementById('divInmfoSoup')
+        divInmfoSoup.classList.add('divContAh')
+
         const btnStart = document.getElementById("btnStart");
-        
         clearInterval(temporizador);
         divSoup.classList.add('hidenDiv')
         btnStart.disabled = true;
@@ -203,7 +209,7 @@ export const AlphabetSoup = () => {
         const btnEnviar = document.getElementById("btnEnviar");
         btnEnviar.classList.remove('hidenDiv')
         btnEnviar.classList.add('btn')
-        btnEnviar.classList.add('orange')
+        btnEnviar.classList.add('btnSoupActive')
         btnEnviar.classList.add('mt-3')
 
     }
@@ -235,7 +241,7 @@ export const AlphabetSoup = () => {
             palabrasArray.push(
                 doc.data().palabra
             );
-            tiempoServ =doc.data().tiempo
+            tiempoServ = doc.data().tiempo
         });
         setpalabras(palabrasArray)
         settiempoSopa(tiempoServ)
@@ -245,8 +251,10 @@ export const AlphabetSoup = () => {
 
 
         if (userInfo.Correo) {
+            console.log(codA);
             const docRef = doc(db.db, "registrosForo", codA);
             const docSnap = await getDoc(docRef);
+            console.log(docSnap.data());
             let arrayTemp = docSnap.data().participacion
             if (arrayTemp.indexOf(userInfo.codUser) < 0) {
                 setisLoged(true)
@@ -258,40 +266,64 @@ export const AlphabetSoup = () => {
         }
     }
 
-    const envPutnaje =()=>{
-console.log(puntos);
-console.log(userInfo);
+    const envPutnaje = async () => {
+        let btnFinal = document.getElementById('btnEnviar')
+        btnFinal.disabled = true;
+        const docRef = doc(db.db, "registrosForo", codA);
+        const docSnap = await getDoc(docRef);
+        let arrayTemp = docSnap.data().participacion
+        arrayTemp.push(userInfo.codUser)
+        await updateDoc(docRef, {
+            participacion: arrayTemp
+        });
+        const rankRef = await addDoc(collection(db.db, "rankingActividades"), {
+            codReg: codA,
+            nombreUser: userInfo.Nombres,
+            puntaje: puntos,
+            codUser: userInfo.codUser
+        });
+        setisLoged(false)
+        window.location.href = "http://www.agendavirtual.online/actividades/finishPage.html";
     }
 
     if (isLoged) {
         return (
-            <div className='d-flex justify-content-center pt-1 flex-column align-items-center'>
-                <div className='d-flex justify-content-center mb-3 mt-4'>
-                    <h3>Sopa de letras</h3>
-                </div>
-                <div id='divSoup' className='hidenDiv'>
-                    <RendrSoup></RendrSoup>
-                </div>
-                <p id="timer" className='text-center'>El tiempo para resolver la sopa es de {tiempoSopa} segundos</p>
-                <div id='showPuntos' className='hidenDiv'>
-                    <h1>Tu puntaje</h1>
-                </div>
-                <div className='d-flex'>
-                    <div>
-                        {
-                            palabras.map((answer, index) => (
-                                <li key={index}>{answer}</li>
-                            ))
-                        }
-                    </div>
-                    <div id='palabrasEncontradas'>
+            <div>
+                <div className='d-flex justify-content-center pt-5 pb-3 flex-column align-items-center'>
+                    <div className='divContAh' id='divInmfoSoup'>
+                        <div className='d-flex justify-content-center mb-3 mt-4'>
+                            <h3>Sopa de Letras</h3>
+                        </div>
+                        <div id='divSoup' className='hidenDiv'>
+                            <RendrSoup></RendrSoup>
+                        </div>
+                        <p id="timer" className='text-center'>El tiempo para resolver la sopa es de {tiempoSopa} segundos</p>
+                        <div id='showPuntos' className='hidenDiv'>
+                            <h1>Tu puntaje</h1>
+                        </div>
 
+                  
+                            <div className='d-flex justify-content-evenly'>
+                                <div>
+                                    {
+                                        palabras.map((answer, index) => (
+                                            <li key={index}>{answer}</li>
+                                        ))
+                                    }
+                                </div>
+                                <div id='palabrasEncontradas' >
+
+                                </div>
+                            </div>
+                      
+                        <button onClick={() => finalizar()} className='hidenDiv' id='termianr'>Terminar</button>
+
+
+                        <button onClick={() => Temporizador()} id='btnStart' className='btn btnSoupActive mt-3'>Empezar</button>
+
+                        <button onClick={() => envPutnaje()} className='hidenDiv' id='btnEnviar'>Enviar puntaje</button>
                     </div>
                 </div>
-                <button onClick={() => Temporizador()} id='btnStart' className='btn orange mt-3'>Strat</button>
-                <button onClick={() => finalizar()} className='btn orange mt-3' className='hidenDiv' id='termianr'>Terminar</button>
-
-                <button onClick={() => envPutnaje()} className='hidenDiv' id='btnEnviar'>Enviar puntaje</button>
             </div>
         )
     } else {
@@ -299,10 +331,10 @@ console.log(userInfo);
             <>
                 <div className='contLogAh'>
                     <div className='divContAh'>
-                        <h5>Ingresa tu correo</h5>
+                        <h5>Ingresa tu Correo</h5>
                         <input className="form-control" type={'email'} onChange={(e) => setuser(e.target.value)} id='logIngin'></input>
 
-                        <button className="btn orange mt-3 w-100" onClick={loginUser}>
+                        <button className="btn btnSoupActive mt-3 w-100" onClick={loginUser}>
                             Ingresar
                         </button>
 
@@ -310,7 +342,7 @@ console.log(userInfo);
                             Bienvenido {userInfo.Nombres} los puntos ganados seran registrados a este correo
                         </p>
                         <button
-                            className="btn orange w-100"
+                            className="btn btnSoupActive w-100"
                             onClick={starGame}
                         >Empezar Avtividad</button>
                     </div>

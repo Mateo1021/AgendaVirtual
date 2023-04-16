@@ -13,6 +13,13 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 export const IdentitiCard = (infoUser: any) => {
   const dataUser = infoUser.infoUser[0]._data;
   const { authState } = useContext(AuthContext);
+  console.log(dataUser.foto);
+  let urlPhothoUser
+  if(dataUser.foto ==''){
+    urlPhothoUser = 'https://firebasestorage.googleapis.com/v0/b/agenda-virtual-fearc.appspot.com/o/files%2Fimagen_2023-04-09_142413.png?alt=media&token=0c7cda07-06f1-412d-bbd3-9fa0756db0b0'
+  }else{
+    urlPhothoUser = dataUser.foto
+  }
   return (
     <TouchableOpacity>
       <View style={stylesApp.cardIdentit}>
@@ -25,7 +32,7 @@ export const IdentitiCard = (infoUser: any) => {
           <View>
             <Image
               style={{ width: 150, height: 150 }}
-              source={{ uri: `${dataUser.foto}` }}
+              source={{ uri: `${urlPhothoUser}` }}
             />
           </View>
           <View style={{

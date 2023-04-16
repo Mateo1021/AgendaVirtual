@@ -7,7 +7,7 @@ import { GrFormRefresh, GrLaunch } from "react-icons/gr";
 import { FcSearch } from "react-icons/fc";
 
 export const Ahorcado = () => {
-    document.body.style.background = "linear-gradient(90.04deg, rgb(255 109 109) 0.03%, rgb(255 171 107) 99.96%)";
+    document.body.style.background = "linear-gradient(90.04deg, rgb(53 36 81) 0.03%, rgb(35 79 77) 99.96%)";
 
     const { codC, codA } = useParams();
 
@@ -103,16 +103,15 @@ export const Ahorcado = () => {
         if (newid <= palabraServ.length - 1) {
             setidPista(0)
             setletrasAdivinadas([])
-
-            console.log(newid);
-            console.log(palabraServ.length - 1);
-
             setidPalabra(newid)
             setpistas(palabraServ[newid].pistas)
             setpalabraSeleccionada(palabraServ[newid].palabra)
             console.log(palabraServ[newid].palabra);
             setisDisable(true)
         } else {
+            let btnFinal = document.getElementById('btnSgPalabra')
+            btnFinal.disabled = true;
+
             let scoreNew = score + 1
             setscore(scoreNew)
             setPuntosUser()
@@ -217,6 +216,8 @@ export const Ahorcado = () => {
     async function setPuntosUser() {
 
 
+        let btnFinal = document.getElementById('btnEnviar')
+        btnFinal.disabled = true;
 
         const userRef = doc(db.db, "Usuarios", userInfo.codUser);
         let newValor = Number(userInfo.Puntaje) + Number(score)
@@ -249,11 +250,11 @@ export const Ahorcado = () => {
         return (
             <>
                 <div className='contLogAh'>
-                    <div className='divContAh'>
-                        <h5>Ingresa tu correo</h5>
+                    <div className='divContOther'>
+                        <h5>Ingresa tu Correo</h5>
                         <input className="form-control" type={'email'} onChange={(e) => setuser(e.target.value)} id='logIngin'></input>
 
-                        <button className="btn orange mt-3 w-100" onClick={loginUser}>
+                        <button className="btn btnAhorcadoActive mt-3 w-100" onClick={loginUser}>
                             Ingresar
                         </button>
 
@@ -261,7 +262,7 @@ export const Ahorcado = () => {
                             Bienvenido {userInfo.Nombres} los puntos ganados seran registrados a este correo
                         </p>
                         <button
-                            className="btn orange w-100"
+                            className="btn btnAhorcadoActive w-100"
                             onClick={starGame}
                         >Empezar Avtividad</button>
                     </div>
@@ -296,17 +297,19 @@ export const Ahorcado = () => {
                     <MostrarIntentos></MostrarIntentos>
 
                     <button
-                        className="btn orange"
+                        className="btn btnAhorcadoActive"
                         onClick={SelectPalabra}
                         disabled={isDisable}
+                        id='btnSgPalabra'
                     >
                         Siguiente palabra
                     </button>
 
                     <p>tu puntaje es: {score}</p>
                     <button
-                        className="btn orange mb-2 px-5"
+                        className="btn btnAhorcadoActive mb-2 px-5"
                         onClick={setPuntosUser}
+                        id='btnEnviar'
                     >
                         finalizar
                     </button>

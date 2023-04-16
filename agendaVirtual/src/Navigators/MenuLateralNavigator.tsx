@@ -43,14 +43,14 @@ const MenuInterno = ({navigation}:DrawerContentComponentProps) =>{
         <TouchableOpacity         
         style={stylesApp.btnMenuLat}
         onPress={()=> navigation.navigate('PerfilScreen')}>
-          <Text style={stylesApp.txtBtnMenuLat}>Perfil</Text>
+          <Text style={stylesApp.txtBtnMenuLat}>Editar perfil</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity         
+{/*         <TouchableOpacity         
         style={stylesApp.btnMenuLat}
         onPress={()=> navigation.navigate('ConfigScreen')}>
           <Text style={stylesApp.txtBtnMenuLat}>Configuracion</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
       </View>
 

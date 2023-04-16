@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useParams } from 'react-router-dom';
 import './quiz.css'
 import db from '../../../firebase/firebaseConfig'
-import { collection, query, where, getDoc, onSnapshot, getDocs, updateDoc, doc,addDoc } from "firebase/firestore";
+import { collection, query, where, getDoc, onSnapshot, getDocs, updateDoc, doc, addDoc } from "firebase/firestore";
 import { async } from '@firebase/util';
 let quiz = {}
 let question
@@ -129,7 +129,7 @@ const Quiz = () => {
 
 
     const addPointUser = async () => {
-        
+
         let btnFinal = document.getElementById('btnFinal')
         btnFinal.disabled = true;
         const userRef = doc(db.db, "Usuarios", user.codUser);
@@ -150,9 +150,9 @@ const Quiz = () => {
         const rankRef = await addDoc(collection(db.db, "rankingActividades"), {
             codReg: codA,
             nombreUser: user.Nombres,
-            puntaje:result.score,
-            codUser:user.codUser
-          });
+            puntaje: result.score,
+            codUser: user.codUser
+        });
 
         setstarGame(false)
         window.location.href = "http://www.agendavirtual.online/actividades/finishPage.html";
@@ -193,7 +193,7 @@ const Quiz = () => {
                                 <button
                                     onClick={onClickNext}
                                     disabled={selectedAnswerIndex === null}>
-                                    {activeQuestion === questions.length - 1 ? 'Finish' : 'Next'}
+                                    {activeQuestion === questions.length - 1 ? 'Finalizar' : 'Sigiente'}
                                 </button>
                             </div>
                         </div>
@@ -213,7 +213,7 @@ const Quiz = () => {
                                 Preguntas incorrectas:<span> {result.wrongAnswers}</span>
                             </p>
                             <button
-                            id='btnFinal'
+                                id='btnFinal'
                                 onClick={addPointUser}>
                                 Finalizar y enviar respuestas
                             </button>
@@ -226,7 +226,7 @@ const Quiz = () => {
         return (
             <div className="bodyQuiz">
                 <div className="quiz-container">
-                    <h1>Bienvenido</h1>
+                    <h5>Ingresa tu Correo</h5>
                     <input type={'text'}
                         onChange={(e) => setuser(e.target.value)}
                         id='logIngin'
@@ -236,11 +236,13 @@ const Quiz = () => {
                     </input>
                     <button className='mb-3'
                         onClick={() => loginStud()}
-                    > Login </button>
-                    <p>{user.Nombres}</p>
+                    > Ingresar </button>
+                    <p className="mt-3 text-center">
+                        Bienvenido {user.Nombres} los puntos ganados seran registrados a este correo
+                    </p>
                     <button
                         onClick={() => getCuestions()}
-                    > Empeza juego </button>
+                    > Empeza Avtividad </button>
                 </div>
             </div>
         )
