@@ -239,7 +239,7 @@ export const AlphabetSoup = () => {
         let tiempoServ
         querySnapshot.forEach((doc) => {
             palabrasArray.push(
-                doc.data().palabra
+                doc.data().palabra.toUpperCase()
             );
             tiempoServ = doc.data().tiempo
         });
@@ -257,7 +257,11 @@ export const AlphabetSoup = () => {
             console.log(docSnap.data());
             let arrayTemp = docSnap.data().participacion
             if (arrayTemp.indexOf(userInfo.codUser) < 0) {
-                setisLoged(true)
+                if (docSnap.data().active == "1") {
+                    setisLoged(true)
+                } else {
+                    alert('Esta actividad ya se encuentra finalizazda')
+                }
             } else {
                 alert('Tu ya realizaste esta actividad')
             }
@@ -267,6 +271,7 @@ export const AlphabetSoup = () => {
     }
 
     const envPutnaje = async () => {
+        let datePlay = new Date()
         let btnFinal = document.getElementById('btnEnviar')
         btnFinal.disabled = true;
         const docRef = doc(db.db, "registrosForo", codA);
@@ -280,7 +285,8 @@ export const AlphabetSoup = () => {
             codReg: codA,
             nombreUser: userInfo.Nombres,
             puntaje: puntos,
-            codUser: userInfo.codUser
+            codUser: userInfo.codUser,
+            createAt: datePlay
         });
         setisLoged(false)
         window.location.href = "http://www.agendavirtual.online/actividades/finishPage.html";
@@ -302,20 +308,20 @@ export const AlphabetSoup = () => {
                             <h1>Tu puntaje</h1>
                         </div>
 
-                  
-                            <div className='d-flex justify-content-evenly'>
-                                <div>
-                                    {
-                                        palabras.map((answer, index) => (
-                                            <li key={index}>{answer}</li>
-                                        ))
-                                    }
-                                </div>
-                                <div id='palabrasEncontradas' >
 
-                                </div>
+                        <div className='d-flex justify-content-evenly'>
+                            <div>
+                                {
+                                    palabras.map((answer, index) => (
+                                        <li key={index}>{answer}</li>
+                                    ))
+                                }
                             </div>
-                      
+                            <div id='palabrasEncontradas' >
+
+                            </div>
+                        </div>
+
                         <button onClick={() => finalizar()} className='hidenDiv' id='termianr'>Terminar</button>
 
 

@@ -22,7 +22,6 @@ export const NewActivi = () => {
 
   const [preguntas, setpreguntas] = useState([])
   const [palabrasA, setpalabrasA] = useState([])
-
   const [palabrasSoup, setpalabrasSoup] = useState([])
 
   const [preg, setpreg] = useState(false)
@@ -56,7 +55,15 @@ export const NewActivi = () => {
     if (bodyAc == '' || titulo == '' || tipoSelect == '0') {
       alert('Por favor llena todos los campos')
     } else {
-      addReg()
+      if (palabrasSoup.length == 0) {
+        addReg()
+      } else {
+        if (document.getElementById('timeSoup').value == "") {
+          alert('Por favor agrega un tiempo a la sopa')
+        } else {
+          addReg()
+        }
+      }
     }
   }
   const addReg = async () => {
@@ -66,10 +73,10 @@ export const NewActivi = () => {
       validUrl = ' http://www.agendavirtual.online/actividades/index.html?tipo=1&curso=' + idC + '&actividad=' + idResponse
     } else if (palabrasA.length > 0) {
       validUrl = ' http://www.agendavirtual.online/actividades/index.html?tipo=2&curso=' + idC + '&actividad=' + idResponse
-    }else if (palabrasSoup.length > 0) {
+    } else if (palabrasSoup.length > 0) {
       validUrl = ' http://www.agendavirtual.online/actividades/index.html?tipo=3&curso=' + idC + '&actividad=' + idResponse
     }
-     else {
+    else {
       validUrl = ''
     }
     let bodyConUrl = bodyAc + validUrl
@@ -136,103 +143,98 @@ export const NewActivi = () => {
   }
 
   const addPregunta = async () => {
-    setpalabrasA([])
-    let arrayOption = []
-    arrayOption.push(document.getElementById('op1').value)
-    arrayOption.push(document.getElementById('op2').value)
-    arrayOption.push(document.getElementById('op3').value)
-    arrayOption.push(document.getElementById('respuesta').value)
-    let newArray = shuffle(arrayOption)
+    if (!document.getElementById('pregunta').value == ''
+      && !document.getElementById('respuesta').value == ''
+      && !document.getElementById('op1').value == ''
+      && !document.getElementById('op2').value == ''
+      && !document.getElementById('op3').value == '') {
+      setpalabrasA([])
+      setpalabrasSoup([])
+      let arrayOption = []
+      arrayOption.push(document.getElementById('op1').value)
+      arrayOption.push(document.getElementById('op2').value)
+      arrayOption.push(document.getElementById('op3').value)
+      arrayOption.push(document.getElementById('respuesta').value)
+      let newArray = shuffle(arrayOption)
 
-    console.log(newArray);
-    console.log(document.getElementById('pregunta').value);
-
-
-
-    preguntas.push({
-      opciones: newArray,
-      pregunta: document.getElementById('pregunta').value,
-      respuesta: document.getElementById('respuesta').value
-    })
-
-    console.log(preguntas);
-    document.getElementById('op1').value = ''
-    document.getElementById('op2').value = ''
-    document.getElementById('op3').value = ''
-    document.getElementById('respuesta').value = ''
-    document.getElementById('pregunta').value = ''
-
-    setpreguntas(preguntas);
-    setpreg(!preg)
-    /* 
-    await setDoc(doc(db.db, "preguntas", idCoursComplet), {
-      body: bodyAc,
-      idRegistro: idResponse,
-      codProyecto: idC,
-      titulo: titulo,
-      createdAt: dateReg,
-      file: 'test',
-      active: '1',
-      participacion: []
-    }); */
+      console.log(newArray);
+      console.log(document.getElementById('pregunta').value);
 
 
 
-  }
-  const addPalabra = async () => {
-    setpreguntas([])
-    let arrayOption = []
-    arrayOption.push(document.getElementById('pis1').value)
-    arrayOption.push(document.getElementById('pis2').value)
-    arrayOption.push(document.getElementById('pis3').value)
-    let newArray = shuffle(arrayOption)
+      preguntas.push({
+        opciones: newArray,
+        pregunta: document.getElementById('pregunta').value,
+        respuesta: document.getElementById('respuesta').value
+      })
 
-    console.log(newArray);
-    console.log(document.getElementById('palabraA').value);
-
-
-
-    palabrasA.push({
-      pistas: newArray,
-      palabra: document.getElementById('palabraA').value,
-    })
-
-    console.log(palabrasA);
-
-    document.getElementById('pis1').value = ''
-    document.getElementById('pis2').value = ''
-    document.getElementById('pis3').value = ''
-    document.getElementById('palabraA').value = ''
-
-
-    setpalabrasA(palabrasA);
-    setpreg(!preg)
-    /* 
-    await setDoc(doc(db.db, "preguntas", idCoursComplet), {
-      body: bodyAc,
-      idRegistro: idResponse,
-      codProyecto: idC,
-      titulo: titulo,
-      createdAt: dateReg,
-      file: 'test',
-      active: '1',
-      participacion: []
-    }); */
-
-
-
-  }
-
-
-  const addPalabraSopa = () => {
-    let palabraSopa = document.getElementById('palabraSopa').value
-    if (palabraSopa !== '') {
-      palabrasSoup.push(palabraSopa)
-      setpalabrasSoup(palabrasSoup)
+      console.log(preguntas);
+      setpreguntas(preguntas);
       setpreg(!preg)
+      document.getElementById('op1').value = ''
+      document.getElementById('op2').value = ''
+      document.getElementById('op3').value = ''
+      document.getElementById('respuesta').value = ''
+      document.getElementById('pregunta').value = ''
+    } else {
+      alert('Llena todos los campos')
     }
   }
 
+  const addPalabra = async () => {
+    if (!document.getElementById('palabraA').value == ''
+      && !document.getElementById('pis1').value == ''
+      && !document.getElementById('pis2').value == ''
+      && !document.getElementById('pis3').value == '') {
+
+      setpreguntas([])
+      setpalabrasSoup([])
+      let arrayOption = []
+      arrayOption.push(document.getElementById('pis1').value)
+      arrayOption.push(document.getElementById('pis2').value)
+      arrayOption.push(document.getElementById('pis3').value)
+      let newArray = shuffle(arrayOption)
+
+      console.log(newArray);
+      console.log(document.getElementById('palabraA').value);
+
+
+
+      palabrasA.push({
+        pistas: newArray,
+        palabra: document.getElementById('palabraA').value,
+      })
+
+      console.log(palabrasA);
+
+      document.getElementById('pis1').value = ''
+      document.getElementById('pis2').value = ''
+      document.getElementById('pis3').value = ''
+      document.getElementById('palabraA').value = ''
+
+
+      setpalabrasA(palabrasA);
+      setpreg(!preg)
+    } else {
+      alert('Llena todos los campos')
+    }
+
+
+  }
+
+  const addPalabraSopa = () => {
+
+    let palabraSopa = document.getElementById('palabraSopa').value
+    if (palabraSopa !== '') {
+      setpreguntas([])
+      setpalabrasA([])
+      palabrasSoup.push(palabraSopa)
+      setpalabrasSoup(palabrasSoup)
+      setpreg(!preg)
+    } else {
+      alert('Agrega una palabra primero')
+    }
+  }
 
   const RenderTipoAct = () => {
     if (tipoSelect == '1') {

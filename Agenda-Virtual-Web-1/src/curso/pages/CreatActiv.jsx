@@ -84,17 +84,43 @@ export const CreatActiv = () => {
     });
 
 
+  }, [])
 
+  useLayoutEffect(() => {
     const activyRef = collection(db.db, "rankingActividades");
     const qA = query(activyRef, where("codReg", "==", idA), orderBy("puntaje", "desc"));
     const unsubscribeS = onSnapshot(qA, (querySnapshot) => {
       const rank = [];
       querySnapshot.forEach((doc) => {
-        rank.push(doc.data());
+        const fecha = new Date(doc.data().createAt.seconds * 1000); // Crear una instancia de Date
+
+        // Opciones de formato para imprimir la hora en español (España)
+        const opciones = {
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric',
+          hour12: false,
+          timeZone: 'America/Bogota',
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          timeZoneName: 'short',
+          locale: 'es-CO' // Configuración regional y el idioma en español (España)
+        };
+
+        const horaEnEspanol = fecha.toLocaleTimeString('es-CO', opciones);
+        console.log(horaEnEspanol);
+        rank.push({
+          codReg: doc.data().codReg,
+          codUser: doc.data().codUser,
+          createAt: horaEnEspanol,
+          nombreUser: doc.data().nombreUser,
+          puntaje: doc.data().puntaje
+        });
       });
       setrankArray(rank)
     });
-
   }, [])
 
   const updateActiv = async () => {
@@ -211,10 +237,15 @@ export const CreatActiv = () => {
             </div>
             <div className='scrollList'>
               {rankArray.map((id, index) => (
-                <div key={index} className="cardResponse">
-                  <h5>{id.nombreUser}</h5>
-
-                  <h6>{id.puntaje}</h6>
+                <div key={index}  className="cardResponse d-flex flex-row justify-content-between">
+                  <div>
+                    <h5>{id.nombreUser}</h5>
+                    <h6>{id.puntaje}</h6>
+                  </div>
+                  <div>
+                    <h5>fecha</h5>
+                    <h6>{id.createAt}</h6>
+                  </div>
                 </div>
               ))}
             </div>
@@ -248,7 +279,7 @@ export const CreatActiv = () => {
   return (
     <div className=' mt-5'>
       <div className='infoStuf'>
-      <div className='d-flex justify-content-center'>
+        <div className='d-flex justify-content-center'>
           <h3 className='text-uppercase'>Informacion de la actividad</h3>
         </div>
         <Form.Group className="mb-3" >

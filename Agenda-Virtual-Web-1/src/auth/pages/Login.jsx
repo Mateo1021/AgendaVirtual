@@ -106,24 +106,24 @@ export const Login = () => {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', width: '100%', height: '100vh', backgroundImage: `url(${Background})` }}>
         <div style={{ display: 'flex', justifyContent: 'center', width: '70%', height: '90vh' }} >
-          <Card className='m-auto' style={{ width: '90%', alignItems: 'center', opacity: '0.95' }}>
+          <Card className='m-auto' style={{ width: '100%', alignItems: 'center', opacity: '0.95' }}>
             <Card.Img variant="top" src={Logo} style={{ width: '70%', }} />
             <Card.Body>
               <Card.Title>Módulo Web</Card.Title>
               <Card.Text>
                 Fundación sin ánimo de lucro que hace 50 años brinda educación, primaria, secundaria y mediatéc
               </Card.Text>
-              <form className="">
-                <div style={{ width: '50%', marginLeft: '25%', marginRight: '25%', paddingTop: '2%' }}>
+              <form className="d-flex flex-column align-items-center">
+                <div className='mt-1'>
                   <label htmlFor="staticEmail" className="" >Email</label>
                   <input type="text" className="input form-control" id="staticEmail" value={user} placeholder={'Correo'} onChange={e => setUser(e.target.value)} />
                 </div>
-                <div style={{ width: '50%', marginLeft: '25%', marginRight: '25%', paddingTop: '2%' }}>
+                <div className='mt-1'>
                   <label htmlFor="inputPassword" className="" >Password</label>
                   <input type="password" className="input form-control" id="inputPassword" value={pass} placeholder={'Contraseña'} onChange={e => setPass(e.target.value)} />
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '2%' }}>
-                  <Button type="button" className="btn orange" onClick={onLogIn}>Iniciar sesión</Button>
+                <div >
+                  <Button type="button" className="btn orange mt-3" onClick={onLogIn}>Iniciar sesión</Button>
                 </div>
               </form>
             </Card.Body>

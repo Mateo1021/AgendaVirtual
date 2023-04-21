@@ -60,8 +60,8 @@ export const NavBar = () => {
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                   <Nav className="justify-content-end flex-grow-1 pe-3">
-                    <Nav.Link href="/home">Inicio</Nav.Link>
-                    <Nav.Link href="/curso/iniCurso">Curso</Nav.Link>
+                    <Nav.Link onClick={goHome}>Inicio</Nav.Link>
+                    <Nav.Link onClick={goCurso}>Curso</Nav.Link>
                     <Nav.Link href="/login" onClick={onLogut}>Salir</Nav.Link>
                   </Nav>
                 </Offcanvas.Body>

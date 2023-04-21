@@ -84,7 +84,11 @@ const Quiz = () => {
         let arrayTemp = docSnap.data().participacion
 
         if (arrayTemp.indexOf(user.codUser) < 0) {
-            setstarGame(true)
+            if (docSnap.data().active == "1") {
+                setstarGame(true)
+            } else {
+                alert('Esta actividad ya se encuentra finalizazda')
+            }
         } else {
             alert('Tu ya realizaste esta actividad')
         }
@@ -129,7 +133,7 @@ const Quiz = () => {
 
 
     const addPointUser = async () => {
-
+        let datePlay = new Date();
         let btnFinal = document.getElementById('btnFinal')
         btnFinal.disabled = true;
         const userRef = doc(db.db, "Usuarios", user.codUser);
@@ -151,7 +155,8 @@ const Quiz = () => {
             codReg: codA,
             nombreUser: user.Nombres,
             puntaje: result.score,
-            codUser: user.codUser
+            codUser: user.codUser,
+            createAt: datePlay
         });
 
         setstarGame(false)

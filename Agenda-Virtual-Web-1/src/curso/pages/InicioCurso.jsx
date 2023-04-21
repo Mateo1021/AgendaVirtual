@@ -54,7 +54,7 @@ export const InicioCurso = () => {
     return (
       <div className='tarjeta' style={{
         display: 'flex',
-        width: '35rem',
+        width: '50vh',
         margin: '20px',
         height: '600px',
         flexDirection: 'column',
@@ -86,7 +86,7 @@ export const InicioCurso = () => {
 
     return (
       <button disabled={isFirstItemVisible} onClick={() => scrollPrev()}
-        style={{ backgroundColor: "white", borderWidth: "0" }}>
+        style={{ backgroundColor: "#f9f9f9", borderWidth: "0" }}>
         <IoChevronBackSharp >
 
         </IoChevronBackSharp>
@@ -101,7 +101,7 @@ export const InicioCurso = () => {
 
     return (
       <button disabled={isLastItemVisible} onClick={() => scrollNext()}
-        style={{ backgroundColor: "white", borderWidth: "0" }}
+        style={{ backgroundColor: "#f9f9f9", borderWidth: "0" }}
       >
         <IoChevronForwardSharp></IoChevronForwardSharp>
       </button>

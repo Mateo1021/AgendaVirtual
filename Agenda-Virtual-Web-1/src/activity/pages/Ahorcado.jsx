@@ -85,8 +85,13 @@ export const Ahorcado = () => {
             const docSnap = await getDoc(docRef);
             let arrayTemp = docSnap.data().participacion
             console.log(arrayTemp);
+            console.log(docSnap.data());
             if (arrayTemp.indexOf(userInfo.codUser) < 0) {
-                setisLogin(true)
+                if( docSnap.data().active == "1"){
+                    setisLogin(true)
+                }else{
+                    alert('Esta actividad ya se encuentra finalizazda')
+                }
             } else {
                 alert('Tu ya realizaste esta actividad')
             }
@@ -214,7 +219,7 @@ export const Ahorcado = () => {
 
 
     async function setPuntosUser() {
-
+        let datePlay = new Date();
 
         let btnFinal = document.getElementById('btnEnviar')
         btnFinal.disabled = true;
@@ -238,7 +243,8 @@ export const Ahorcado = () => {
             codReg: codA,
             nombreUser: userInfo.Nombres,
             puntaje: score,
-            codUser: userInfo.codUser
+            codUser: userInfo.codUser,
+            createAt: datePlay
         });
 
         setisLogin(false)
@@ -285,14 +291,14 @@ export const Ahorcado = () => {
                             maxLength='1'
                             className="form-control inputStyleAh w-25">
                         </input>
-                 
+
                         <button
                             className="iconPlay"
                             onClick={verificarLetra}
                             disabled={!isDisable}
                         >
-                             <FcSearch size={50} className='styleicon'></FcSearch>
-                            </button>
+                            <FcSearch size={50} className='styleicon'></FcSearch>
+                        </button>
                     </div>
                     <MostrarIntentos></MostrarIntentos>
 

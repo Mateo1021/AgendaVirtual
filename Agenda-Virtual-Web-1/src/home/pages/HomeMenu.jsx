@@ -18,7 +18,11 @@ export const HomeMenu = () => {
   const navigate = useNavigate();
 
   const sendActiv = (idReg, idCour) => {
-    navigate('/curso/creatActiv/' + idReg + '/' + idCour)
+    if (idReg == '') {
+      alert('Aun no hay participaciones')
+    } else {
+      navigate('/curso/creatActiv/' + idReg + '/' + idCour)
+    }
   }
 
 
@@ -96,7 +100,7 @@ export const HomeMenu = () => {
 
 
           respuestas.push({
-            tituloRes: arrayReg[i].titelReg,
+            tituloRes: 'Actividad: ' + arrayReg[i].titelReg,
             userPlublic: doc.data().nameUser,
             msj: doc.data().bodyMsj,
             cours: arrayReg[i].nameCours,
@@ -117,7 +121,20 @@ export const HomeMenu = () => {
         }
       }
     }
+
+    let notInfo = [{
+      tituloRes: "",
+      userPlublic: "",
+      msj: "Aun no hay participaciones en los foros",
+      cours: "",
+      codReg: "",
+      idCours: "",
+      createdAt: ""
+    }]
     setnotifi(arrayDesestructurado);
+    if (arrayDesestructurado.length == 0) {
+      setnotifi(notInfo);
+    }
   }
   useLayoutEffect(() => {
     const q = query(collection(db.db, "respuestas"));
@@ -159,7 +176,7 @@ export const HomeMenu = () => {
                   <h4>{id.userPlublic}</h4>
                 </div>
                 <div>
-                  <h6>Actividad: {id.tituloRes}</h6>
+                  <h6>{id.tituloRes}</h6>
                   <p>{id.msj}</p>
                 </div>
                 <div className='d-flex justify-content-end'>
