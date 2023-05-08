@@ -45,6 +45,13 @@ export const AppRouter = () => {
         }>
         </Route>
 
+        <Route path="configAdmin/" element={
+          <PrivateRoute>
+            <InfoAdmin/>
+          </PrivateRoute>
+        }>
+        </Route>
+
         <Route path="listaDocentes/" element={
           <PrivateRoute>
             <ListaDocentes/>

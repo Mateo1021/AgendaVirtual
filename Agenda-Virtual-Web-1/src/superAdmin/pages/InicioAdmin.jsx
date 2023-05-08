@@ -104,6 +104,10 @@ export const InicioAdmin = () => {
     navigate('/createUser')
   }
 
+  const SendConfig = () => {
+    navigate('/configAdmin')
+  }
+
 
 
   let options;
@@ -559,7 +563,7 @@ export const InicioAdmin = () => {
             },
             title: {
               display: true,
-              text: 'Chart.js Line Chart',
+              text: 'Actividades por mes',
             },
           },
         };
@@ -580,7 +584,7 @@ export const InicioAdmin = () => {
             },
             title: {
               display: true,
-              text: 'Chart.js Line Chart',
+              text: 'Estudiantes por curso',
             },
           },
         };
@@ -612,7 +616,7 @@ export const InicioAdmin = () => {
             },
             title: {
               display: true,
-              text: 'Chart.js Bar Chart',
+              text: 'Asistencia a eventos',
             },
           },
         };
@@ -746,6 +750,14 @@ export const InicioAdmin = () => {
             <img
               className='graficImg2'
               src={img5}
+            />
+          </button>
+
+          <button className='btnDSAdmin clor6' onClick={() => SendConfig()}>
+            <p className='txtImgsGraphic'>Configuraciones generales</p>
+            <img
+              className='graficImg2'
+              src={img6}
             />
           </button>
 
