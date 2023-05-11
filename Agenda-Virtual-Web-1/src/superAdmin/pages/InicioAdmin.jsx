@@ -8,6 +8,7 @@ import img4 from '../../images/image3.png';
 import img5 from '../../images/image4.png';
 import img6 from '../../images/image5.png';
 import img7 from '../../images/image6.png';
+import img9 from '../../images/image9.png';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -757,7 +758,7 @@ export const InicioAdmin = () => {
             <p className='txtImgsGraphic'>Configuraciones generales</p>
             <img
               className='graficImg2'
-              src={img6}
+              src={img9}
             />
           </button>
 

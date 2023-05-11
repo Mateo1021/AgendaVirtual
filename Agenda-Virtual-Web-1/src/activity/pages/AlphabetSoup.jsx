@@ -271,6 +271,14 @@ export const AlphabetSoup = () => {
     }
 
     const envPutnaje = async () => {
+
+        const userRef = doc(db.db, "Usuarios", userInfo.codUser);
+        let newValor = Number(userInfo.Puntaje) + Number(puntos)
+        await updateDoc(userRef, {
+            Puntaje: newValor.toString()
+        });
+
+
         let datePlay = new Date()
         let btnFinal = document.getElementById('btnEnviar')
         btnFinal.disabled = true;
